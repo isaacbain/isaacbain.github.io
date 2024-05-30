@@ -2,7 +2,7 @@
 title: "test-post1"
 author: "Isaac Bain"
 date: "2024-05-30"
-categories: [news]
+categories: [news, air quality]
 ---
 
 # test post
