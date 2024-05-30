@@ -1,0 +1,15 @@
+---
+title: "test-post1"
+author: "Isaac Bain"
+date: "2024-05-30"
+categories: [news]
+---
+
+# test post
+
+```{r}
+library(tidyverse)
+
+ggplot(data = mtcars) +
+  geom_point(aes(hp, disp))
+```
