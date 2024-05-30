@@ -9,9 +9,9 @@ website:
       - about.qmd
       - blog.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/isaacbain
+      - icon: linkedin
+        href: www.linkedin.com/in/isaac-bain-4a0227172
 format:
   html:
     theme: flatly
