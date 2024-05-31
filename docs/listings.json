@@ -2,10 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
-      "/posts/arrowtown-air-quality/index.html",
-      "/posts/post-with-code/index.html",
-      "/posts/test-post/index.html",
-      "/posts/welcome/index.html"
+      "/posts/arrowtown-air-quality/index.html"
     ]
   }
 ]

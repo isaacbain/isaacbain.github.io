@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Arrowtown air quality\n\n\n\n\n\n\ncode\n\n\nair quality\n\n\nanimation\n\n\n\n\n\n\n\n\n\nMay 31, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nMay 30, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\ntest-post1\n\n\n\n\n\n\nnews\n\n\nair quality\n\n\n\n\n\n\n\n\n\nMay 30, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMay 27, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Arrowtown air quality\n\n\n\n\n\n\ncode\n\n\nair quality\n\n\nanimation\n\n\n\n\n\n\n\n\n\nMay 31, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -14,11 +14,11 @@
     "text": "This is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You’ll hopefully find lots of interesting content here about environmental data, freshwater ecology, and public health.\nPlease remember, nothing here represents the views of my employer—it’s all just my personal work and thoughts. My goal is to make complex data more accessible and even a bit fun. I aim to provide insights and provoke thought rather than deliver definitive conclusions.\nI hope you find something intriguing and valuable on my site. Feel free to reach out with any questions or comments.\nNgā mihi,\nIsaac Bain"
   },
   {
-    "objectID": "index.html#header-1",
-    "href": "index.html#header-1",
-    "title": "Home",
+    "objectID": "index.html#welcome-to-my-personal-website.",
+    "href": "index.html#welcome-to-my-personal-website.",
+    "title": "Kia ora 👋",
     "section": "",
-    "text": "this is a test."
+    "text": "This is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You’ll hopefully find lots of interesting content here about environmental data, freshwater ecology, and public health.\nPlease remember, nothing here represents the views of my employer—it’s all just my personal work and thoughts. My goal is to make complex data more accessible and even a bit fun. I aim to provide insights and provoke thought rather than deliver definitive conclusions.\nI hope you find something intriguing and valuable on my site. Feel free to reach out with any questions or comments.\nNgā mihi,\nIsaac Bain"
   },
   {
     "objectID": "posts/arrowtown-air-quality/index.html",
@@ -63,45 +63,10 @@
     "text": "Make an animated plot\nLet’s jazz it up; by making it animated - revealing the daily concentrations over time, and making it a polar chart - which are particularly effective at emphasising the cyclical nature of seasonal air quality.\n\n\nShow the code\n# Define the start dates for each season according to New Zealand definitions\nseason_start_dates &lt;- as.Date(c(\"2022-12-01\", \"2022-03-01\", \"2022-06-01\", \"2022-09-01\"))\n\n# Create the plot with seasonal division lines and y-axis labels inside the chart\np &lt;- ggplot(dat_filtered) +\n  geom_hline(yintercept = 45, linetype = \"dashed\", color = \"red\", alpha = 0.7) +\n  geom_line(aes(x = sample_date, y = concentration),\n            color = \"#D72638\",\n            size = 0.5) +\n  geom_vline(\n    xintercept = as.numeric(season_start_dates),\n    linetype = \"dashed\",\n    color = \"black\",\n    alpha = 0.3\n  ) +\n  geom_point(aes(x = sample_date, y = concentration), color = \"#420039\", size = 2) +\n  scale_x_date(date_labels = \"%b\", date_breaks = \"1 month\") +\n  coord_curvedpolar() +\n  labs(\n    title = bquote(\"Daily PM\"[10] * \" concentration (µg/m\"^3 * \") in Arrowtown, 2022\"),\n    x = \"\",\n    y = \"\"\n  ) +\n  theme_minimal() +\n  theme(\n    plot.title = element_text(hjust = 0.5, \n                              colour = \"#420039\"),\n    axis.text.y = element_blank(),\n    axis.ticks.y = element_blank(),\n    axis.text.x = element_text(\n      color = \"#12355B\",\n      face = \"bold\",\n      size = 14,\n      vjust = -0.5\n    )\n  ) +\n  annotate(\n    'text',\n    x = as.Date(\"2022-01-03\"),\n    y = my_breaks,\n    label = round(my_breaks, 2),\n    angle = 0,\n    hjust = -0.1,\n    vjust = 0.5\n  ) +\n  geom_segment(data = tick_data,\n               aes(\n                 x = x,\n                 xend = xend,\n                 y = y,\n                 yend = yend\n               ),\n               color = \"black\") +\n  transition_reveal(sample_date) +\n  ease_aes('linear')  # Easing to make the animation smoother\n\n# Render the animation and save as GIF\nanim &lt;- animate(p, nframes = 100, fps = 10, renderer = gifski_renderer())\n\nanim"
   },
   {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "posts/test-post/index.html",
-    "href": "posts/test-post/index.html",
-    "title": "test-post1",
-    "section": "",
-    "text": "test post\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nggplot(data = mtcars) +\n  geom_point(aes(hp, disp))"
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
     "text": "Hi there! I’m a quantitative ecologist who loves working in environmental resource management. I dive into all sorts of tasks, from analysing raw data and generating insights, to developing policies, advising decision-makers, and building tools to help with implementation. I’m all about using open-source tools like R and making sure my analyses are reproducible.\nI call Ōtautahi (Christchurch) home—a lovely little city. When I’m not working, you’ll likely find me packrafting, paragliding, bikepacking, or sea kayaking.\nMost of my work focuses on freshwater ecosystems, but I’m also interested in how our environment health affects human health. I spend a lot of time at the intersection of science and policy, trying to bridge the gap between research and real-world applications.\nOn top of all that, I’m also a PhD candidate in Public Health at the University of Otago, continuing to learn and contribute to a new field."
-  },
-  {
-    "objectID": "index.html#kia-ora",
-    "href": "index.html#kia-ora",
-    "title": "Home",
-    "section": "",
-    "text": "Welcome to my personal website.\nThis is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You’ll hopefully find lots of interesting content here about environmental data, freshwater ecology, and public health.\nPlease remember, nothing here represents the views of my employer—it’s all just my personal work and thoughts. My goal is to make complex data more accessible and maybe even a bit fun. My aim is to provide insights and provoke thought rather than deliver definitive conclusions.\nI hope you find something intriguing and valuable on my site. Feel free to reach out with any questions or comments.\nNgā mihi,\nIsaac Bain"
-  },
-  {
-    "objectID": "index.html#welcome-to-my-personal-website.",
-    "href": "index.html#welcome-to-my-personal-website.",
-    "title": "Kia ora 👋",
-    "section": "",
-    "text": "This is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You’ll hopefully find lots of interesting content here about environmental data, freshwater ecology, and public health.\nPlease remember, nothing here represents the views of my employer—it’s all just my personal work and thoughts. My goal is to make complex data more accessible and even a bit fun. I aim to provide insights and provoke thought rather than deliver definitive conclusions.\nI hope you find something intriguing and valuable on my site. Feel free to reach out with any questions or comments.\nNgā mihi,\nIsaac Bain"
   }
 ]
