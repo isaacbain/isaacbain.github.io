@@ -9,9 +9,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Home",
+    "title": "Kia ora 👋",
     "section": "",
-    "text": "this is a test."
+    "text": "This is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You’ll hopefully find lots of interesting content here about environmental data, freshwater ecology, and public health.\nPlease remember, nothing here represents the views of my employer—it’s all just my personal work and thoughts. My goal is to make complex data more accessible and even a bit fun. I aim to provide insights and provoke thought rather than deliver definitive conclusions.\nI hope you find something intriguing and valuable on my site. Feel free to reach out with any questions or comments.\nNgā mihi,\nIsaac Bain"
   },
   {
     "objectID": "index.html#header-1",
@@ -88,6 +88,20 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this blog"
+    "text": "Hi there! I’m a quantitative ecologist who loves working in environmental resource management. I dive into all sorts of tasks, from analysing raw data and generating insights, to developing policies, advising decision-makers, and building tools to help with implementation. I’m all about using open-source tools like R and making sure my analyses are reproducible.\nI call Ōtautahi (Christchurch) home—a lovely little city. When I’m not working, you’ll likely find me packrafting, paragliding, bikepacking, or sea kayaking.\nMost of my work focuses on freshwater ecosystems, but I’m also interested in how our environment health affects human health. I spend a lot of time at the intersection of science and policy, trying to bridge the gap between research and real-world applications.\nOn top of all that, I’m also a PhD candidate in Public Health at the University of Otago, continuing to learn and contribute to a new field."
+  },
+  {
+    "objectID": "index.html#kia-ora",
+    "href": "index.html#kia-ora",
+    "title": "Home",
+    "section": "",
+    "text": "Welcome to my personal website.\nThis is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You’ll hopefully find lots of interesting content here about environmental data, freshwater ecology, and public health.\nPlease remember, nothing here represents the views of my employer—it’s all just my personal work and thoughts. My goal is to make complex data more accessible and maybe even a bit fun. My aim is to provide insights and provoke thought rather than deliver definitive conclusions.\nI hope you find something intriguing and valuable on my site. Feel free to reach out with any questions or comments.\nNgā mihi,\nIsaac Bain"
+  },
+  {
+    "objectID": "index.html#welcome-to-my-personal-website.",
+    "href": "index.html#welcome-to-my-personal-website.",
+    "title": "Kia ora 👋",
+    "section": "",
+    "text": "This is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You’ll hopefully find lots of interesting content here about environmental data, freshwater ecology, and public health.\nPlease remember, nothing here represents the views of my employer—it’s all just my personal work and thoughts. My goal is to make complex data more accessible and even a bit fun. I aim to provide insights and provoke thought rather than deliver definitive conclusions.\nI hope you find something intriguing and valuable on my site. Feel free to reach out with any questions or comments.\nNgā mihi,\nIsaac Bain"
   }
 ]

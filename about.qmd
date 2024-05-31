@@ -12,4 +12,10 @@ about:
       href: https://www.linkedin.com/in/isaac-bain-4a0227172
 ---
 
-About this blog
+Hi there! I'm a quantitative ecologist who loves working in environmental resource management. I dive into all sorts of tasks, from analysing raw data and generating insights, to developing policies, advising decision-makers, and building tools to help with implementation. I'm all about using open-source tools like R and making sure my analyses are reproducible.
+
+I call Ōtautahi (Christchurch) home—a lovely little city. When I'm not working, you'll likely find me packrafting, paragliding, bikepacking, or sea kayaking.
+
+Most of my work focuses on freshwater ecosystems, but I'm also interested in how our environment health affects human health. I spend a lot of time at the intersection of science and policy, trying to bridge the gap between research and real-world applications.
+
+On top of all that, I'm also a PhD candidate in Public Health at the University of Otago, continuing to learn and contribute to a new field.

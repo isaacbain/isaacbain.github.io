@@ -1,7 +1,15 @@
 ---
-title: "Home"
+title: "Kia ora 👋"
 ---
 
-## Header 1
+## Welcome to my personal website. 
 
-this is a test.
+This is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You'll hopefully find lots of interesting content here about environmental data, freshwater ecology, and public health.
+
+Please remember, nothing here represents the views of my employer—it's all just my personal work and thoughts. My goal is to make complex data more accessible and even a bit fun. I aim to provide insights and provoke thought rather than deliver definitive conclusions.
+
+I hope you find something intriguing and valuable on my site. Feel free to reach out with any questions or comments.
+
+Ngā mihi,
+
+Isaac Bain

@@ -48,7 +48,7 @@ LAWA make their data freely available at <https://lawa.org.nz/download-data>, fr
 
 Particulate matter (PM) can have adverse effects on human health and the environment. The numbers 10 and 2.5 refer to the diameter of the particles in micrometers (µm).
 
-::: {.callout-note collapse="true"}
+::: {.callout-note collapse="false"}
 ## What are the human health impacts of PM in New Zealand?
 
 Hales et al. (2021) did a retrospective cohort epidemiological study of the association between PM~2.5~, NO~2~ and mortality and morbidity for 2.2m New Zealanders. They found that exposure to PM~2.5~ per 10 μg/m^3^ increased the risk of death by 11% (95% CI 7-15%) and increased the risk of ischaemic heart disease by 29% (95% CI 23-35%).
@@ -57,7 +57,7 @@ Hales, S., Atkinson, J., Metcalfe, J., Kuschel, G., & Woodward, A. (2021). Long 
 :::
 
 |                    |                                                                                                                                                                                                                                                                                                                       |
-|-------------------------------------------|-----------------------------|
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **PM~10~**         |                                                                                                                                                                                                                                                                                                                       |
 | **Definition**     | PM~10~ refers to particulate matter with a diameter of 10 micrometers or less.                                                                                                                                                                                                                                        |
 | **Sources**        | These particles are usually produced by mechanical processes such as construction activities, road dust, industrial processes, and natural sources like pollen and sea spray.                                                                                                                                         |
