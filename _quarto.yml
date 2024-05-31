@@ -16,6 +16,8 @@ website:
         href: https://github.com/isaacbain
       - icon: linkedin
         href: https://www.linkedin.com/in/isaac-bain-4a0227172
+      - icon: mortarboard-fill
+        href: https://scholar.google.com/citations?user=vtZwgC4AAAAJ&hl=en
 format:
   html:
     theme: flatly
