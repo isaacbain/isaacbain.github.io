@@ -4,7 +4,7 @@ title: "Kia ora 👋"
 
 ![](ashburton-lakes.png){width="700"}
 
-## Welcome to my personal website. 
+## Welcome to my personal website.
 
 This is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You'll hopefully find lots of interesting content here about environmental data, freshwater ecology, and public health.
 
