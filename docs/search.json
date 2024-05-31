@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nMay 30, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\ntest-post1\n\n\n\n\n\n\nnews\n\n\nair quality\n\n\n\n\n\n\n\n\n\nMay 30, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMay 27, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Arrowtown air quality\n\n\n\n\n\n\ncode\n\n\nair quality\n\n\nanimation\n\n\n\n\n\n\n\n\n\nMay 31, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nMay 30, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\ntest-post1\n\n\n\n\n\n\nnews\n\n\nair quality\n\n\n\n\n\n\n\n\n\nMay 30, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMay 27, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -21,11 +21,46 @@
     "text": "this is a test."
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
+    "objectID": "posts/arrowtown-air-quality/index.html",
+    "href": "posts/arrowtown-air-quality/index.html",
+    "title": "Arrowtown air quality",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "Show the code\nlibrary(tidyverse) # provides ggplot, dplyr, etc\nlibrary(janitor) # tidy up messy variable names\nlibrary(gganimate) # provides animations\nlibrary(geomtextpath) # makes labels curved on polar graph"
+  },
+  {
+    "objectID": "posts/arrowtown-air-quality/index.html#libraries",
+    "href": "posts/arrowtown-air-quality/index.html#libraries",
+    "title": "Arrowtown air quality",
+    "section": "",
+    "text": "Show the code\nlibrary(tidyverse) # provides ggplot, dplyr, etc\nlibrary(janitor) # tidy up messy variable names\nlibrary(gganimate) # provides animations\nlibrary(geomtextpath) # makes labels curved on polar graph"
+  },
+  {
+    "objectID": "posts/arrowtown-air-quality/index.html#import-data",
+    "href": "posts/arrowtown-air-quality/index.html#import-data",
+    "title": "Arrowtown air quality",
+    "section": "Import data",
+    "text": "Import data\nLand, Air, Water Aotearoa (LAWA) is a collaboration between New Zealand’s 16 regional councils and unitary authorities, the Cawthron Institute, the Ministry for the Environment, the Department of Conservation, and Stats NZ.\nIt provides state of the environment monitoring data for a number of environmental domains, including:\n\nswimming water quality,\nestuary health,\ngroundwater quality,\nlake quality,\nland cover,\nriver quality,\nwater quantity,\n\nand of particular interest here, air quality.\nLAWA make their data freely available at https://lawa.org.nz/download-data, from which I downloaded an excel sheet of air quality for the period 2016-2022. They only have PM10 and PM2.5 parameters available for now.\nParticulate matter (PM) can have adverse effects on human health and the environment. The numbers 10 and 2.5 refer to the diameter of the particles in micrometers (µm).\n\n\n\n\n\n\nWhat are the human health impacts of PM in New Zealand?\n\n\n\n\n\nHales et al. (2021) did a retrospective cohort epidemiological study of the association between PM2.5, NO2 and mortality and morbidity for 2.2m New Zealanders. They found that exposure to PM2.5 per 10 μg/m3 increased the risk of death by 11% (95% CI 7-15%) and increased the risk of ischaemic heart disease by 29% (95% CI 23-35%).\nHales, S., Atkinson, J., Metcalfe, J., Kuschel, G., & Woodward, A. (2021). Long term exposure to air pollution, mortality and morbidity in New Zealand: cohort study. Science of The Total Environment, 801, 149660.\n\n\n\n\n\n\n\n\n\n\nPM10\n\n\n\nDefinition\nPM10 refers to particulate matter with a diameter of 10 micrometers or less.\n\n\nSources\nThese particles are usually produced by mechanical processes such as construction activities, road dust, industrial processes, and natural sources like pollen and sea spray.\n\n\nHealth Effects\nPM10 particles can be inhaled into the lungs, causing respiratory issues, aggravating asthma, and other lung diseases. They can also affect cardiovascular health.\n\n\nRegulations\nMany countries have set air quality standards for PM10 to protect public health. For instance, the World Health Organization (WHO) recommends that the 24-hour mean concentration of PM10 should not exceed 45 µg/m³.\n\n\nPM2.5\n\n\n\nDefinition\nPM2.5 refers to particulate matter with a diameter of 2.5 micrometers or less.\n\n\nSources\nThese finer particles are often produced by combustion processes such as vehicle emissions, power plants, residential heating, industrial activities, and wildfires. Secondary particles can also form in the atmosphere from chemical reactions involving gases like sulfur dioxide (SO₂) and nitrogen oxides (NOx).\n\n\nHealth Effects\nPM2.5 particles are more dangerous than PM10 because they can penetrate deeper into the respiratory tract, reaching the alveoli in the lungs. Long-term exposure to PM2.5 is associated with increased rates of chronic bronchitis, lung cancer, heart disease, and can also impact cognitive function.\n\n\nRegulations\nWHO guidelines suggest that the annual mean concentration of PM2.5 should not exceed 10 µg/m³, and the 24-hour mean should not exceed 25 µg/m³.\n\n\n\n\n\nShow the code\ndat &lt;- readxl::read_xlsx(\"data/airqualitydownloaddata_2016-2022.xlsx\",\n                         sheet = \"Air Quality Data\") |&gt; \n  clean_names() |&gt; \n  mutate(year = year(sample_date)) |&gt;\n  filter(!is.na(sample_date) & !is.na(concentration))"
+  },
+  {
+    "objectID": "posts/arrowtown-air-quality/index.html#what-are-the-worst-sites",
+    "href": "posts/arrowtown-air-quality/index.html#what-are-the-worst-sites",
+    "title": "Arrowtown air quality",
+    "section": "What are the worst sites?",
+    "text": "What are the worst sites?\nAir quality is known to be worst in more southern areas, places where home heating via wood burning or coal is more prevalent, and over the colder months of the year.\nBut let’s check some of these assumptions by extracting the worst 5 sites for maximum recorded PM10 values.\n\n\nShow the code\ndat |&gt; \n  filter(indicator == \"PM10\") |&gt;\n  group_by(site_name) |&gt; \n  summarize(max_concentration = max(concentration, na.rm = TRUE)) |&gt; \n  arrange(desc(max_concentration)) |&gt; \n  top_n(5, max_concentration)\n\n\n# A tibble: 5 × 2\n  site_name                       max_concentration\n  &lt;chr&gt;                                       &lt;dbl&gt;\n1 Milton                                       203.\n2 Arrowtown                                    158.\n3 Lower Hutt (Phil Evans Reserve)              155.\n4 Invercargill at Pomona Street                139.\n5 Washdyke Alpine                              123.\n\n\nIndeed most of these locations are in South Island (except for Lower Hutt, which is at the bottom of the North Island)."
+  },
+  {
+    "objectID": "posts/arrowtown-air-quality/index.html#static-plot-of-seasonal-air-quality",
+    "href": "posts/arrowtown-air-quality/index.html#static-plot-of-seasonal-air-quality",
+    "title": "Arrowtown air quality",
+    "section": "Static plot of seasonal air quality",
+    "text": "Static plot of seasonal air quality\nNow let’s check the assumption that air quality is worse in the colder months of the year. Here I’m plotting daily PM10 concentrations over 2022 for one site (Arrowtown). And there is quite a spike over the winter months, with a number of exceedances of the WHO guideline of 45 µg/m³.\n\n\nShow the code\ndat_filtered &lt;- dat |&gt; \n  filter(site_name == \"Arrowtown\") |&gt; \n  filter(indicator == \"PM10\") |&gt; \n  filter(year == 2022) |&gt;\n  arrange(sample_date) |&gt; \n  mutate(sample_date = as.Date(sample_date))\n\n# Calculate the breaks for y-axis labels\nn_breaks &lt;- 5\nmy_breaks &lt;- scales::breaks_extended(n = n_breaks)(range(dat_filtered$concentration))\nmy_breaks &lt;- my_breaks[my_breaks &gt; 0]\n\n# Create a data frame for the tick marks\ntick_data &lt;- data.frame(\n  x = as.Date(\"2022-01-01\"),\n  xend = as.Date(\"2022-01-03\"),\n  y = my_breaks,\n  yend = my_breaks\n)\n\nggplot(dat_filtered) +\n  geom_hline(yintercept = 45, linetype = \"dashed\", color = \"red\", alpha = 0.7) +\n  geom_line(aes(x = sample_date, y = concentration),\n            color = \"#D72638\",\n            size = 0.5) +\n  scale_x_date(date_labels = \"%b\", date_breaks = \"1 month\") +\n  #coord_curvedpolar() +\n  labs(\n    title = bquote(\"Daily PM\"[10] * \" concentration (µg/m\"^3 * \") in Arrowtown, 2022\"),\n    x = \"\",\n    y = bquote(\"Daily PM\"[10] * \" concentration (µg/m\"^3 * \")\")\n  ) +\n  theme_minimal() +\n  theme(\n    plot.title = element_text(hjust = 0.5, \n                              colour = \"#420039\"),\n    axis.text.y = element_blank(),\n    axis.ticks.y = element_blank(),\n    axis.text.x = element_text(\n      color = \"#12355B\",\n      face = \"bold\",\n      size = 14,\n      vjust = -0.5\n    )\n  ) +\n  annotate(\n    'text',\n    x = as.Date(\"2022-01-03\"),\n    y = my_breaks,\n    label = round(my_breaks, 2),\n    angle = 0,\n    hjust = -0.1,\n    vjust = 0.5\n  ) +\n  geom_segment(data = tick_data,\n               aes(\n                 x = x,\n                 xend = xend,\n                 y = y,\n                 yend = yend\n               ),\n               color = \"black\")"
+  },
+  {
+    "objectID": "posts/arrowtown-air-quality/index.html#make-an-animated-plot",
+    "href": "posts/arrowtown-air-quality/index.html#make-an-animated-plot",
+    "title": "Arrowtown air quality",
+    "section": "Make an animated plot",
+    "text": "Make an animated plot\nLet’s jazz it up; by making it animated - revealing the daily concentrations over time, and making it a polar chart - which are particularly effective at emphasising the cyclical nature of seasonal air quality.\n\n\nShow the code\n# Define the start dates for each season according to New Zealand definitions\nseason_start_dates &lt;- as.Date(c(\"2022-12-01\", \"2022-03-01\", \"2022-06-01\", \"2022-09-01\"))\n\n# Create the plot with seasonal division lines and y-axis labels inside the chart\np &lt;- ggplot(dat_filtered) +\n  geom_hline(yintercept = 45, linetype = \"dashed\", color = \"red\", alpha = 0.7) +\n  geom_line(aes(x = sample_date, y = concentration),\n            color = \"#D72638\",\n            size = 0.5) +\n  geom_vline(\n    xintercept = as.numeric(season_start_dates),\n    linetype = \"dashed\",\n    color = \"black\",\n    alpha = 0.3\n  ) +\n  geom_point(aes(x = sample_date, y = concentration), color = \"#420039\", size = 2) +\n  scale_x_date(date_labels = \"%b\", date_breaks = \"1 month\") +\n  coord_curvedpolar() +\n  labs(\n    title = bquote(\"Daily PM\"[10] * \" concentration (µg/m\"^3 * \") in Arrowtown, 2022\"),\n    x = \"\",\n    y = \"\"\n  ) +\n  theme_minimal() +\n  theme(\n    plot.title = element_text(hjust = 0.5, \n                              colour = \"#420039\"),\n    axis.text.y = element_blank(),\n    axis.ticks.y = element_blank(),\n    axis.text.x = element_text(\n      color = \"#12355B\",\n      face = \"bold\",\n      size = 14,\n      vjust = -0.5\n    )\n  ) +\n  annotate(\n    'text',\n    x = as.Date(\"2022-01-03\"),\n    y = my_breaks,\n    label = round(my_breaks, 2),\n    angle = 0,\n    hjust = -0.1,\n    vjust = 0.5\n  ) +\n  geom_segment(data = tick_data,\n               aes(\n                 x = x,\n                 xend = xend,\n                 y = y,\n                 yend = yend\n               ),\n               color = \"black\") +\n  transition_reveal(sample_date) +\n  ease_aes('linear')  # Easing to make the animation smoother\n\n# Render the animation and save as GIF\nanim &lt;- animate(p, nframes = 100, fps = 10, renderer = gifski_renderer())\n\nanim"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -33,6 +68,13 @@
     "title": "Post With Code",
     "section": "",
     "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
   },
   {
     "objectID": "posts/test-post/index.html",

@@ -1,0 +1,231 @@
+---
+title: "Arrowtown air quality"
+author: "Isaac Bain"
+date: "2024-05-31"
+categories: [code, air quality, animation]
+execute:
+  warning: false
+  error: false
+format: 
+  html:
+    code-fold: show
+    code-summary: "Show the code"
+editor: visual
+---
+
+## Libraries
+
+```{r}
+library(tidyverse) # provides ggplot, dplyr, etc
+library(janitor) # tidy up messy variable names
+library(gganimate) # provides animations
+library(geomtextpath) # makes labels curved on polar graph
+```
+
+## Import data
+
+[Land, Air, Water Aotearoa (LAWA)](https://lawa.org.nz/) is a collaboration between New Zealand's 16 regional councils and unitary authorities, the Cawthron Institute, the Ministry for the Environment, the Department of Conservation, and Stats NZ.
+
+It provides state of the environment monitoring data for a number of [environmental domains](https://lawa.org.nz/explore-data), including:
+
+1.  swimming water quality,
+
+2.  estuary health,
+
+3.  groundwater quality,
+
+4.  lake quality,
+
+5.  land cover,
+
+6.  river quality,
+
+7.  water quantity,
+
+and of particular interest here, air quality.
+
+LAWA make their data freely available at <https://lawa.org.nz/download-data>, from which I downloaded an excel sheet of air quality for the period 2016-2022. They only have PM~10~ and PM~2.5~ parameters available for now.
+
+Particulate matter (PM) can have adverse effects on human health and the environment. The numbers 10 and 2.5 refer to the diameter of the particles in micrometers (µm).
+
+::: {.callout-note collapse="true"}
+## What are the human health impacts of PM in New Zealand?
+
+Hales et al. (2021) did a retrospective cohort epidemiological study of the association between PM~2.5~, NO~2~ and mortality and morbidity for 2.2m New Zealanders. They found that exposure to PM~2.5~ per 10 μg/m^3^ increased the risk of death by 11% (95% CI 7-15%) and increased the risk of ischaemic heart disease by 29% (95% CI 23-35%).
+
+Hales, S., Atkinson, J., Metcalfe, J., Kuschel, G., & Woodward, A. (2021). Long term exposure to air pollution, mortality and morbidity in New Zealand: cohort study. *Science of The Total Environment, 801*, 149660.
+:::
+
+|                    |                                                                                                                                                                                                                                                                                                                       |
+|-------------------------------------------|-----------------------------|
+| **PM~10~**         |                                                                                                                                                                                                                                                                                                                       |
+| **Definition**     | PM~10~ refers to particulate matter with a diameter of 10 micrometers or less.                                                                                                                                                                                                                                        |
+| **Sources**        | These particles are usually produced by mechanical processes such as construction activities, road dust, industrial processes, and natural sources like pollen and sea spray.                                                                                                                                         |
+| **Health Effects** | PM~10~ particles can be inhaled into the lungs, causing respiratory issues, aggravating asthma, and other lung diseases. They can also affect cardiovascular health.                                                                                                                                                  |
+| **Regulations**    | Many countries have set air quality standards for PM~10~ to protect public health. For instance, the World Health Organization (WHO) recommends that the 24-hour mean concentration of PM~10~ should not exceed 45 µg/m³.                                                                                             |
+| **PM~2.5~**        |                                                                                                                                                                                                                                                                                                                       |
+| **Definition**     | PM~2.5~ refers to particulate matter with a diameter of 2.5 micrometers or less.                                                                                                                                                                                                                                      |
+| **Sources**        | These finer particles are often produced by combustion processes such as vehicle emissions, power plants, residential heating, industrial activities, and wildfires. Secondary particles can also form in the atmosphere from chemical reactions involving gases like sulfur dioxide (SO₂) and nitrogen oxides (NOx). |
+| **Health Effects** | PM~2.5~ particles are more dangerous than PM10 because they can penetrate deeper into the respiratory tract, reaching the alveoli in the lungs. Long-term exposure to PM~2.5~ is associated with increased rates of chronic bronchitis, lung cancer, heart disease, and can also impact cognitive function.           |
+| **Regulations**    | WHO guidelines suggest that the annual mean concentration of PM~2.5~ should not exceed 10 µg/m³, and the 24-hour mean should not exceed 25 µg/m³.                                                                                                                                                                     |
+
+```{r}
+dat <- readxl::read_xlsx("data/airqualitydownloaddata_2016-2022.xlsx",
+                         sheet = "Air Quality Data") |> 
+  clean_names() |> 
+  mutate(year = year(sample_date)) |>
+  filter(!is.na(sample_date) & !is.na(concentration))
+```
+
+## What are the worst sites?
+
+Air quality is known to be worst in more southern areas, places where home heating via wood burning or coal is more prevalent, and over the colder months of the year.
+
+But let's check some of these assumptions by extracting the worst 5 sites for maximum recorded PM~10~ values.
+
+```{r}
+dat |> 
+  filter(indicator == "PM10") |>
+  group_by(site_name) |> 
+  summarize(max_concentration = max(concentration, na.rm = TRUE)) |> 
+  arrange(desc(max_concentration)) |> 
+  top_n(5, max_concentration)
+```
+
+Indeed most of these locations are in South Island (except for Lower Hutt, which is at the bottom of the North Island).
+
+## Static plot of seasonal air quality
+
+Now let's check the assumption that air quality is worse in the colder months of the year. Here I'm plotting daily PM10 concentrations over 2022 for one site (Arrowtown). And there is quite a spike over the winter months, with a number of exceedances of the WHO guideline of 45 µg/m³.
+
+```{r}
+dat_filtered <- dat |> 
+  filter(site_name == "Arrowtown") |> 
+  filter(indicator == "PM10") |> 
+  filter(year == 2022) |>
+  arrange(sample_date) |> 
+  mutate(sample_date = as.Date(sample_date))
+
+# Calculate the breaks for y-axis labels
+n_breaks <- 5
+my_breaks <- scales::breaks_extended(n = n_breaks)(range(dat_filtered$concentration))
+my_breaks <- my_breaks[my_breaks > 0]
+
+# Create a data frame for the tick marks
+tick_data <- data.frame(
+  x = as.Date("2022-01-01"),
+  xend = as.Date("2022-01-03"),
+  y = my_breaks,
+  yend = my_breaks
+)
+
+ggplot(dat_filtered) +
+  geom_hline(yintercept = 45, linetype = "dashed", color = "red", alpha = 0.7) +
+  geom_line(aes(x = sample_date, y = concentration),
+            color = "#D72638",
+            size = 0.5) +
+  scale_x_date(date_labels = "%b", date_breaks = "1 month") +
+  #coord_curvedpolar() +
+  labs(
+    title = bquote("Daily PM"[10] * " concentration (µg/m"^3 * ") in Arrowtown, 2022"),
+    x = "",
+    y = bquote("Daily PM"[10] * " concentration (µg/m"^3 * ")")
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, 
+                              colour = "#420039"),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.x = element_text(
+      color = "#12355B",
+      face = "bold",
+      size = 14,
+      vjust = -0.5
+    )
+  ) +
+  annotate(
+    'text',
+    x = as.Date("2022-01-03"),
+    y = my_breaks,
+    label = round(my_breaks, 2),
+    angle = 0,
+    hjust = -0.1,
+    vjust = 0.5
+  ) +
+  geom_segment(data = tick_data,
+               aes(
+                 x = x,
+                 xend = xend,
+                 y = y,
+                 yend = yend
+               ),
+               color = "black")
+```
+
+## Make an animated plot
+
+Let's jazz it up; by making it animated - revealing the daily concentrations over time, and making it a polar chart - which are particularly effective at emphasising the cyclical nature of seasonal air quality.
+
+```{r}
+# Define the start dates for each season according to New Zealand definitions
+season_start_dates <- as.Date(c("2022-12-01", "2022-03-01", "2022-06-01", "2022-09-01"))
+
+# Create the plot with seasonal division lines and y-axis labels inside the chart
+p <- ggplot(dat_filtered) +
+  geom_hline(yintercept = 45, linetype = "dashed", color = "red", alpha = 0.7) +
+  geom_line(aes(x = sample_date, y = concentration),
+            color = "#D72638",
+            size = 0.5) +
+  geom_vline(
+    xintercept = as.numeric(season_start_dates),
+    linetype = "dashed",
+    color = "black",
+    alpha = 0.3
+  ) +
+  geom_point(aes(x = sample_date, y = concentration), color = "#420039", size = 2) +
+  scale_x_date(date_labels = "%b", date_breaks = "1 month") +
+  coord_curvedpolar() +
+  labs(
+    title = bquote("Daily PM"[10] * " concentration (µg/m"^3 * ") in Arrowtown, 2022"),
+    x = "",
+    y = ""
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, 
+                              colour = "#420039"),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.x = element_text(
+      color = "#12355B",
+      face = "bold",
+      size = 14,
+      vjust = -0.5
+    )
+  ) +
+  annotate(
+    'text',
+    x = as.Date("2022-01-03"),
+    y = my_breaks,
+    label = round(my_breaks, 2),
+    angle = 0,
+    hjust = -0.1,
+    vjust = 0.5
+  ) +
+  geom_segment(data = tick_data,
+               aes(
+                 x = x,
+                 xend = xend,
+                 y = y,
+                 yend = yend
+               ),
+               color = "black") +
+  transition_reveal(sample_date) +
+  ease_aes('linear')  # Easing to make the animation smoother
+
+# Render the animation and save as GIF
+anim <- animate(p, nframes = 100, fps = 10, renderer = gifski_renderer())
+
+anim
+```
