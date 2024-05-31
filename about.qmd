@@ -10,6 +10,9 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/isaac-bain-4a0227172
+    - icon: mortarboard-fill
+      text: Google Scholar
+      href: https://scholar.google.com/citations?user=vtZwgC4AAAAJ&hl=en
 ---
 
 Hi there! I'm a quantitative ecologist who loves working in environmental resource management. I dive into all sorts of tasks, from analysing raw data and generating insights, to developing policies, advising decision-makers, and building tools to help with implementation. I'm all about using open-source tools like R and making sure my analyses are reproducible.
