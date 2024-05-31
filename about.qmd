@@ -4,12 +4,12 @@ image: profile.jpg
 about:
   template: jolla
   links:
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/isaac-bain-4a0227172
     - icon: github
       text: Github
       href: https://github.com/isaacbain
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/isaac-bain-4a0227172
 ---
 
 About this blog
