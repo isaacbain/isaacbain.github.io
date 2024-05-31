@@ -10,6 +10,8 @@ website:
   navbar:
     logo: kakapo-logo.png
     right:
+      - text: "Home"
+        href: index.qmd
       - about.qmd
       - blog.qmd
       - icon: github
