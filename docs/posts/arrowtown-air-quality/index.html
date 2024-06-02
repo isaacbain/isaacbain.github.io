@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -165,6 +165,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </i> 
 <span class="menu-text"></span></a>
   </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/isaacbain"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -173,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Arrowtown air quality</h1>
@@ -208,8 +213,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link active" data-scroll-target="#libraries"><span class="header-section-number">1</span> Libraries</a></li>
+  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><span class="header-section-number">2</span> Import data</a></li>
+  <li><a href="#what-are-the-worst-sites" id="toc-what-are-the-worst-sites" class="nav-link" data-scroll-target="#what-are-the-worst-sites"><span class="header-section-number">3</span> What are the worst sites?</a></li>
+  <li><a href="#static-plot-of-seasonal-air-quality" id="toc-static-plot-of-seasonal-air-quality" class="nav-link" data-scroll-target="#static-plot-of-seasonal-air-quality"><span class="header-section-number">4</span> Static plot of seasonal air quality</a></li>
+  <li><a href="#make-an-animated-plot" id="toc-make-an-animated-plot" class="nav-link" data-scroll-target="#make-an-animated-plot"><span class="header-section-number">5</span> Make an animated plot</a></li>
+  <li><a href="#make-4-animated-plots" id="toc-make-4-animated-plots" class="nav-link" data-scroll-target="#make-4-animated-plots"><span class="header-section-number">6</span> Make 4 animated plots</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">7</span> Next steps</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -218,8 +240,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Most of the time, New Zealand enjoys good air quality, allowing us to step outside and breathe a breath of fresh air, knowing it’s safe. However at certain times and places, our air is polluted to such levels that it causes us harm, or in the worst cases, premature death. Here I access air quality data from LAWA and explore it for one site known for severe winter air pollution.</p>
-<section id="libraries" class="level2">
-<h2 class="anchored" data-anchor-id="libraries">Libraries</h2>
+<section id="libraries" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="libraries"><span class="header-section-number">1</span> Libraries</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -231,8 +253,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="import-data" class="level2">
-<h2 class="anchored" data-anchor-id="import-data">Import data</h2>
+<section id="import-data" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="import-data"><span class="header-section-number">2</span> Import data</h2>
 <p><a href="https://lawa.org.nz/">Land, Air, Water Aotearoa (LAWA)</a> is a collaboration between New Zealand’s 16 regional councils and unitary authorities, the Cawthron Institute, the Ministry for the Environment, the Department of Conservation, and Stats NZ. LAWA provides state of the environment monitoring data for various <a href="https://lawa.org.nz/explore-data">environmental domains</a>, including; swimming water quality, estuary health, groundwater quality, lake quality, land cover, river quality, water quantity, and of particular interest here, air quality.</p>
 <p>LAWA makes their data freely available at <a href="https://lawa.org.nz/download-data" class="uri">https://lawa.org.nz/download-data</a>. From this source I downloaded an Excel sheet of air quality data for the period 2016 to 2022. Currently, the available parameters are PM<sub>10</sub> and PM<sub>2.5</sub>.</p>
 <p>Particulate matter (PM) can have adverse effects on human health and the environment. The numbers 10 and 2.5 refer to the diameter of the particles in micrometers (µm).</p>
@@ -264,8 +286,8 @@ What are the human health impacts of PM in New Zealand?
 </details>
 </div>
 </section>
-<section id="what-are-the-worst-sites" class="level2">
-<h2 class="anchored" data-anchor-id="what-are-the-worst-sites">What are the worst sites?</h2>
+<section id="what-are-the-worst-sites" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="what-are-the-worst-sites"><span class="header-section-number">3</span> What are the worst sites?</h2>
 <p>Air quality is known to be worst in more southern areas, places where home heating via wood burning or coal is more prevalent, particularly during the colder months of the year.</p>
 <p>But let’s check some of these assumptions by extracting the worst 5 sites for highest recorded PM<sub>10</sub> values (<a href="#tbl-top5" class="quarto-xref">Table&nbsp;1</a>).</p>
 <div class="cell">
@@ -365,13 +387,13 @@ Table&nbsp;1: Top 5 sites with highest PM<sub>10</sub> concentrations
 <span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-f81fe52b45d51794b630" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-f81fe52b45d51794b630">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[-46.12132792,-44.94857127,-41.2126069999999,-46.43192839,-44.356199],[169.9615016,168.84573717,174.920876,168.36991681,171.242334],[14.24078649513432,12.56582667395982,12.46595363379794,11.78897790310933,11.11287541548091],null,null,{"interactive":true,"className":"","stroke":0,"color":["#FFFFCC","#FD6E32","#FD5E2E","#D21021","#800026"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#FFFFCC","#FD6E32","#FD5E2E","#D21021","#800026"],"fillOpacity":1},null,null,null,null,["Milton, Max PM10: 202.8","Arrowtown, Max PM10: 157.9","Lower Hutt (Phil Evans Reserve), Max PM10: 155.4","Invercargill at Pomona Street, Max PM10: 138.98","Washdyke Alpine, Max PM10: 123.496"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#800026 , #A80026 8.20135176031474%, #D61220 20.8110561888429%, #F44025 33.4207606173711%, #FD7B36 46.0304650458993%, #FEA747 58.6401694744275%, #FFCD69 71.2498739029557%, #FFE794 83.8595783314839%, #FFFAC0 96.4692827600121%, #FFFFCC "],"labels":["200","190","180","170","160","150","140","130"],"na_color":null,"na_label":"NA","opacity":0.7,"position":"bottomright","type":"numeric","title":"Max PM10 Concentration","extra":{"p_1":0.08201351760314743,"p_n":0.9646928276001209},"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[-46.43192839,-41.2126069999999],"lng":[168.36991681,174.920876]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-994aa6d462e5cf52ee22" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-994aa6d462e5cf52ee22">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[-46.12132792,-44.94857127,-41.2126069999999,-46.43192839,-44.356199],[169.9615016,168.84573717,174.920876,168.36991681,171.242334],[14.24078649513432,12.56582667395982,12.46595363379794,11.78897790310933,11.11287541548091],null,null,{"interactive":true,"className":"","stroke":0,"color":["#FFFFCC","#FD6E32","#FD5E2E","#D21021","#800026"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#FFFFCC","#FD6E32","#FD5E2E","#D21021","#800026"],"fillOpacity":1},null,null,null,null,["Milton, Max PM10: 202.8","Arrowtown, Max PM10: 157.9","Lower Hutt (Phil Evans Reserve), Max PM10: 155.4","Invercargill at Pomona Street, Max PM10: 138.98","Washdyke Alpine, Max PM10: 123.496"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#800026 , #A80026 8.20135176031474%, #D61220 20.8110561888429%, #F44025 33.4207606173711%, #FD7B36 46.0304650458993%, #FEA747 58.6401694744275%, #FFCD69 71.2498739029557%, #FFE794 83.8595783314839%, #FFFAC0 96.4692827600121%, #FFFFCC "],"labels":["200","190","180","170","160","150","140","130"],"na_color":null,"na_label":"NA","opacity":0.7,"position":"bottomright","type":"numeric","title":"Max PM10 Concentration","extra":{"p_1":0.08201351760314743,"p_n":0.9646928276001209},"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[-46.43192839,-41.2126069999999],"lng":[168.36991681,174.920876]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
-<section id="static-plot-of-seasonal-air-quality" class="level2">
-<h2 class="anchored" data-anchor-id="static-plot-of-seasonal-air-quality">Static plot of seasonal air quality</h2>
+<section id="static-plot-of-seasonal-air-quality" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="static-plot-of-seasonal-air-quality"><span class="header-section-number">4</span> Static plot of seasonal air quality</h2>
 <p>Now let’s check the assumption that air quality is worse during the colder months of the year. Here, I plot daily PM<sub>10</sub> concentrations over 2022 for one site (Arrowtown) (<a href="#fig-staticplot" class="quarto-xref">Figure&nbsp;1</a>). The data shows a significant spike during the winter months, with a number of exceedances of the WHO guideline of 45 µg/m³.</p>
 <div class="cell">
 <details class="code-fold">
@@ -453,8 +475,8 @@ Figure&nbsp;1: PM<sub>10</sub> daily concentrations at Arrowtown, 2022. Dashed l
 </div>
 </div>
 </section>
-<section id="make-an-animated-plot" class="level2">
-<h2 class="anchored" data-anchor-id="make-an-animated-plot">Make an animated plot</h2>
+<section id="make-an-animated-plot" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="make-an-animated-plot"><span class="header-section-number">5</span> Make an animated plot</h2>
 <p>Let’s enhance our analysis by creating an animated polar chart that reveals the daily PM<sub>10</sub> concentrations over time (<a href="#fig-animation" class="quarto-xref">Figure&nbsp;2</a>). This approach effectively highlights the cyclical nature of seasonal air quality. By animating the data, we can observe the progression of PM<sub>10</sub> levels throughout the year, providing a clear visual representation of how air quality deteriorates during the winter months.</p>
 <div class="cell">
 <details class="code-fold">
@@ -534,8 +556,8 @@ Figure&nbsp;2: Animated polar chart of PM<sub>10</sub> daily concentrations at A
 </div>
 </div>
 </section>
-<section id="make-4-animated-plots" class="level2">
-<h2 class="anchored" data-anchor-id="make-4-animated-plots">Make 4 animated plots</h2>
+<section id="make-4-animated-plots" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="make-4-animated-plots"><span class="header-section-number">6</span> Make 4 animated plots</h2>
 <p>Now let’s check out whether other high PM<sub>10</sub> sites also have similar seasonal dynamics in air quality (we’ll also use a different year to make sure) (<a href="#fig-top4" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <div class="cell">
 <details class="code-fold">
@@ -588,8 +610,8 @@ Figure&nbsp;3: Animated polar chart of PM<sub>10</sub> daily concentrations at A
 <p>Lower Hutt remains well below the guideline all year-round, but exhibits reversed seasonality, with higher concentrations in summer. It’s worth noting that Lower Hutt is included in the top four due to a single large spike in 2022, so it might be reasonable to exclude this site from further analysis.</p>
 <p>Milton is particularly interesting as it has numerous exceedances during winter but appears not to monitor air quality during summer (this trend is true in other years as well).</p>
 </section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<section id="next-steps" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">7</span> Next steps</h2>
 <p>This analysis has provided some interesting insights into the seasonality of PM<sub>10</sub> concentrations in New Zealand. The next steps could involve:</p>
 <ul>
 <li>Conduct a formal test for seasonality between sites.</li>

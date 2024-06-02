@@ -18,6 +18,8 @@ website:
         href: https://www.linkedin.com/in/isaac-bain-4a0227172
       - icon: mortarboard-fill
         href: https://scholar.google.com/citations?user=vtZwgC4AAAAJ&hl=en
+      - icon: twitter
+        href: https://twitter.com/isaacbain
 format:
   html:
     theme: flatly
