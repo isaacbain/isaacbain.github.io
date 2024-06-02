@@ -301,3 +301,14 @@ Some interesting results here.[^1] Firstly, Arrowtown demonstrates similar seaso
 Lower Hutt remains well below the guideline all year-round, but exhibits reversed seasonality, with higher concentrations in summer. It's worth noting that Lower Hutt is included in the top four due to a single large spike in 2022, so it might be reasonable to exclude this site from further analysis.
 
 Milton is particularly interesting as it has numerous exceedances during winter but appears not to monitor air quality during summer (this trend is true in other years as well).
+
+## Next steps
+
+This analysis has provided some interesting insights into the seasonality of PM~10~ concentrations in New Zealand. The next steps could involve:
+
+- Conduct a formal test for seasonality between sites. 
+- Classify sites into categories such as 'high-summer', 'high-winter', 'high-all-year-round', or 'low'.
+- Produce animations for all sites on a map. 
+- Investigate causes of seasonality (latitude?).
+- Repeat analyses for PM~2.5~.
+- Put multiple years on single graph. 
