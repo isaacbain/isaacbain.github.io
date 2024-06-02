@@ -309,9 +309,9 @@ Milton is particularly interesting as it has numerous exceedances during winter 
 
 This analysis has provided some interesting insights into the seasonality of PM~10~ concentrations in New Zealand. The next steps could involve:
 
-- Conduct a formal test for seasonality between sites. 
-- Classify sites into categories such as 'high-summer', 'high-winter', 'high-all-year-round', or 'low'.
-- Produce animations for all sites on a map. 
-- Investigate causes of seasonality (latitude?).
-- Repeat analyses for PM~2.5~.
-- Put multiple years on single graph. 
+- Conduct a formal test for seasonality between sites
+- Classify sites into categories such as 'high-summer', 'high-winter', 'high-all-year-round', or 'low'
+- Produce animations for all sites on a map
+- Investigate causes of seasonality (latitude?)
+- Repeat analyses for PM~2.5~
+- Put multiple years on single graph
