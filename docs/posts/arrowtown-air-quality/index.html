@@ -103,6 +103,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="../../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="../../site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="../../site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="../../site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="../../site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="../../site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="../../site_libs/leaflet-binding-2.2.2/leaflet.js"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -207,33 +217,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<p>Most of the time, New Zealand enjoys good air quality, allowing us to step outside and breathe a breath of fresh air, knowing it’s safe. However at certain times and places, our air is polluted to such levels that it causes us harm, or in the worst cases, premature death. Here I access air quality data from LAWA and explore it for one site known for severe winter air pollution.</p>
 <section id="libraries" class="level2">
 <h2 class="anchored" data-anchor-id="libraries">Libraries</h2>
 <div class="cell">
-<details open="" class="code-fold">
+<details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># provides ggplot, dplyr, etc</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor) <span class="co"># tidy up messy variable names</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate) <span class="co"># provides animations</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geomtextpath) <span class="co"># makes labels curved on polar graph</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geomtextpath) <span class="co"># makes labels curved on polar graph</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet) <span class="co"># for interactive mapping</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="import-data" class="level2">
 <h2 class="anchored" data-anchor-id="import-data">Import data</h2>
-<p><a href="https://lawa.org.nz/">Land, Air, Water Aotearoa (LAWA)</a> is a collaboration between New Zealand’s 16 regional councils and unitary authorities, the Cawthron Institute, the Ministry for the Environment, the Department of Conservation, and Stats NZ.</p>
-<p>It provides state of the environment monitoring data for a number of <a href="https://lawa.org.nz/explore-data">environmental domains</a>, including:</p>
-<ol type="1">
-<li><p>swimming water quality,</p></li>
-<li><p>estuary health,</p></li>
-<li><p>groundwater quality,</p></li>
-<li><p>lake quality,</p></li>
-<li><p>land cover,</p></li>
-<li><p>river quality,</p></li>
-<li><p>water quantity,</p></li>
-</ol>
-<p>and of particular interest here, air quality.</p>
-<p>LAWA make their data freely available at <a href="https://lawa.org.nz/download-data" class="uri">https://lawa.org.nz/download-data</a>, from which I downloaded an excel sheet of air quality for the period 2016-2022. They only have PM<sub>10</sub> and PM<sub>2.5</sub> parameters available for now.</p>
+<p><a href="https://lawa.org.nz/">Land, Air, Water Aotearoa (LAWA)</a> is a collaboration between New Zealand’s 16 regional councils and unitary authorities, the Cawthron Institute, the Ministry for the Environment, the Department of Conservation, and Stats NZ. LAWA provides state of the environment monitoring data for various <a href="https://lawa.org.nz/explore-data">environmental domains</a>, including; swimming water quality, estuary health, groundwater quality, lake quality, land cover, river quality, water quantity, and of particular interest here, air quality.</p>
+<p>LAWA makes their data freely available at <a href="https://lawa.org.nz/download-data" class="uri">https://lawa.org.nz/download-data</a>. From this source I downloaded an Excel sheet of air quality data for the period 2016 to 2022. Currently, the available parameters are PM<sub>10</sub> and PM<sub>2.5</sub>.</p>
 <p>Particulate matter (PM) can have adverse effects on human health and the environment. The numbers 10 and 2.5 refer to the diameter of the particles in micrometers (µm).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -252,97 +253,132 @@ What are the human health impacts of PM in New Zealand?
 </div>
 </div>
 </div>
-<table class="table">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 93%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><strong>PM<sub>10</sub></strong></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>Definition</strong></td>
-<td>PM<sub>10</sub> refers to particulate matter with a diameter of 10 micrometers or less.</td>
-</tr>
-<tr class="odd">
-<td><strong>Sources</strong></td>
-<td>These particles are usually produced by mechanical processes such as construction activities, road dust, industrial processes, and natural sources like pollen and sea spray.</td>
-</tr>
-<tr class="even">
-<td><strong>Health Effects</strong></td>
-<td>PM<sub>10</sub> particles can be inhaled into the lungs, causing respiratory issues, aggravating asthma, and other lung diseases. They can also affect cardiovascular health.</td>
-</tr>
-<tr class="odd">
-<td><strong>Regulations</strong></td>
-<td>Many countries have set air quality standards for PM<sub>10</sub> to protect public health. For instance, the World Health Organization (WHO) recommends that the 24-hour mean concentration of PM<sub>10</sub> should not exceed 45 µg/m³.</td>
-</tr>
-<tr class="even">
-<td><strong>PM<sub>2.5</sub></strong></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>Definition</strong></td>
-<td>PM<sub>2.5</sub> refers to particulate matter with a diameter of 2.5 micrometers or less.</td>
-</tr>
-<tr class="even">
-<td><strong>Sources</strong></td>
-<td>These finer particles are often produced by combustion processes such as vehicle emissions, power plants, residential heating, industrial activities, and wildfires. Secondary particles can also form in the atmosphere from chemical reactions involving gases like sulfur dioxide (SO₂) and nitrogen oxides (NOx).</td>
-</tr>
-<tr class="odd">
-<td><strong>Health Effects</strong></td>
-<td>PM<sub>2.5</sub> particles are more dangerous than PM10 because they can penetrate deeper into the respiratory tract, reaching the alveoli in the lungs. Long-term exposure to PM<sub>2.5</sub> is associated with increased rates of chronic bronchitis, lung cancer, heart disease, and can also impact cognitive function.</td>
-</tr>
-<tr class="even">
-<td><strong>Regulations</strong></td>
-<td>WHO guidelines suggest that the annual mean concentration of PM<sub>2.5</sub> should not exceed 10 µg/m³, and the 24-hour mean should not exceed 25 µg/m³.</td>
-</tr>
-</tbody>
-</table>
 <div class="cell">
-<details open="" class="code-fold">
+<details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"data/airqualitydownloaddata_2016-2022.xlsx"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sheet =</span> <span class="st">"Air Quality Data"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(sample_date)) <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sample_date) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(concentration))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sheet =</span> <span class="st">"Air Quality Data"</span>) <span class="sc">|&gt;</span> <span class="co"># read in data</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> <span class="co"># tidy up messy names</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(sample_date)) <span class="sc">|&gt;</span> <span class="co"># extract year as a new variable</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sample_date) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(concentration)) <span class="co"># filter out NAs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="what-are-the-worst-sites" class="level2">
 <h2 class="anchored" data-anchor-id="what-are-the-worst-sites">What are the worst sites?</h2>
-<p>Air quality is known to be worst in more southern areas, places where home heating via wood burning or coal is more prevalent, and over the colder months of the year.</p>
-<p>But let’s check some of these assumptions by extracting the worst 5 sites for maximum recorded PM<sub>10</sub> values.</p>
-<div class="cell">
-<details open="" class="code-fold">
+<p>Air quality is known to be worst in more southern areas, places where home heating via wood burning or coal is more prevalent, particularly during the colder months of the year.</p>
+<p>But let’s check some of these assumptions by extracting the worst 5 sites for highest recorded PM<sub>10</sub> values (<a href="#tbl-top5" class="quarto-xref">Table&nbsp;1</a>).</p>
+<div class="cell" data-tbl-colwidths="[25,75]">
+<details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(indicator <span class="sc">==</span> <span class="st">"PM10"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(indicator <span class="sc">==</span> <span class="st">"PM10"</span>) <span class="sc">|&gt;</span> <span class="co"># just look at PM10</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site_name) <span class="sc">|&gt;</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">max_concentration =</span> <span class="fu">max</span>(concentration, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(max_concentration)) <span class="sc">|&gt;</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>, max_concentration)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">max_concentration =</span> <span class="fu">max</span>(concentration, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> <span class="co"># get max conc. per site</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(max_concentration)) <span class="sc">|&gt;</span> <span class="co"># sort descending</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>, max_concentration) <span class="sc">|&gt;</span> <span class="co"># get top 5 sites</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 2
-  site_name                       max_concentration
-  &lt;chr&gt;                                       &lt;dbl&gt;
-1 Milton                                       203.
-2 Arrowtown                                    158.
-3 Lower Hutt (Phil Evans Reserve)              155.
-4 Invercargill at Pomona Street                139.
-5 Washdyke Alpine                              123.</code></pre>
+<div id="tbl-top5" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-top5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Top 5 sites with highest PM<sub>10</sub> concentrations
+</figcaption>
+<div aria-describedby="tbl-top5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">site_name</th>
+<th style="text-align: right;">max_concentration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Milton</td>
+<td style="text-align: right;">202.800</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arrowtown</td>
+<td style="text-align: right;">157.900</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lower Hutt (Phil Evans Reserve)</td>
+<td style="text-align: right;">155.400</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Invercargill at Pomona Street</td>
+<td style="text-align: right;">138.980</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Washdyke Alpine</td>
+<td style="text-align: right;">123.496</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<p>Indeed most of these locations are in South Island (except for Lower Hutt, which is at the bottom of the North Island).</p>
+</figure>
+</div>
+</div>
+<p>Indeed most of these locations are in South Island, with the exception of Lower Hutt, which is at the southern end of the North Island.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>processed_data <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(indicator <span class="sc">==</span> <span class="st">"PM10"</span>) <span class="sc">%&gt;%</span> <span class="co"># just look at PM10</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site_name) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_concentration =</span> <span class="fu">max</span>(concentration, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">latitude =</span> <span class="fu">first</span>(latitude),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">longitude =</span> <span class="fu">first</span>(longitude)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="co"># get max conc. per site</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(max_concentration)) <span class="sc">%&gt;%</span> <span class="co"># sort descending</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>, max_concentration) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a color palette</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorNumeric</span>(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="st">"YlOrRd"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">domain =</span> processed_data<span class="sc">$</span>max_concentration, <span class="co"># Set the domain to the range of max_concentration</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.color =</span> <span class="st">"transparent"</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">reverse =</span> <span class="cn">TRUE</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Leaflet map</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(processed_data) <span class="sc">%&gt;%</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">radius =</span> <span class="sc">~</span><span class="fu">sqrt</span>(max_concentration), <span class="co"># Scale the radius proportional to max_concentration</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="sc">~</span><span class="fu">pal</span>(max_concentration),</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">fillOpacity =</span> <span class="dv">1</span>,</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">stroke =</span> <span class="dv">0</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="sc">~</span><span class="fu">paste0</span>(site_name, <span class="st">", "</span>, <span class="st">"Max PM10: "</span>, max_concentration)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addLegend</span>(</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bottomright"</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">pal =</span> pal,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> processed_data<span class="sc">$</span>max_concentration, <span class="co"># Pass the actual max_concentration values</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Max PM10 Concentration"</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">opacity =</span> <span class="fl">0.7</span>,</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">labFormat =</span> <span class="fu">labelFormat</span>(<span class="at">transform =</span> <span class="cf">function</span>(x) <span class="fu">sort</span>(x, <span class="at">decreasing =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-1c2f80e6f8aedba1d22b" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-1c2f80e6f8aedba1d22b">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[-46.12132792,-44.94857127,-41.2126069999999,-46.43192839,-44.356199],[169.9615016,168.84573717,174.920876,168.36991681,171.242334],[14.24078649513432,12.56582667395982,12.46595363379794,11.78897790310933,11.11287541548091],null,null,{"interactive":true,"className":"","stroke":0,"color":["#FFFFCC","#FD6E32","#FD5E2E","#D21021","#800026"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#FFFFCC","#FD6E32","#FD5E2E","#D21021","#800026"],"fillOpacity":1},null,null,null,null,["Milton, Max PM10: 202.8","Arrowtown, Max PM10: 157.9","Lower Hutt (Phil Evans Reserve), Max PM10: 155.4","Invercargill at Pomona Street, Max PM10: 138.98","Washdyke Alpine, Max PM10: 123.496"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#800026 , #A80026 8.20135176031474%, #D61220 20.8110561888429%, #F44025 33.4207606173711%, #FD7B36 46.0304650458993%, #FEA747 58.6401694744275%, #FFCD69 71.2498739029557%, #FFE794 83.8595783314839%, #FFFAC0 96.4692827600121%, #FFFFCC "],"labels":["200","190","180","170","160","150","140","130"],"na_color":null,"na_label":"NA","opacity":0.7,"position":"bottomright","type":"numeric","title":"Max PM10 Concentration","extra":{"p_1":0.08201351760314743,"p_n":0.9646928276001209},"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[-46.43192839,-41.2126069999999],"lng":[168.36991681,174.920876]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </section>
 <section id="static-plot-of-seasonal-air-quality" class="level2">
 <h2 class="anchored" data-anchor-id="static-plot-of-seasonal-air-quality">Static plot of seasonal air quality</h2>
-<p>Now let’s check the assumption that air quality is worse in the colder months of the year. Here I’m plotting daily PM10 concentrations over 2022 for one site (Arrowtown). And there is quite a spike over the winter months, with a number of exceedances of the WHO guideline of 45 µg/m³.</p>
+<p>Now let’s check the assumption that air quality is worse during the colder months of the year. Here, I plot daily PM<sub>10</sub> concentrations over 2022 for one site (Arrowtown) (<a href="#fig-staticplot" class="quarto-xref">Figure&nbsp;1</a>). The data shows a significant spike during the winter months, with a number of exceedances of the WHO guideline of 45 µg/m³.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat_filtered <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_name <span class="sc">==</span> <span class="st">"Arrowtown"</span>) <span class="sc">|&gt;</span> </span>
@@ -364,13 +400,13 @@ What are the human health impacts of PM in New Zealand?
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">yend =</span> my_breaks</span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_filtered) <span class="sc">+</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">45</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample_date, <span class="at">y =</span> concentration),</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"#D72638"</span>,</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_labels =</span> <span class="st">"%b"</span>, <span class="at">date_breaks =</span> <span class="st">"1 month"</span>) <span class="sc">+</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">#coord_curvedpolar() +</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_filtered) <span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">45</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample_date, <span class="at">y =</span> concentration),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"#D72638"</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_labels =</span> <span class="st">"%b"</span>, <span class="at">date_breaks =</span> <span class="st">"1 month"</span>) <span class="sc">+</span></span>
 <span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">bquote</span>(<span class="st">"Daily PM"</span>[<span class="dv">10</span>] <span class="sc">*</span> <span class="st">" concentration (µg/m"</span><span class="sc">^</span><span class="dv">3</span> <span class="sc">*</span> <span class="st">") in Arrowtown, 2022"</span>),</span>
 <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
@@ -408,9 +444,14 @@ What are the human health impacts of PM in New Zealand?
 <span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-staticplot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-staticplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-staticplot-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-staticplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: PM<sub>10</sub> daily concentrations at Arrowtown, 2022. Dashed line shows WHO guideline value.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -418,9 +459,9 @@ What are the human health impacts of PM in New Zealand?
 </section>
 <section id="make-an-animated-plot" class="level2">
 <h2 class="anchored" data-anchor-id="make-an-animated-plot">Make an animated plot</h2>
-<p>Let’s jazz it up; by making it animated - revealing the daily concentrations over time, and making it a polar chart - which are particularly effective at emphasising the cyclical nature of seasonal air quality.</p>
+<p>Let’s enhance our analysis by creating an animated polar chart that reveals the daily PM<sub>10</sub> concentrations over time (<a href="#fig-animation" class="quarto-xref">Figure&nbsp;2</a>). This approach effectively highlights the cyclical nature of seasonal air quality. By animating the data, we can observe the progression of PM<sub>10</sub> levels throughout the year, providing a clear visual representation of how air quality deteriorates during the winter months.</p>
 <div class="cell">
-<details open="" class="code-fold">
+<details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the start dates for each season according to New Zealand definitions</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>season_start_dates <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2022-12-01"</span>, <span class="st">"2022-03-01"</span>, <span class="st">"2022-06-01"</span>, <span class="st">"2022-09-01"</span>))</span>
@@ -484,18 +525,83 @@ What are the human health impacts of PM in New Zealand?
 <span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>anim</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.gif" class="img-fluid figure-img"></p>
+<div id="fig-animation" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-animation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-animation-1.gif" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-animation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Animated polar chart of PM<sub>10</sub> daily concentrations at Arrowtown, 2022. Dashed circle shows WHO guideline value. Dashed lines show seasons.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
+</section>
+<section id="make-4-animated-plots" class="level2">
+<h2 class="anchored" data-anchor-id="make-4-animated-plots">Make 4 animated plots</h2>
+<p>Now let’s check out whether other high PM<sub>10</sub> sites also have similar seasonal dynamics in air quality (we’ll also use a different year to make sure) (<a href="#fig-top4" class="quarto-xref">Figure&nbsp;3</a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>top_4 <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(indicator <span class="sc">==</span> <span class="st">"PM10"</span>) <span class="sc">|&gt;</span> <span class="co"># just look at PM10</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site_name) <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">max_concentration =</span> <span class="fu">max</span>(concentration, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> <span class="co"># get max conc. per site</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(max_concentration)) <span class="sc">|&gt;</span> <span class="co"># sort descending</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">4</span>, max_concentration)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_name <span class="sc">%in%</span> top_4<span class="sc">$</span>site_name) <span class="sc">|&gt;</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(indicator <span class="sc">==</span> <span class="st">"PM10"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(sample_date) <span class="sc">|&gt;</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample_date =</span> <span class="fu">as.Date</span>(sample_date)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">45</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample_date, <span class="at">y =</span> concentration), <span class="at">color =</span> <span class="st">"#D72638"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample_date, <span class="at">y =</span> concentration), <span class="at">color =</span> <span class="st">"#420039"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">date_labels =</span> <span class="st">"%b"</span>, <span class="at">date_breaks =</span> <span class="st">"1 month"</span>) <span class="sc">+</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_curvedpolar</span>() <span class="sc">+</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">bquote</span>(<span class="st">"Daily PM"</span>[<span class="dv">10</span>] <span class="sc">*</span> <span class="st">" concentration (µg/m"</span><span class="sc">^</span><span class="dv">3</span> <span class="sc">*</span> <span class="st">")"</span>)) <span class="sc">+</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_reveal</span>(sample_date) <span class="sc">+</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ease_aes</span>(<span class="st">'linear'</span>) <span class="sc">+</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>site_name, <span class="at">scales =</span> <span class="st">"free_y"</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the animation and save as GIF</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>anim2 <span class="ot">&lt;-</span> <span class="fu">animate</span>(p2, <span class="at">nframes =</span> <span class="dv">100</span>, <span class="at">fps =</span> <span class="dv">10</span>, <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>())</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>anim2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-top4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-top4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-top4-1.gif" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-top4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Animated polar chart of PM<sub>10</sub> daily concentrations at Arrowtown, Invercargill, Lower Hutt, and Milton, 2019. Dashed circle shows WHO guideline value. Note the y-axes differ between plots.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Some interesting results here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Firstly, Arrowtown demonstrates similar seasonal dynamics to 2022, with low concentrations in summer and a number of exceedances during winter. Invercargill also shows similar seasonality, albeit at lower concentrations.</p>
+<p>Lower Hutt remains well below the guideline all year-round, but exhibits reversed seasonality, with higher concentrations in summer. It’s worth noting that Lower Hutt is included in the top four due to a single large spike in 2022, so it might be reasonable to exclude this site from further analysis.</p>
+<p>Milton is particularly interesting as it has numerous exceedances during winter but appears not to monitor air quality during summer (this trend is true in other years as well).</p>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Note the y-axes differ between each site. This is due to the large magnitude in differences. My goal here was to explore the relative seasonality between each site, so having free axes makes sense. If the goal was instead to explore relative magnitudes between each site, I could have simply set <code>facet_wrap(~site_name, scales = "fixed")</code>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

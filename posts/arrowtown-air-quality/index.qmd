@@ -1,17 +1,19 @@
 ---
 title: "Arrowtown air quality"
 author: "Isaac Bain"
-date: "2024-05-31"
+date: "2024-06-02"
 categories: [code, air quality, animation]
 execute:
   warning: false
   error: false
 format: 
   html:
-    code-fold: show
+    code-fold: true
     code-summary: "Show the code"
 editor: visual
 ---
+
+Most of the time, New Zealand enjoys good air quality, allowing us to step outside and breathe a breath of fresh air, knowing it's safe. However at certain times and places, our air is polluted to such levels that it causes us harm, or in the worst cases, premature death. Here I access air quality data from LAWA and explore it for one site known for severe winter air pollution.
 
 ## Libraries
 
@@ -20,31 +22,14 @@ library(tidyverse) # provides ggplot, dplyr, etc
 library(janitor) # tidy up messy variable names
 library(gganimate) # provides animations
 library(geomtextpath) # makes labels curved on polar graph
+library(leaflet) # for interactive mapping
 ```
 
 ## Import data
 
-[Land, Air, Water Aotearoa (LAWA)](https://lawa.org.nz/) is a collaboration between New Zealand's 16 regional councils and unitary authorities, the Cawthron Institute, the Ministry for the Environment, the Department of Conservation, and Stats NZ.
+[Land, Air, Water Aotearoa (LAWA)](https://lawa.org.nz/) is a collaboration between New Zealand's 16 regional councils and unitary authorities, the Cawthron Institute, the Ministry for the Environment, the Department of Conservation, and Stats NZ. LAWA provides state of the environment monitoring data for various [environmental domains](https://lawa.org.nz/explore-data), including; swimming water quality, estuary health, groundwater quality, lake quality, land cover, river quality, water quantity, and of particular interest here, air quality.
 
-It provides state of the environment monitoring data for a number of [environmental domains](https://lawa.org.nz/explore-data), including:
-
-1.  swimming water quality,
-
-2.  estuary health,
-
-3.  groundwater quality,
-
-4.  lake quality,
-
-5.  land cover,
-
-6.  river quality,
-
-7.  water quantity,
-
-and of particular interest here, air quality.
-
-LAWA make their data freely available at <https://lawa.org.nz/download-data>, from which I downloaded an excel sheet of air quality for the period 2016-2022. They only have PM~10~ and PM~2.5~ parameters available for now.
+LAWA makes their data freely available at <https://lawa.org.nz/download-data>. From this source I downloaded an Excel sheet of air quality data for the period 2016 to 2022. Currently, the available parameters are PM~10~ and PM~2.5~.
 
 Particulate matter (PM) can have adverse effects on human health and the environment. The numbers 10 and 2.5 refer to the diameter of the particles in micrometers (µm).
 
@@ -56,49 +41,85 @@ Hales et al. (2021) did a retrospective cohort epidemiological study of the asso
 Hales, S., Atkinson, J., Metcalfe, J., Kuschel, G., & Woodward, A. (2021). Long term exposure to air pollution, mortality and morbidity in New Zealand: cohort study. *Science of The Total Environment, 801*, 149660.
 :::
 
-|                    |                                                                                                                                                                                                                                                                                                                       |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **PM~10~**         |                                                                                                                                                                                                                                                                                                                       |
-| **Definition**     | PM~10~ refers to particulate matter with a diameter of 10 micrometers or less.                                                                                                                                                                                                                                        |
-| **Sources**        | These particles are usually produced by mechanical processes such as construction activities, road dust, industrial processes, and natural sources like pollen and sea spray.                                                                                                                                         |
-| **Health Effects** | PM~10~ particles can be inhaled into the lungs, causing respiratory issues, aggravating asthma, and other lung diseases. They can also affect cardiovascular health.                                                                                                                                                  |
-| **Regulations**    | Many countries have set air quality standards for PM~10~ to protect public health. For instance, the World Health Organization (WHO) recommends that the 24-hour mean concentration of PM~10~ should not exceed 45 µg/m³.                                                                                             |
-| **PM~2.5~**        |                                                                                                                                                                                                                                                                                                                       |
-| **Definition**     | PM~2.5~ refers to particulate matter with a diameter of 2.5 micrometers or less.                                                                                                                                                                                                                                      |
-| **Sources**        | These finer particles are often produced by combustion processes such as vehicle emissions, power plants, residential heating, industrial activities, and wildfires. Secondary particles can also form in the atmosphere from chemical reactions involving gases like sulfur dioxide (SO₂) and nitrogen oxides (NOx). |
-| **Health Effects** | PM~2.5~ particles are more dangerous than PM10 because they can penetrate deeper into the respiratory tract, reaching the alveoli in the lungs. Long-term exposure to PM~2.5~ is associated with increased rates of chronic bronchitis, lung cancer, heart disease, and can also impact cognitive function.           |
-| **Regulations**    | WHO guidelines suggest that the annual mean concentration of PM~2.5~ should not exceed 10 µg/m³, and the 24-hour mean should not exceed 25 µg/m³.                                                                                                                                                                     |
-
 ```{r}
 dat <- readxl::read_xlsx("data/airqualitydownloaddata_2016-2022.xlsx",
-                         sheet = "Air Quality Data") |> 
-  clean_names() |> 
-  mutate(year = year(sample_date)) |>
-  filter(!is.na(sample_date) & !is.na(concentration))
+                         sheet = "Air Quality Data") |> # read in data
+  clean_names() |> # tidy up messy names
+  mutate(year = year(sample_date)) |> # extract year as a new variable
+  filter(!is.na(sample_date) & !is.na(concentration)) # filter out NAs
 ```
 
 ## What are the worst sites?
 
-Air quality is known to be worst in more southern areas, places where home heating via wood burning or coal is more prevalent, and over the colder months of the year.
+Air quality is known to be worst in more southern areas, places where home heating via wood burning or coal is more prevalent, particularly during the colder months of the year.
 
-But let's check some of these assumptions by extracting the worst 5 sites for maximum recorded PM~10~ values.
+But let's check some of these assumptions by extracting the worst 5 sites for highest recorded PM~10~ values (@tbl-top5).
+
 
 ```{r}
+#| label: tbl-top5
+#| tbl-cap: "Top 5 sites with highest PM~10~ concentrations"
+
 dat |> 
-  filter(indicator == "PM10") |>
+  filter(indicator == "PM10") |> # just look at PM10
   group_by(site_name) |> 
-  summarize(max_concentration = max(concentration, na.rm = TRUE)) |> 
-  arrange(desc(max_concentration)) |> 
-  top_n(5, max_concentration)
+  summarize(max_concentration = max(concentration, na.rm = TRUE)) |> # get max conc. per site
+  arrange(desc(max_concentration)) |> # sort descending
+  top_n(5, max_concentration) |> # get top 5 sites
+  knitr::kable()
 ```
 
-Indeed most of these locations are in South Island (except for Lower Hutt, which is at the bottom of the North Island).
+Indeed most of these locations are in South Island, with the exception of Lower Hutt, which is at the southern end of the North Island.
+
+```{r}
+processed_data <- dat %>% 
+  filter(indicator == "PM10") %>% # just look at PM10
+  group_by(site_name) %>% 
+  summarise(
+    max_concentration = max(concentration, na.rm = TRUE), 
+    latitude = first(latitude),
+    longitude = first(longitude)
+  ) %>% # get max conc. per site
+  arrange(desc(max_concentration)) %>% # sort descending
+  top_n(5, max_concentration) %>% 
+  sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+
+# Create a color palette
+pal <- colorNumeric(
+  palette = "YlOrRd",
+  domain = processed_data$max_concentration, # Set the domain to the range of max_concentration
+  na.color = "transparent",
+  reverse = TRUE
+)
+
+# Create a Leaflet map
+leaflet(processed_data) %>%
+  addTiles() %>%
+  addCircleMarkers(
+    radius = ~sqrt(max_concentration), # Scale the radius proportional to max_concentration
+    color = ~pal(max_concentration),
+    fillOpacity = 1,
+    stroke = 0,
+    label = ~paste0(site_name, ", ", "Max PM10: ", max_concentration)
+  ) %>%
+  addLegend(
+    "bottomright",
+    pal = pal,
+    values = processed_data$max_concentration, # Pass the actual max_concentration values
+    title = "Max PM10 Concentration",
+    opacity = 0.7,
+    labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
+  )
+```
 
 ## Static plot of seasonal air quality
 
-Now let's check the assumption that air quality is worse in the colder months of the year. Here I'm plotting daily PM10 concentrations over 2022 for one site (Arrowtown). And there is quite a spike over the winter months, with a number of exceedances of the WHO guideline of 45 µg/m³.
+Now let's check the assumption that air quality is worse during the colder months of the year. Here, I plot daily PM~10~ concentrations over 2022 for one site (Arrowtown) (@fig-staticplot). The data shows a significant spike during the winter months, with a number of exceedances of the WHO guideline of 45 µg/m³.
 
 ```{r}
+#| label: fig-staticplot
+#| fig-cap: "PM~10~ daily concentrations at Arrowtown, 2022. Dashed line shows WHO guideline value."
+
 dat_filtered <- dat |> 
   filter(site_name == "Arrowtown") |> 
   filter(indicator == "PM10") |> 
@@ -119,13 +140,13 @@ tick_data <- data.frame(
   yend = my_breaks
 )
 
+# plot
 ggplot(dat_filtered) +
   geom_hline(yintercept = 45, linetype = "dashed", color = "red", alpha = 0.7) +
   geom_line(aes(x = sample_date, y = concentration),
             color = "#D72638",
             size = 0.5) +
   scale_x_date(date_labels = "%b", date_breaks = "1 month") +
-  #coord_curvedpolar() +
   labs(
     title = bquote("Daily PM"[10] * " concentration (µg/m"^3 * ") in Arrowtown, 2022"),
     x = "",
@@ -165,9 +186,12 @@ ggplot(dat_filtered) +
 
 ## Make an animated plot
 
-Let's jazz it up; by making it animated - revealing the daily concentrations over time, and making it a polar chart - which are particularly effective at emphasising the cyclical nature of seasonal air quality.
+Let's enhance our analysis by creating an animated polar chart that reveals the daily PM~10~ concentrations over time (@fig-animation). This approach effectively highlights the cyclical nature of seasonal air quality. By animating the data, we can observe the progression of PM~10~ levels throughout the year, providing a clear visual representation of how air quality deteriorates during the winter months.
 
 ```{r}
+#| label: fig-animation
+#| fig-cap: "Animated polar chart of PM~10~ daily concentrations at Arrowtown, 2022. Dashed circle shows WHO guideline value. Dashed lines show seasons."
+
 # Define the start dates for each season according to New Zealand definitions
 season_start_dates <- as.Date(c("2022-12-01", "2022-03-01", "2022-06-01", "2022-09-01"))
 
@@ -229,3 +253,51 @@ anim <- animate(p, nframes = 100, fps = 10, renderer = gifski_renderer())
 
 anim
 ```
+
+## Make 4 animated plots
+
+Now let's check out whether other high PM~10~ sites also have similar seasonal dynamics in air quality (we'll also use a different year to make sure) (@fig-top4).
+
+```{r}
+#| label: fig-top4
+#| fig-cap: "Animated polar chart of PM~10~ daily concentrations at Arrowtown, Invercargill, Lower Hutt, and Milton, 2019. Dashed circle shows WHO guideline value. Note the y-axes differ between plots."
+
+top_4 <- dat |> 
+  filter(indicator == "PM10") |> # just look at PM10
+  group_by(site_name) |> 
+  summarize(max_concentration = max(concentration, na.rm = TRUE)) |> # get max conc. per site
+  arrange(desc(max_concentration)) |> # sort descending
+  top_n(4, max_concentration)
+
+p2 <- dat |> 
+  filter(site_name %in% top_4$site_name) |> 
+  filter(indicator == "PM10") |> 
+  filter(year == 2019) |>
+  arrange(sample_date) |> 
+  mutate(sample_date = as.Date(sample_date)) |> 
+  ggplot() +
+    geom_hline(yintercept = 45, linetype = "dashed", color = "red", alpha = 0.7) +
+    geom_line(aes(x = sample_date, y = concentration), color = "#D72638", size = 0.5) +
+    geom_point(aes(x = sample_date, y = concentration), color = "#420039", size = 2) +
+    scale_x_date(date_labels = "%b", date_breaks = "1 month") +
+    coord_curvedpolar() +
+    theme_minimal() +
+    labs(x = "", 
+         y = bquote("Daily PM"[10] * " concentration (µg/m"^3 * ")")) +
+    transition_reveal(sample_date) +
+    ease_aes('linear') +
+    facet_wrap(~site_name, scales = "free_y")
+
+# Render the animation and save as GIF
+anim2 <- animate(p2, nframes = 100, fps = 10, renderer = gifski_renderer())
+
+anim2
+```
+
+Some interesting results here.[^1] Firstly, Arrowtown demonstrates similar seasonal dynamics to 2022, with low concentrations in summer and a number of exceedances during winter. Invercargill also shows similar seasonality, albeit at lower concentrations.
+
+[^1]: Note the y-axes differ between each site. This is due to the large magnitude in differences. My goal here was to explore the relative seasonality between each site, so having free axes makes sense. If the goal was instead to explore relative magnitudes between each site, I could have simply set `facet_wrap(~site_name, scales = "fixed")`.
+
+Lower Hutt remains well below the guideline all year-round, but exhibits reversed seasonality, with higher concentrations in summer. It's worth noting that Lower Hutt is included in the top four due to a single large spike in 2022, so it might be reasonable to exclude this site from further analysis.
+
+Milton is particularly interesting as it has numerous exceedances during winter but appears not to monitor air quality during summer (this trend is true in other years as well).
