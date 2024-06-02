@@ -257,7 +257,7 @@ anim <- animate(p, nframes = 100, fps = 10, renderer = gifski_renderer())
 anim
 ```
 
-## Make 4 animated plots
+## Make multiple animated plots
 
 Now let's check out whether other high PM~10~ sites also have similar seasonal dynamics in air quality (we'll also use a different year to make sure) (@fig-top4).
 
