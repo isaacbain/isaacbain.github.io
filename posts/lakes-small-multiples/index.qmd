@@ -88,7 +88,7 @@ Now, let's get down to plotting the largest lakes, and colour them by their resp
 Here's what the scores correspond to in ecological terms:
 
 | **TLI Score** | **Description**                                                                                                                                                                                                                         |
-|:--------------:|--------------------------------------------------------|
+|:-------------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |      0–2      | Microtrophic: The lake is very clean with very low levels of nutrients and algae. The lake can have snow or glacial sources.                                                                                                            |
 |     \>2–3     | Oligotrophic: The lake is clear and blue, with low levels of nutrients and algae.                                                                                                                                                       |
 |     \>3–4     | Mesotrophic: The lake has moderate levels of nutrients and algae.                                                                                                                                                                       |
