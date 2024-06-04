@@ -184,7 +184,7 @@ final_plot <- gridExtra::grid.arrange(
 
 Bonus just for the blog readers... here's the plot for the 50 largest lakes in New Zealand! 
 
-```{r fig.height=20,fig.width=7}
+```{r fig.height=18,fig.width=7}
 #| echo: false
 
 lakes_50 <- lakes |> 
