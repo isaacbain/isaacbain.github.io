@@ -30,7 +30,9 @@ library(tidyverse)
 library(sf)
 library(gridExtra)
 
-lakes <- st_read("data/fenz_v1_lakes/FENZ_v1_Lakes.shp", quiet = TRUE) |> janitor::clean_names()
+lakes <- st_read("data/fenz_v1_lakes/FENZ_v1_Lakes.shp", quiet = TRUE) |>
+  janitor::clean_names() |> 
+  drop_na(name)
 
 wq <- read_csv("data/mfe-lake-water-quality-modelled-2016-2020-CSV/lake-water-quality-modelled-2016-2020.csv") |>
   janitor::clean_names() |> 
@@ -49,12 +51,12 @@ Sorting the lakes dataset by size (surface area) and selecting the largest ones 
 I've have also selected Trophic Level Index (TLI) as an indicator of water quality - more on that below.
 
 ```{r}
-lakes_n <- lakes |> 
+lakes_20 <- lakes |> 
   top_n(n = 20, wt = shape_area)
 
-mapview::mapview(lakes_n)
+mapview::mapview(lakes_20)
 
-lakes_n |> 
+lakes_20 |> 
   st_drop_geometry() |> 
   select(name, shape_area, value) |> 
   arrange(desc(shape_area)) |> 
@@ -88,7 +90,7 @@ Now, let's get down to plotting the largest lakes, and colour them by their resp
 Here's what the scores correspond to in ecological terms:
 
 | **TLI Score** | **Description**                                                                                                                                                                                                                         |
-|:-------------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:----------:|------------------------------------------------------------|
 |      0–2      | Microtrophic: The lake is very clean with very low levels of nutrients and algae. The lake can have snow or glacial sources.                                                                                                            |
 |     \>2–3     | Oligotrophic: The lake is clear and blue, with low levels of nutrients and algae.                                                                                                                                                       |
 |     \>3–4     | Mesotrophic: The lake has moderate levels of nutrients and algae.                                                                                                                                                                       |
@@ -98,7 +100,7 @@ Here's what the scores correspond to in ecological terms:
 ```{r fig.height=10,fig.width=7}
 
 # Calculate centroids
-lake_polygons <- lakes_n %>%
+lake_polygons <- lakes_20 %>%
   mutate(centroid = st_centroid(st_geometry(.)))
 
 # Sort the lake polygons by shape_area in descending order
@@ -178,10 +180,101 @@ final_plot <- gridExtra::grid.arrange(
 )
 ```
 
+## Plot the 50 largest lakes
+
+Bonus just for the blog readers... here's the plot for the 50 largest lakes in New Zealand! 
+
+```{r fig.height=20,fig.width=7}
+#| echo: false
+
+lakes_50 <- lakes |> 
+  top_n(n = 50, wt = shape_area)
+
+# Calculate centroids
+lake_polygons <- lakes_50 %>%
+  mutate(centroid = st_centroid(st_geometry(.)))
+
+# Sort the lake polygons by shape_area in descending order
+lake_polygons <- lake_polygons %>%
+  arrange(desc(shape_area))
+
+# Compute bounding boxes and find the maximum width and height
+bboxes <- lapply(st_geometry(lake_polygons), function(x) as.numeric(st_bbox(x)))
+max_width <- max(sapply(bboxes, function(x) abs(x[1] - x[3])))
+max_height <- max(sapply(bboxes, function(x) abs(x[2] - x[4])))
+
+# Set padding to ensure polygons are not cut off
+padding <- 3500  # Adjust this value based on your specific spatial scale
+
+# Calculate colors based on value
+lake_polygons$color <- viridis::viridis(
+  n = nrow(lake_polygons), 
+  option = "D", 
+  direction = 1
+)[cut(lake_polygons$value, breaks = nrow(lake_polygons), labels = FALSE)]
+
+# Function to make plots
+graph <- function(x) {
+  centroid <- st_coordinates(lake_polygons$centroid[x])
+  ggplot(lake_polygons[x, ]) +
+    geom_sf(fill = lake_polygons$color[x], colour = NA) +
+    coord_sf(xlim = c(centroid[1] - max_width/2 - padding, centroid[1] + max_width/2 + padding), 
+             ylim = c(centroid[2] - max_height/2 - padding, centroid[2] + max_height/2 + padding), 
+             expand = FALSE) +
+    theme_void() +
+    ggtitle(str_wrap(lake_polygons$name[x], width = 20)) +
+    theme(plot.title = element_text(hjust = 0.5, size = 10, vjust = 1),
+          legend.position = "none")
+}
+
+# Create a list of plots
+plot_list <- lapply(1:nrow(lake_polygons), FUN = graph)
+
+# Combine plots and titles
+combined_list <- lapply(plot_list, function(p) {
+  title <- ggplot_build(p)$layout$panel_params[[1]]$title
+  gridExtra::arrangeGrob(p, top = grid::textGrob(
+    label = title,
+    gp = grid::gpar(fontsize = 10),
+    hjust = 0.5,
+    vjust = 1
+  ))
+})
+
+# Create the overall title and subtitle grobs
+overall_title <- grid::textGrob("The 50 Largest Lakes of New Zealand", gp = grid::gpar(fontsize = 16, fontface = "bold"))
+subtitle <- grid::textGrob("Coloured by Trophic Level Index", gp = grid::gpar(fontsize = 12))
+
+# Create a common legend plot to extract the legend
+legend_plot <- ggplot(lake_polygons) +
+  geom_sf(aes(fill = value), colour = NA) +
+  scale_fill_viridis_c(name = "TLI3", option = "D", direction = 1) +
+  theme_void() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 10, hjust = 0.5),
+    legend.title.position = "top",
+    legend.text = element_text(size = 8),
+    legend.box.margin = margin(0, 0, 0, 0)
+  )
+
+# Extract the legend
+legend_grob <- cowplot::get_plot_component(legend_plot, 'guide-box-bottom', return_all = TRUE)
+
+# Arrange the plots together with the overall title and subtitle
+final_plot <- gridExtra::grid.arrange(
+  gridExtra::arrangeGrob(overall_title, subtitle, ncol = 1, heights = c(0.08, 0.05)),
+  do.call(gridExtra::arrangeGrob, c(combined_list, ncol = 5)),
+  legend_grob,
+  nrow = 3,
+  heights = c(0.1, 0.8, 0.1)
+)
+```
+
 ## Next steps
 
 -   Plot the smallest 20 lakes
 
--   Make an animation of each lake flashing by
-
 -   Make an estuaries small multiples map
+
+-   Figure out how to shrink the rows for the smaller lakes
