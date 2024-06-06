@@ -14,7 +14,6 @@ format:
     toc-location: left
     number-sections: true
 editor: visual
-draft: true
 ---
 
 I've been inspired by a new type of small multiples map I've seen, where multipolygons are extracted from their spatial locations and reassembled in a grid while maintaining their relative sizes. If you unsure what I mean, check out [this one](https://www.ordnancesurvey.co.uk/blog/britains-largest-islands) as an example. So I thought I'd try applying it to some lakes data in New Zealand.
@@ -90,7 +89,7 @@ Now, let's get down to plotting the largest lakes, and colour them by their resp
 Here's what the scores correspond to in ecological terms:
 
 | **TLI Score** | **Description**                                                                                                                                                                                                                         |
-|:----------:|------------------------------------------------------------|
+|:--------------:|--------------------------------------------------------|
 |      0–2      | Microtrophic: The lake is very clean with very low levels of nutrients and algae. The lake can have snow or glacial sources.                                                                                                            |
 |     \>2–3     | Oligotrophic: The lake is clear and blue, with low levels of nutrients and algae.                                                                                                                                                       |
 |     \>3–4     | Mesotrophic: The lake has moderate levels of nutrients and algae.                                                                                                                                                                       |
@@ -182,7 +181,7 @@ final_plot <- gridExtra::grid.arrange(
 
 ## Plot the 50 largest lakes
 
-Bonus just for the blog readers... here's the plot for the 50 largest lakes in New Zealand! 
+Bonus just for the blog readers... here's the plot for the 50 largest lakes in New Zealand!
 
 ```{r fig.height=18,fig.width=7}
 #| echo: false
