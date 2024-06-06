@@ -5,6 +5,9 @@ project:
 website:
   title: "Isaac Bain"
   favicon: kakapo-logo.png
+  twitter-card: true
+  open-graph: true
+  google-analytics: "G-0P0B7NPGM0"
   navbar:
     logo: kakapo-logo.png
     right:
