@@ -1,0 +1,380 @@
+---
+title: "Earthquakes animation"
+author: "Isaac Bain"
+date: "2024-06-09"
+categories: [code, geophysics, maps, animation]
+execute:
+  warning: false
+  error: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+editor: visual
+draft: true
+---
+
+## Data source
+
+GeoNet is a partnernship between Toka Tū Ake EQC, GNS Science, and Land Information New Zealand (LINZ) which has been around since 2001. It is a geological hazard monitoring system comprised of a network of geophysical instruments, used to detect earthquakes, volcanic activity, large landslides, tsunami, and slow-slip events that precede large earthquakes.
+
+They make their data available in a number of API formats, here I use a Web Feature Service (WFS) to query the GeoNet Earthquake Catalogue to return earthquakes that happened (1) last year, (2) were greater than magnitude one, (3) occurred onshore or offshore in the vicinity of New Zealand.
+
+The API is a nice way to get around the CSV download limit of their website, and the data can be read straight into R as an Simple Features (sf) spatial object.
+
+Libraries:
+
+```{r}
+#| label: libraries
+#| output: false
+
+library(tidyverse)
+library(sf)
+library(httr)
+library(gganimate)
+library(patchwork)
+library(ggtext)
+```
+
+Download data:
+
+```{r}
+#| label: import-data
+#| output: false
+#| cache: true
+
+wfs_url <- "https://wfs.geonet.org.nz/geonet/ows"
+type_name <- "geonet:quake_search_v1"
+output_format <- "json"
+cql_filter <- "origintime>='2023-01-01T00:00:00.000Z' AND origintime<'2024-01-01T00:00:00.000Z' AND magnitude>1.5"
+
+query_url <- paste0(
+  wfs_url,
+  "?service=WFS&version=1.0.0&request=GetFeature&typeName=", type_name,
+  "&outputFormat=", output_format,
+  "&cql_filter=", URLencode(cql_filter)
+)
+
+earthquakes_sf <- st_read(query_url) |> st_transform(2193)
+
+coastline <- st_read("data/coastline_simplified/nz-coastlines-and-islands-polygons-topo-150k.shp", crs = 2193)
+
+```
+
+Crop data:
+
+```{r}
+#| label: crop-data
+
+bbox <- st_as_sfc(st_bbox(c(xmin = 166, ymin = -47.5, xmax = 180, ymax = -33))) |>
+  st_set_crs(4326) |>
+  st_transform(2193)
+
+earthquakes_nz_sf <- st_intersection(earthquakes_sf, bbox)
+
+coastline <- st_crop(coastline, bbox)
+
+```
+
+## Exploratory data analysis
+
+### Depth and magnitude
+
+Firstly let's have a look at the distribution of depths and magnitudes of the earthquakes (@fig-depth-and-magnitude). You can clearly see there are more shallow earthquakes than deep ones, and more small earthquakes than large ones.
+
+```{r}
+#| label: fig-depth-and-magnitude
+#| fig-cap: "Distribution of depths and magnitudes of earthquakes in New Zealand, 2023."
+#| fig-width: 10
+
+plot_depth <- ggplot(earthquakes_nz_sf, aes(x = depth)) +
+  geom_histogram(aes(fill = ..x..), bins = 30, color = "black", alpha = 0.7) +
+  theme_minimal() +
+  labs(
+    title = "Distribution of Depths",
+    x = "Depth (km)",
+    y = "Count"
+  ) +
+  scale_fill_viridis_c(option = "inferno", direction = -1) +
+  theme(
+    axis.text.x = element_text(vjust = 0.5, hjust = 0.5),
+    legend.position = "bottom",
+    legend.title = element_blank()
+  )
+
+bin_data <- earthquakes_nz_sf %>%
+  mutate(bin = cut(magnitude, breaks = seq(min(magnitude), max(magnitude), length.out = 31), include.lowest = TRUE)) %>%
+  group_by(bin) %>%
+  summarise(
+    magnitude = mean(magnitude),
+    count = n(),
+    magnitude_exp = mean(exp(magnitude))
+  )
+
+plot_magnitude <- ggplot(earthquakes_nz_sf, aes(x = magnitude)) +
+  geom_histogram(aes(y = ..count..), bins = 30, fill = "darkslateblue", color = "black", alpha = 0.7) +
+  # geom_point(data = bin_data, aes(x = magnitude, y = count, size = magnitude_exp),
+  #            color = "black", alpha = 0.5) +
+  theme_minimal() +
+  labs(
+    title = "Distribution of Magnitudes",
+    x = "Magnitude",
+    y = "Count"
+  ) +
+  scale_x_continuous(
+    breaks = c(1, 2, 3, 4, 5, 6, 7),
+    labels = c("1\nUnnoticeable", "2\nUnnoticeable", "3\nWeak", "4\nLight", "5\nModerate", "6\nStrong", "7\nSevere")
+  ) +
+  scale_size_continuous(
+    name = "Magnitude",
+    range = c(3, 15),
+    breaks = exp(c(3, 4, 5, 6)),
+    labels = c("≤ 3", 4, 5, "≥ 6")
+  ) +
+  theme(
+    axis.text.x = element_text(vjust = 0.5, hjust = 0.5),
+    legend.position = "bottom",
+    legend.title = element_blank()
+  )
+
+plot_depth + plot_magnitude
+
+```
+
+### Depth vs magnitude
+
+Let's take this one step further and look at the relationship between depth and magnitude (@fig-depth-vs-magnitude). Large and shallow earthquakes are the most dangerous, as they can cause the most damage. Whilst, small and deep earthquakes are less likely to be felt by people, there's not many of these in the dataset - but perhaps seismometers can't easily detect them.
+
+```{r}
+#| label: fig-depth-vs-magnitude
+#| fig-cap: "Earthquake depth versus magnitude in New Zealand, 2023. Dashed line at 35 km depth boundary between crustal and subduction earthquakes."
+
+ggplot(data = earthquakes_nz_sf, aes(magnitude, depth)) +
+    geom_point(aes(color = depth > 35), alpha = 0.1) +
+  scale_color_manual(values = c("TRUE" = "darkorange", "FALSE" = "darkslateblue")) +
+  geom_hline(yintercept = 35, linetype = "dashed") +
+  theme_minimal() +
+  labs(
+    x = "Magnitude",
+    y = "Depth (km)",
+    title = "Earthquake depth versus magnitude",
+    subtitle = "Dashed line at 35 km depth boundary between <span style='color:darkslateblue; font-weight:bold;'>crustal</span> and <span style='color:darkorange; font-weight:bold;'>subduction</span> earthquakes"
+  ) +
+  annotate(
+    geom = "curve", x = 5.5, y = 200, xend = 5.9, yend = 50,
+    curvature = .3, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(geom = "text", x = 5.5, y = 215, label = "Shallow & strong!", hjust = "center") +
+  annotate(
+    geom = "curve", x = 1.75, y = 450, xend = 1.75, yend = 500,
+    curvature = .3, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(geom = "text", x = 1.75, y = 440, label = "No worries", hjust = "center") +
+  annotate(geom = "text", x = 6.5, y = 50, label = "35km", hjust = "center") +
+  theme(
+    legend.position = "none",
+    plot.subtitle = element_markdown()
+  )
+```
+
+```         
+```
+
+## Mapping
+
+### Crustal vs subduction earthquakes
+
+Deep earthquakes under the North Island form a well defined line, which is the Hikurangi subduction zone where the Pacific Plate is being forced under the Australian Plate (@fig-crustal-subduction). This pattern of deeper earthquakes towards the west of the North Island is the Wadati–Benioff zone.
+
+Conversely, the South Island has a different pattern of earthquakes, where the Australian plate is being forced under the Pacific Plate. This is the Alpine Fault, which is a transform fault, and is responsible for the Southern Alps. The deeper earthquakes occur occur on the southeast edge of the Wadati–Benioff zone where it dips steeply to the southeast.
+
+```{r}
+#| label: fig-crustal-subduction
+#| fig-cap: "Crustal and subduction earthquakes in New Zealand, 2023. The Hikurangi subduction zone is visible under the North Island, and the Alpine Fault under the South Island."
+
+# https://www.otago.ac.nz/geology/research/alpine-fault
+
+plot_crustal <- ggplot() +
+  geom_sf(
+    data = coastline,
+    fill = "#839073",
+    color = NA
+  ) +
+  geom_sf(
+    data = earthquakes_nz_sf |> filter(depth < 35),
+    colour = "darkslateblue",
+    size = 0.1,
+    alpha = 0.7
+  ) +
+  coord_sf(xlim = c(1050000, 2200000), ylim = c(4700000, 6200000)) +
+  theme_void() +
+  labs(
+    title = "Crustal earthquakes \n< 35km deep",
+    x = "",
+    y = ""
+  ) +
+  theme(plot.title = element_text(
+    family = "sans", size = 12, face = "bold", color = "#394053", hjust = 0.5
+  )) +
+    annotate(
+    "curve", x = 1680000, y = 5746015, xend = 1851604, yend = 5703141,
+    curvature = .3, arrow = arrow(length = unit(2, "mm")), color = "black",
+    linewidth = 0.25
+  ) +
+  annotate(
+    "text", x = 1670000, y = 5746015, label = "Taupō volcanic zone", hjust = "right", color = "black", size = 2.5
+  ) +
+    annotate(
+    "curve", x = 1894962, y = 6057348, xend = 1969587, yend = 5839512,
+    curvature = .3, arrow = arrow(length = unit(2, "mm")), color = "black",
+    linewidth = 0.25
+  ) +
+  annotate(
+    "text", x = 1894962, y = 6057348, label = "Whakaari \nWhite Island", hjust = "centre",
+    vjust = -0.15, color = "black", size = 2.5
+  )
+
+plot_subduction <- ggplot() +
+  geom_sf(
+    data = coastline,
+    fill = "#839073",
+    color = NA
+  ) +
+  geom_sf(
+    data = earthquakes_nz_sf |> filter(depth > 35),
+    aes(color = depth),
+    size = 0.1,
+    alpha = 0.7
+  ) +
+  coord_sf(xlim = c(1050000, 2200000), ylim = c(4700000, 6200000)) +
+  theme_void() +
+  labs(
+    title = "Subduction earthquakes \n> 35km deep",
+    x = "",
+    y = "",
+    color = "Depth (km)",
+    size = "Magnitude"
+  ) +
+  theme(
+    plot.title = element_text(
+      family = "sans", size = 12, face = "bold", color = "#394053", hjust = 0.5
+    ),
+    legend.position = "bottom"
+  ) +
+  scale_color_viridis_c(option = "inferno", direction = -1) +
+    annotate(
+    "curve", x = 1680000, y = 5000000, xend = 1450000, yend = 5200000,
+    curvature = .3, arrow = arrow(length = unit(2, "mm")), color = "black",
+    linewidth = 0.25
+  ) +
+  annotate(
+    "text", x = 1680000, y = 4930000, label = "Notable gap in deep \nearthquakes", hjust = 0.5, color = "black", size = 2.5
+  )
+
+plot_crustal + plot_subduction
+```
+
+### Static map
+
+Let's plot all of the earthquakes on a map of New Zealand (@fig-static). We'll use the `geom_sf` function to plot the earthquakes and the coastline. We'll also use the `scale_size_continuous` function to adjust the size of the points based on the magnitude of the earthquake, with an exponential transform to reflect the disproportionate larger amount of energy released from larger magnitude earthquakes.
+
+```{r fig.height=6, fig.width=6}
+#| label: fig-static
+#| fig-cap: "Earthquakes in New Zealand, 2023. The size of the points represents the magnitude of the earthquake, and the colour represents the depth."
+
+ggplot() +
+  geom_sf(
+    data = coastline,
+    fill = "#839073",
+    color = NA
+  ) +
+  geom_sf(
+    data = earthquakes_nz_sf,
+    aes(color = depth, size = exp(magnitude)),
+    alpha = 0.2
+  ) +
+  scale_size_continuous(
+    name = "Magnitude",
+    range = c(0.01, 8),
+    breaks = exp(c(3, 4, 5, 6)),
+    labels = c("≤ 3", 4, 5, "≥ 6")
+  ) +
+  coord_sf(xlim = c(1050000, 2200000), ylim = c(4700000, 6200000)) +
+  theme_void() +
+  labs(
+    title = "Earthquakes in New Zealand (2023)",
+    x = "",
+    y = "",
+    color = "Depth (km)",
+    size = "Magnitude"
+  ) +
+  theme(plot.title = element_text(
+    family = "sans", size = 12, face = "bold", color = "#394053", hjust = 0.5, vjust = 2.5
+  )) +
+  scale_color_viridis_c(
+    option = "inferno",
+    direction = -1
+  )
+```
+
+### Animated plot
+
+Now to make it animated! We'll use the `gganimate` package to create an animated plot of the earthquakes over time (@fig-animated). We'll use the `transition_time` function to animate the plot over the `origintime` variable, which is the date of the earthquake. We'll also use the `shadow_mark` function to create a shadow of the earthquakes that have already occurred.
+
+```{r fig.height=5, fig.width=5}
+#| label: fig-animated
+#| fig-cap: "Animated plot of earthquakes in New Zealand, 2023. The size of the points represents the magnitude of the earthquake, and the colour represents the depth."
+
+p <- ggplot() +
+  geom_sf(
+    data = coastline,
+    fill = "#839073",
+    color = NA
+  ) +
+  geom_sf(
+    data = earthquakes_nz_sf,
+    aes(color = depth, size = exp(magnitude)),
+    alpha = 0.4
+  ) +
+  scale_size_continuous(
+    name = "Magnitude",
+    range = c(0.01, 8), #2-12
+    breaks = exp(c(3, 4, 5, 6)),
+    labels = c("≤ 3", 4, 5, "≥ 6")
+  ) +
+  coord_sf(xlim = c(1050000, 2200000), ylim = c(4700000, 6200000)) +
+  theme_void() +
+  labs(
+    title = "Earthquakes in New Zealand (2023)",
+    subtitle = "Date: {lubridate::as_date(next_state)}",
+    x = "",
+    y = "",
+    color = "Depth (km)",
+    size = "Magnitude"
+  ) +
+  scale_color_viridis_c(
+    option = "inferno",
+    direction = -1
+  ) +
+  theme(
+    plot.title = element_text(family = "sans", size = 12, face = "bold", color = "#394053",
+                              hjust = 0.5),
+    plot.subtitle = element_text(size = 8, hjust = 0.5),
+    legend.title = element_text(size = 8)
+  ) +
+  guides(color = guide_colourbar(reverse = T)) +
+  transition_states(origintime, transition_length = 2, state_length = 1) +
+  shadow_mark(past = TRUE)
+
+animate(p,
+  start_pause = 15,
+  end_pause = 60,
+  nframes = 300,
+  fps = 20,
+  res = 300,
+  renderer = gifski_renderer()
+)
+```

@@ -2,7 +2,7 @@
 title: "Kia ora 👋"
 ---
 
-![](ashburton-lakes.png){width="700"}
+<div class="banner"></div>
 
 ## Welcome to my personal website.
 
