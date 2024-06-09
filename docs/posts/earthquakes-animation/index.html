@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Isaac Bain">
-<meta name="dcterms.date" content="2024-06-09">
+<meta name="dcterms.date" content="2024-06-10">
 
 <title>Isaac Bain - Earthquakes animation</title>
 <style>
@@ -211,7 +211,7 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 9, 2024</p>
+        <p class="date">June 10, 2024</p>
       </div>
     </div>
     
@@ -258,7 +258,7 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <p>GeoNet is a partnernship between Toka Tū Ake EQC, GNS Science, and Land Information New Zealand (LINZ) which has been around since 2001. It is a geological hazard monitoring system that uses a network of geophysical instruments to detect earthquakes, volcanic activity, large landslides, tsunami, and slow-slip events that precede large earthquakes.</p>
 <p>They make their data available in a number of API formats. Here, I use a Web Feature Service (WFS) to query the GeoNet Earthquake Catalogue for earthquakes that happened (1) last year, (2) were greater than magnitude one, (3) occurred in or near New Zealand.</p>
 <p>The API bypasses the CSV download limit on their website, and the data can be directly read into R as a Simple Features (sf) spatial object.</p>
-<p>Libraries:</p>
+<p>Libraries</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -270,7 +270,7 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Download data:</p>
+<p>Download data</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -291,7 +291,7 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>coastline <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/coastline_simplified/nz-coastlines-and-islands-polygons-topo-150k.shp"</span>, <span class="at">crs =</span> <span class="dv">2193</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Crop data:</p>
+<p>Crop data</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -433,7 +433,7 @@ Figure&nbsp;2: Earthquake depth versus magnitude in New Zealand, 2023. Dashed li
 <section id="crustal-vs-subduction-earthquakes" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="crustal-vs-subduction-earthquakes"><span class="header-section-number">3.1</span> Crustal vs subduction earthquakes</h3>
 <p>Deep earthquakes under the North Island form a well-defined line, representing the Hikurangi subduction zone where the Pacific Plate is being forced under the Australian Plate (<a href="#fig-crustal-subduction" class="quarto-xref">Figure&nbsp;3</a>). This pattern, with deeper earthquakes towards the west of the North Island, is the Wadati–Benioff zone.</p>
-<p>In contrast, the South Island exhibits a different earthquake pattern, with the Australian Plate being forced under the Pacific Plate. This is the Alpine Fault, a transform fault responsible for the Southern Alps. The deeper earthquakes occur occur on the southeast edge of the Wadati–Benioff zone, where it dips steeply to the southeast.</p>
+<p>In contrast, the South Island exhibits a different earthquake pattern, with the Australian Plate being forced under the Pacific Plate. This is the Alpine Fault, a transform fault responsible for the Southern Alps. The deeper earthquakes occur on the southeast edge of the Wadati–Benioff zone, where it dips steeply to the southeast.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -534,7 +534,7 @@ Figure&nbsp;3: Crustal and subduction earthquakes in New Zealand, 2023. The Hiku
 </section>
 <section id="static-map" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="static-map"><span class="header-section-number">3.2</span> Static map</h3>
-<p>Let’s plot all of the earthquakes on a map of New Zealand (<a href="#fig-static" class="quarto-xref">Figure&nbsp;4</a>). We’ll use the <code>geom_sf</code> function to plot the earthquakes and the coastline. Additionally we’ll use the <code>scale_size_continuous</code> function to adjust the size of the points based on the magnitude of the earthquake, applying an exponential transform to reflect the disproportionately larger amount of energy released by larger magnitude earthquakes.</p>
+<p>Let’s plot all of the earthquakes on a map of New Zealand (<a href="#fig-static" class="quarto-xref">Figure&nbsp;4</a>). We’ll use the <code>geom_sf</code> function to plot the earthquakes and the coastline. Additionally we’ll use the <code>scale_size_continuous</code> function to adjust the size of the points based on the magnitude of the earthquake, applying an exponential transformation to reflect the disproportionately larger amount of energy released by larger magnitude earthquakes.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
