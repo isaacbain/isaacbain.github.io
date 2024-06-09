@@ -193,6 +193,7 @@ In contrast, the South Island exhibits a different earthquake pattern, with the 
 ```{r}
 #| label: fig-crustal-subduction
 #| fig-cap: "Crustal and subduction earthquakes in New Zealand, 2023. The Hikurangi subduction zone is visible under the North Island, and the Alpine Fault under the South Island."
+#| classes: preview-image
 
 # https://www.otago.ac.nz/geology/research/alpine-fault
 
