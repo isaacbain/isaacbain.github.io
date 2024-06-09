@@ -161,7 +161,7 @@ ggplot(data = earthquakes_nz_sf, aes(magnitude, depth)) +
     x = "Magnitude",
     y = "Depth (km)",
     title = "Earthquake depth versus magnitude",
-    subtitle = "Dashed line at 35 km depth boundary between <span style='color:darkslateblue; font-weight:bold;'>crustal</span> and <span style='color:darkorange; font-weight:bold;'>subduction</span> earthquakes"
+    subtitle = "Dashed line at 35 km depth boundary between <span style='color:darkslateblue;'><b>crustal</b></span> and <span style='color:darkorange;'><b>subduction</b></span> earthquakes"
   ) +
   annotate(
     geom = "curve", x = 5.5, y = 200, xend = 5.9, yend = 50,
@@ -176,7 +176,7 @@ ggplot(data = earthquakes_nz_sf, aes(magnitude, depth)) +
   annotate(geom = "text", x = 6.5, y = 50, label = "35km", hjust = "center") +
   theme(
     legend.position = "none",
-    plot.subtitle = element_markdown()
+    plot.subtitle = ggtext::element_markdown()
   )
 ```
 
@@ -212,11 +212,11 @@ plot_crustal <- ggplot() +
   coord_sf(xlim = c(1050000, 2200000), ylim = c(4700000, 6200000)) +
   theme_void() +
   labs(
-    title = "Crustal earthquakes \n< 35km deep",
+    title = "<span style='color:darkslateblue'>Crustal</span> earthquakes <br>< 35km deep",
     x = "",
     y = ""
   ) +
-  theme(plot.title = element_text(
+  theme(plot.title = element_markdown(
     family = "sans", size = 12, face = "bold", color = "#394053", hjust = 0.5
   )) +
     annotate(
@@ -252,14 +252,14 @@ plot_subduction <- ggplot() +
   coord_sf(xlim = c(1050000, 2200000), ylim = c(4700000, 6200000)) +
   theme_void() +
   labs(
-    title = "Subduction earthquakes \n> 35km deep",
+    title = "<span style='color:darkorange'>Subduction</span> earthquakes <br>&gt; 35km deep",
     x = "",
     y = "",
     color = "Depth (km)",
     size = "Magnitude"
   ) +
   theme(
-    plot.title = element_text(
+    plot.title = element_markdown(
       family = "sans", size = 12, face = "bold", color = "#394053", hjust = 0.5
     ),
     legend.position = "bottom"
@@ -341,7 +341,7 @@ p <- ggplot() +
   ) +
   scale_size_continuous(
     name = "Magnitude",
-    range = c(0.01, 8), #2-12
+    range = c(0.01, 6), 
     breaks = exp(c(3, 4, 5, 6)),
     labels = c("≤ 3", 4, 5, "≥ 6")
   ) +

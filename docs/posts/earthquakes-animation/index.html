@@ -393,7 +393,7 @@ Figure&nbsp;1: Distribution of depths and magnitudes of earthquakes in New Zeala
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Magnitude"</span>,</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Depth (km)"</span>,</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Earthquake depth versus magnitude"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Dashed line at 35 km depth boundary between &lt;span style='color:darkslateblue; font-weight:bold;'&gt;crustal&lt;/span&gt; and &lt;span style='color:darkorange; font-weight:bold;'&gt;subduction&lt;/span&gt; earthquakes"</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Dashed line at 35 km depth boundary between &lt;span style='color:darkslateblue;'&gt;&lt;b&gt;crustal&lt;/b&gt;&lt;/span&gt; and &lt;span style='color:darkorange;'&gt;&lt;b&gt;subduction&lt;/b&gt;&lt;/span&gt; earthquakes"</span></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"curve"</span>, <span class="at">x =</span> <span class="fl">5.5</span>, <span class="at">y =</span> <span class="dv">200</span>, <span class="at">xend =</span> <span class="fl">5.9</span>, <span class="at">yend =</span> <span class="dv">50</span>,</span>
@@ -408,7 +408,7 @@ Figure&nbsp;1: Distribution of depths and magnitudes of earthquakes in New Zeala
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">6.5</span>, <span class="at">y =</span> <span class="dv">50</span>, <span class="at">label =</span> <span class="st">"35km"</span>, <span class="at">hjust =</span> <span class="st">"center"</span>) <span class="sc">+</span></span>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>()</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>()</span>
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
@@ -453,11 +453,11 @@ Figure&nbsp;2: Earthquake depth versus magnitude in New Zealand, 2023. Dashed li
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1050000</span>, <span class="dv">2200000</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">4700000</span>, <span class="dv">6200000</span>)) <span class="sc">+</span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Crustal earthquakes </span><span class="sc">\n</span><span class="st">&lt; 35km deep"</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"&lt;span style='color:darkslateblue'&gt;Crustal&lt;/span&gt; earthquakes &lt;br&gt;&lt; 35km deep"</span>,</span>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span></span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(</span>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"sans"</span>, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#394053"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span></span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
@@ -493,14 +493,14 @@ Figure&nbsp;2: Earthquake depth versus magnitude in New Zealand, 2023. Dashed li
 <span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1050000</span>, <span class="dv">2200000</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">4700000</span>, <span class="dv">6200000</span>)) <span class="sc">+</span></span>
 <span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
 <span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Subduction earthquakes </span><span class="sc">\n</span><span class="st">&gt; 35km deep"</span>,</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"&lt;span style='color:darkorange'&gt;Subduction&lt;/span&gt; earthquakes &lt;br&gt;&amp;gt; 35km deep"</span>,</span>
 <span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
 <span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
 <span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Depth (km)"</span>,</span>
 <span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="st">"Magnitude"</span></span>
 <span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_markdown</span>(</span>
 <span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"sans"</span>, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#394053"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span></span>
 <span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
