@@ -33,4 +33,5 @@ editor: visual
 
 resources:
   - CNAME
+  - images/
 
