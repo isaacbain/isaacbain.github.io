@@ -19,11 +19,11 @@ draft: true
 
 ## Data source
 
-GeoNet is a partnernship between Toka Tū Ake EQC, GNS Science, and Land Information New Zealand (LINZ) which has been around since 2001. It is a geological hazard monitoring system comprised of a network of geophysical instruments, used to detect earthquakes, volcanic activity, large landslides, tsunami, and slow-slip events that precede large earthquakes.
+GeoNet is a partnernship between Toka Tū Ake EQC, GNS Science, and Land Information New Zealand (LINZ) which has been around since 2001. It is a geological hazard monitoring system that uses a network of geophysical instruments to detect earthquakes, volcanic activity, large landslides, tsunami, and slow-slip events that precede large earthquakes.
 
-They make their data available in a number of API formats, here I use a Web Feature Service (WFS) to query the GeoNet Earthquake Catalogue to return earthquakes that happened (1) last year, (2) were greater than magnitude one, (3) occurred onshore or offshore in the vicinity of New Zealand.
+They make their data available in a number of API formats. Here, I use a Web Feature Service (WFS) to query the GeoNet Earthquake Catalogue for earthquakes that happened (1) last year, (2) were greater than magnitude one, (3) occurred in or near New Zealand.
 
-The API is a nice way to get around the CSV download limit of their website, and the data can be read straight into R as an Simple Features (sf) spatial object.
+The API bypasses the CSV download limit on their website, and the data can be directly read into R as a Simple Features (sf) spatial object.
 
 Libraries:
 
@@ -83,7 +83,7 @@ coastline <- st_crop(coastline, bbox)
 
 ### Depth and magnitude
 
-Firstly let's have a look at the distribution of depths and magnitudes of the earthquakes (@fig-depth-and-magnitude). You can clearly see there are more shallow earthquakes than deep ones, and more small earthquakes than large ones.
+Firstly, let's examine the distribution of earthquake depths and magnitudes (@fig-depth-and-magnitude). It's evident that there are more shallow earthquakes than deep ones, and more small earthquakes than large ones.
 
 ```{r}
 #| label: fig-depth-and-magnitude
@@ -146,7 +146,7 @@ plot_depth + plot_magnitude
 
 ### Depth vs magnitude
 
-Let's take this one step further and look at the relationship between depth and magnitude (@fig-depth-vs-magnitude). Large and shallow earthquakes are the most dangerous, as they can cause the most damage. Whilst, small and deep earthquakes are less likely to be felt by people, there's not many of these in the dataset - but perhaps seismometers can't easily detect them.
+Let's take this one step further and examine the relationship between depth and magnitude (@fig-depth-vs-magnitude). Large, shallow earthquakes are the most dangerous, causing significant damage. Whilst, small, deep earthquakes are less likely to be felt by people, and there are few of these in the dataset—possibly because they are harder for seismometers to detect.
 
 ```{r}
 #| label: fig-depth-vs-magnitude
@@ -187,9 +187,9 @@ ggplot(data = earthquakes_nz_sf, aes(magnitude, depth)) +
 
 ### Crustal vs subduction earthquakes
 
-Deep earthquakes under the North Island form a well defined line, which is the Hikurangi subduction zone where the Pacific Plate is being forced under the Australian Plate (@fig-crustal-subduction). This pattern of deeper earthquakes towards the west of the North Island is the Wadati–Benioff zone.
+Deep earthquakes under the North Island form a well-defined line, representing the Hikurangi subduction zone where the Pacific Plate is being forced under the Australian Plate (@fig-crustal-subduction). This pattern, with deeper earthquakes towards the west of the North Island, is the Wadati–Benioff zone.
 
-Conversely, the South Island has a different pattern of earthquakes, where the Australian plate is being forced under the Pacific Plate. This is the Alpine Fault, which is a transform fault, and is responsible for the Southern Alps. The deeper earthquakes occur occur on the southeast edge of the Wadati–Benioff zone where it dips steeply to the southeast.
+In contrast, the South Island exhibits a different earthquake pattern, with the Australian Plate being forced under the Pacific Plate. This is the Alpine Fault, a transform fault responsible for the Southern Alps. The deeper earthquakes occur occur on the southeast edge of the Wadati–Benioff zone, where it dips steeply to the southeast.
 
 ```{r}
 #| label: fig-crustal-subduction
@@ -279,7 +279,7 @@ plot_crustal + plot_subduction
 
 ### Static map
 
-Let's plot all of the earthquakes on a map of New Zealand (@fig-static). We'll use the `geom_sf` function to plot the earthquakes and the coastline. We'll also use the `scale_size_continuous` function to adjust the size of the points based on the magnitude of the earthquake, with an exponential transform to reflect the disproportionate larger amount of energy released from larger magnitude earthquakes.
+Let's plot all of the earthquakes on a map of New Zealand (@fig-static). We'll use the `geom_sf` function to plot the earthquakes and the coastline. Additionally we'll use the `scale_size_continuous` function to adjust the size of the points based on the magnitude of the earthquake, applying an exponential transform to reflect the disproportionately larger amount of energy released by larger magnitude earthquakes.
 
 ```{r fig.height=6, fig.width=6}
 #| label: fig-static
@@ -322,7 +322,7 @@ ggplot() +
 
 ### Animated plot
 
-Now to make it animated! We'll use the `gganimate` package to create an animated plot of the earthquakes over time (@fig-animated). We'll use the `transition_time` function to animate the plot over the `origintime` variable, which is the date of the earthquake. We'll also use the `shadow_mark` function to create a shadow of the earthquakes that have already occurred.
+Now, to make it animated! We'll use the `gganimate` package to create an animated plot of the earthquakes over time (@fig-animated). We'll use the `transition_time` function to animate the plot over the `origintime` variable, which is the date of the earthquake. Additionally, we'll use the `shadow_mark` function to leave a shadow of the earthquakes that have already occurred.
 
 ```{r fig.height=5, fig.width=5}
 #| label: fig-animated
@@ -378,3 +378,13 @@ animate(p,
   renderer = gifski_renderer()
 )
 ```
+
+## Conclusion
+
+So that's it! We've explored the earthquakes in New Zealand in 2023, focusing on their distribution, the relationship between depth and magnitude, and the spatial patterns relative to tectonic plate boundaries. We've created static and animated visualisations to enhance our understanding of the data and effectively communicate our findings.
+
+Next steps could include further analysis of the data, such as:
+
+- Clustering the earthquakes to identify regions of high seismic activity.
+- Exploring the relationship between earthquakes and other geophysical data, such as volcanic activity or fault lines.
+- Plotting seismograms to visualise the seismic waves generated by particular earthquakes.
