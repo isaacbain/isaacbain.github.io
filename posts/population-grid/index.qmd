@@ -1,0 +1,133 @@
+---
+title: "Exploring the Estimated Resident Population Grid"
+author: "Isaac Bain"
+date: "2024-06-25"
+categories: [code, population, maps]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+editor: visual
+lightbox: auto
+draft: true
+knitr:
+  opts_chunk: 
+    dev: "ragg_png"
+---
+
+## Overview
+
+Understanding the distribution of populations is crucial for various applications, from urban planning to environmental management. Statistics New Zealand’s recently released 2022 Estimated Resident Population Grid at a 500-metre resolution provides an invaluable resource for researchers, policymakers, and analysts.
+
+This dataset stands out due to its fine resolution. Previously, population information was available at the Statistical Area 1 (SA1) level, with SA1s typically housing between 100-200 residents, and a maximum population of about 500. SA1s vary in size, being smaller in urban areas and larger in rural ones.
+
+Now, the population grid offers a much finer resolution, available at 250 metre[^1], 500 metre[^2], or 1000 metre[^3] sizes. To create these population grids, Stats NZ disaggregated population counts from larger geographic areas (i.e., meshblocks) into smaller regular grid cells. This was done using a combination of spatial interpolation methods and ancillary data, such as land use and residential building locations, to accurately distribute the population estimates across the grid.
+
+[^1]: <https://datafinder.stats.govt.nz/layer/115047-new-zealand-2022-estimated-resident-population-grid-250-metre-2023/>
+
+[^2]: <https://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/>
+
+[^3]: <https://datafinder.stats.govt.nz/layer/115051-new-zealand-2022-estimated-resident-population-grid-1-kilometre-2023/>
+
+```{r}
+#| output: false
+#| code-summary: "Libraries code"
+
+library(tidyverse)
+library(sf)
+library(koordinatr)
+library(ggdark)
+library(ggfx)
+library(ggtext)
+```
+
+```{r}
+#| output: false
+#| cache: true
+#| code-summary: "Import data code"
+
+# 500m 
+dat <- koordinatr::get_layer_as_sf(api_key = Sys.getenv("koordinates_api_key"),
+                                  agency = "statsnz",
+                                  id = "115050")
+
+coastline <- st_read("data/coastline_simplified/nz-coastlines-and-islands-polygons-topo-150k.shp", crs = 2193)
+```
+## Inspiration
+
+I wanted to create something that resembled a satellite image or a photo from the International Space Station looking down on New Zealand at night, with the lights of all the different cities shining back *(ignoring the fact this is also known as light pollution!)*.
+
+Here's two examples:
+
+::: {layout-ncol="2"}
+![](new_zealand_DNB_Oct.png)
+
+![](nzherald.png)
+:::
+
+## Creating the plot
+
+The data were provided in a rectangular regular grid, with counts of the Estimated Resident Population per grid cell. To address the wide range of values and maintain aesthetic appeal, a log-transform of the counts was applied. The legend was back-transformed to improve readability.
+
+I used the `ggfx` package to add an outer glow to the coastline, and the `ggdark` package to create a dark theme for the plot. The colour scale was from the `viridis` palette, which is a perceptually uniform colour scale that is designed to be colour blind-friendly.
+
+```{r fig.height=11.69, fig.width=8.0, fig.dpi=300}
+#| out-width: 65%
+#| out-height: 65%
+
+ggplot() +
+  with_outer_glow(
+    geom_sf(data = coastline, fill = "black", colour = NA),
+    colour = "#262525",
+    sigma = 60, 
+    expand = 30
+  ) +
+  geom_sf(data = dat, aes(fill = log(ERP_2022)), colour = NA) +
+  scale_fill_viridis_c(
+    option = "plasma",
+    breaks = log(c(1, 5, 20, 100, 500)), # Adjust breaks for normal scale
+    labels = c("1", "5", "20", "100", "500"), # Corresponding labels
+    guide = guide_colourbar(title.position = "top", title.hjust = 0.5, direction = "horizontal")
+  ) +
+  coord_sf(xlim = c(1050000, 2200000), ylim = c(4700000, 6200000)) +
+  ggdark::dark_theme_void(base_size = 14) +
+  theme(
+    legend.position = "inside",
+    legend.position.inside = c(0.75, 0.2),
+    legend.key.width = unit(1.25, "cm"),
+    legend.title = element_text(size = rel(0.7), hjust = 0.5, color = "#847E89"),
+    legend.text = element_text(color = "#847E89"),
+    plot.caption = element_text(color = "#847E89"),
+    plot.title = element_markdown(
+      family = "Baskerville", 
+      size = rel(2.75),
+      color = "#C2D3CD",
+      hjust = 0.5,
+      margin = margin(14, 0, 4, 0)
+    ),
+    plot.subtitle = element_markdown(
+      family = "Montserrat", 
+      color = "#9FA4A9",
+      hjust = 0.5
+    )
+  ) +
+  labs(
+    title = "People patterns in Aotearoa",
+    subtitle = "Population density from StatsNZ 2023 census data",
+    caption = "isaacbain.com",
+    fill = "Estimated Resident Population\n per 500m2"
+  )
+```
+
+## Conclusion
+
+I had a lot of fun making this population density map in a dark theme. The resulting visualisation not only highlights population patterns but also provides a visually striking representation of New Zealand's demographic landscape.
+
+The improvement in spatial resolution offered by this data could significantly enhance research applications. For instance, it enables more accurate distribution of populations onto river networks, allowing us to answer questions such as how many people live upstream of any given river segment. *Stay tuned for a future post on this topic.*
