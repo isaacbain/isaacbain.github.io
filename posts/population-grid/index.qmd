@@ -16,7 +16,6 @@ format:
     number-sections: true
 editor: visual
 lightbox: auto
-draft: true
 knitr:
   opts_chunk: 
     dev: "ragg_png"
@@ -24,17 +23,19 @@ knitr:
 
 ## Overview
 
-Understanding the distribution of populations is crucial for various applications, from urban planning to environmental management. Statistics New Zealand’s recently released 2022 Estimated Resident Population Grid at a 500-metre resolution provides an invaluable resource for researchers, policymakers, and analysts.
+Understanding the distribution of human populations is crucial for various applications, from urban planning to environmental management. Statistics New Zealand’s recently released [2022 Estimated Resident Population Grid](https://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/) provides an invaluable new resource for researchers, policymakers, and spatial analysts.
 
-This dataset stands out due to its fine resolution. Previously, population information was available at the Statistical Area 1 (SA1) level, with SA1s typically housing between 100-200 residents, and a maximum population of about 500. SA1s vary in size, being smaller in urban areas and larger in rural ones.
+This dataset stands out due to its fine resolution. Previously, the highest resolution population information was available at the [Statistical Area 1](https://datafinder.stats.govt.nz/layer/111208-statistical-area-1-2023-generalised/) (SA1) level, with SA1s typically having between 100-200 residents, and a maximum population of about 500. The critical thing here is that SA1s vary in size, being smaller in urban areas and larger in rural ones[^1].
 
-Now, the population grid offers a much finer resolution, available at 250 metre[^1], 500 metre[^2], or 1000 metre[^3] sizes. To create these population grids, Stats NZ disaggregated population counts from larger geographic areas (i.e., meshblocks) into smaller regular grid cells. This was done using a combination of spatial interpolation methods and ancillary data, such as land use and residential building locations, to accurately distribute the population estimates across the grid.
+[^1]: The largest SA1 is in the south-west corner of the South Island, in Fiordland National Park covering 5800 km2. Whilst the smallest SA1 is a single building in central Wellington, covering 0.00064 km2.
 
-[^1]: <https://datafinder.stats.govt.nz/layer/115047-new-zealand-2022-estimated-resident-population-grid-250-metre-2023/>
+Now, these population grid layers offer a much finer resolution, available at 250 metre[^2], 500 metre[^3], or 1000 metre[^4] sizes. To create these population grids, Stats NZ disaggregated population counts from larger geographic areas (i.e., meshblocks) into smaller regular grid cells. This was done using a combination of spatial interpolation methods and ancillary data, such as land use and residential building locations, to accurately distribute the population estimates across the grid.
 
-[^2]: <https://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/>
+[^2]: <https://datafinder.stats.govt.nz/layer/115047-new-zealand-2022-estimated-resident-population-grid-250-metre-2023/>
 
-[^3]: <https://datafinder.stats.govt.nz/layer/115051-new-zealand-2022-estimated-resident-population-grid-1-kilometre-2023/>
+[^3]: <https://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/>
+
+[^4]: <https://datafinder.stats.govt.nz/layer/115051-new-zealand-2022-estimated-resident-population-grid-1-kilometre-2023/>
 
 ```{r}
 #| output: false
@@ -60,11 +61,12 @@ dat <- koordinatr::get_layer_as_sf(api_key = Sys.getenv("koordinates_api_key"),
 
 coastline <- st_read("data/coastline_simplified/nz-coastlines-and-islands-polygons-topo-150k.shp", crs = 2193)
 ```
+
 ## Inspiration
 
 I wanted to create something that resembled a satellite image or a photo from the International Space Station looking down on New Zealand at night, with the lights of all the different cities shining back *(ignoring the fact this is also known as light pollution!)*.
 
-Here's two examples:
+Here's two examples from [Loss of the Night](https://lossofthenight.blogspot.com/2019/09/new-zealand-imaged-by-starlight.html) and [NASA](https://www.nzherald.co.nz/nz/nasa-releases-space-satellite-images-of-earth-at-night/N3HSALUYXGDKNPY4ZDAEZGGCJ4/):
 
 ::: {layout-ncol="2"}
 ![](new_zealand_DNB_Oct.png)
@@ -81,6 +83,7 @@ I used the `ggfx` package to add an outer glow to the coastline, and the `ggdark
 ```{r fig.height=11.69, fig.width=8.0, fig.dpi=300}
 #| out-width: 65%
 #| out-height: 65%
+#| classes: preview-image
 
 ggplot() +
   with_outer_glow(
@@ -130,4 +133,6 @@ ggplot() +
 
 I had a lot of fun making this population density map in a dark theme. The resulting visualisation not only highlights population patterns but also provides a visually striking representation of New Zealand's demographic landscape.
 
-The improvement in spatial resolution offered by this data could significantly enhance research applications. For instance, it enables more accurate distribution of populations onto river networks, allowing us to answer questions such as how many people live upstream of any given river segment. *Stay tuned for a future post on this topic.*
+The improvement in spatial resolution offered by this data could significantly enhance research applications. For instance, it enables more accurate distribution of populations onto river networks, allowing us to answer questions such as how many people live upstream of any given river segment.
+
+*Stay tuned for a future post on this topic.*

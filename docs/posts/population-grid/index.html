@@ -120,10 +120,12 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Isaac Bain - Exploring the Estimated Resident Population Grid">
 <meta property="og:description" content="">
+<meta property="og:image" content="index_files/figure-html/unnamed-chunk-3-1.png">
 <meta property="og:site_name" content="Isaac Bain">
 <meta name="twitter:title" content="Isaac Bain - Exploring the Estimated Resident Population Grid">
 <meta name="twitter:description" content="">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="index_files/figure-html/unnamed-chunk-3-1.png">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="floating nav-fixed">
@@ -248,9 +250,9 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>Understanding the distribution of populations is crucial for various applications, from urban planning to environmental management. Statistics New Zealand’s recently released 2022 Estimated Resident Population Grid at a 500-metre resolution provides an invaluable resource for researchers, policymakers, and analysts.</p>
-<p>This dataset stands out due to its fine resolution. Previously, population information was available at the Statistical Area 1 (SA1) level, with SA1s typically housing between 100-200 residents, and a maximum population of about 500. SA1s vary in size, being smaller in urban areas and larger in rural ones.</p>
-<p>Now, the population grid offers a much finer resolution, available at 250 metre<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, 500 metre<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, or 1000 metre<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> sizes. To create these population grids, Stats NZ disaggregated population counts from larger geographic areas (i.e., meshblocks) into smaller regular grid cells. This was done using a combination of spatial interpolation methods and ancillary data, such as land use and residential building locations, to accurately distribute the population estimates across the grid.</p>
+<p>Understanding the distribution of human populations is crucial for various applications, from urban planning to environmental management. Statistics New Zealand’s recently released <a href="https://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/">2022 Estimated Resident Population Grid</a> provides an invaluable new resource for researchers, policymakers, and spatial analysts.</p>
+<p>This dataset stands out due to its fine resolution. Previously, the highest resolution population information was available at the <a href="https://datafinder.stats.govt.nz/layer/111208-statistical-area-1-2023-generalised/">Statistical Area 1</a> (SA1) level, with SA1s typically having between 100-200 residents, and a maximum population of about 500. The critical thing here is that SA1s vary in size, being smaller in urban areas and larger in rural ones<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Now, these population grid layers offer a much finer resolution, available at 250 metre<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, 500 metre<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, or 1000 metre<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> sizes. To create these population grids, Stats NZ disaggregated population counts from larger geographic areas (i.e., meshblocks) into smaller regular grid cells. This was done using a combination of spatial interpolation methods and ancillary data, such as land use and residential building locations, to accurately distribute the population estimates across the grid.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Libraries code</summary>
@@ -277,7 +279,7 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <section id="inspiration" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="inspiration"><span class="header-section-number">2</span> Inspiration</h2>
 <p>I wanted to create something that resembled a satellite image or a photo from the International Space Station looking down on New Zealand at night, with the lights of all the different cities shining back <em>(ignoring the fact this is also known as light pollution!)</em>.</p>
-<p>Here’s two examples:</p>
+<p>Here’s two examples from <a href="https://lossofthenight.blogspot.com/2019/09/new-zealand-imaged-by-starlight.html">Loss of the Night</a> and <a href="https://www.nzherald.co.nz/nz/nasa-releases-space-satellite-images-of-earth-at-night/N3HSALUYXGDKNPY4ZDAEZGGCJ4/">NASA</a>:</p>
 <div>
 
 </div>
@@ -296,7 +298,7 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <h2 data-number="3" class="anchored" data-anchor-id="creating-the-plot"><span class="header-section-number">3</span> Creating the plot</h2>
 <p>The data were provided in a rectangular regular grid, with counts of the Estimated Resident Population per grid cell. To address the wide range of values and maintain aesthetic appeal, a log-transform of the counts was applied. The legend was back-transformed to improve readability.</p>
 <p>I used the <code>ggfx</code> package to add an outer glow to the coastline, and the <code>ggdark</code> package to create a dark theme for the plot. The colour scale was from the <code>viridis</code> palette, which is a perceptually uniform colour scale that is designed to be colour blind-friendly.</p>
-<div class="cell">
+<div class="cell preview-image">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -354,7 +356,8 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <section id="conclusion" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4</span> Conclusion</h2>
 <p>I had a lot of fun making this population density map in a dark theme. The resulting visualisation not only highlights population patterns but also provides a visually striking representation of New Zealand’s demographic landscape.</p>
-<p>The improvement in spatial resolution offered by this data could significantly enhance research applications. For instance, it enables more accurate distribution of populations onto river networks, allowing us to answer questions such as how many people live upstream of any given river segment. <em>Stay tuned for a future post on this topic.</em></p>
+<p>The improvement in spatial resolution offered by this data could significantly enhance research applications. For instance, it enables more accurate distribution of populations onto river networks, allowing us to answer questions such as how many people live upstream of any given river segment.</p>
+<p><em>Stay tuned for a future post on this topic.</em></p>
 
 
 </section>
@@ -363,9 +366,10 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p><a href="https://datafinder.stats.govt.nz/layer/115047-new-zealand-2022-estimated-resident-population-grid-250-metre-2023/" class="uri">https://datafinder.stats.govt.nz/layer/115047-new-zealand-2022-estimated-resident-population-grid-250-metre-2023/</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a href="https://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/" class="uri">https://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><a href="https://datafinder.stats.govt.nz/layer/115051-new-zealand-2022-estimated-resident-population-grid-1-kilometre-2023/" class="uri">https://datafinder.stats.govt.nz/layer/115051-new-zealand-2022-estimated-resident-population-grid-1-kilometre-2023/</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>The largest SA1 is in the south-west corner of the South Island, in Fiordland National Park covering 5800 km2. Whilst the smallest SA1 is a single building in central Wellington, covering 0.00064 km2.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://datafinder.stats.govt.nz/layer/115047-new-zealand-2022-estimated-resident-population-grid-250-metre-2023/" class="uri">https://datafinder.stats.govt.nz/layer/115047-new-zealand-2022-estimated-resident-population-grid-250-metre-2023/</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/" class="uri">https://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://datafinder.stats.govt.nz/layer/115051-new-zealand-2022-estimated-resident-population-grid-1-kilometre-2023/" class="uri">https://datafinder.stats.govt.nz/layer/115051-new-zealand-2022-estimated-resident-population-grid-1-kilometre-2023/</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -778,7 +782,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","openEffect":"zoom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

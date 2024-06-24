@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Koordinates API for R\n\n\n\n\n\n\ncode\n\n\nclimate\n\n\nanimation\n\n\n\n\n\n\n\n\n\nJun 18, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nEarthquakes animation\n\n\n\n\n\n\ncode\n\n\ngeophysics\n\n\nmaps\n\n\nanimation\n\n\n\n\n\n\n\n\n\nJun 10, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nLakes small multiples\n\n\n\n\n\n\ncode\n\n\nwater quality\n\n\nmaps\n\n\n\n\n\n\n\n\n\nJun 6, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nArrowtown air quality\n\n\n\n\n\n\ncode\n\n\nair quality\n\n\nanimation\n\n\n\n\n\n\n\n\n\nJun 2, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\nNo matching items"
+    "text": "Exploring the Estimated Resident Population Grid\n\n\n\n\n\n\ncode\n\n\npopulation\n\n\nmaps\n\n\n\n\n\n\n\n\n\nJun 25, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nKoordinates API for R\n\n\n\n\n\n\ncode\n\n\nclimate\n\n\nanimation\n\n\n\n\n\n\n\n\n\nJun 18, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nEarthquakes animation\n\n\n\n\n\n\ncode\n\n\ngeophysics\n\n\nmaps\n\n\nanimation\n\n\n\n\n\n\n\n\n\nJun 10, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nLakes small multiples\n\n\n\n\n\n\ncode\n\n\nwater quality\n\n\nmaps\n\n\n\n\n\n\n\n\n\nJun 6, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\n\n\n\n\n\n\nArrowtown air quality\n\n\n\n\n\n\ncode\n\n\nair quality\n\n\nanimation\n\n\n\n\n\n\n\n\n\nJun 2, 2024\n\n\nIsaac Bain\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#welcome-to-my-personal-website.",
@@ -61,6 +61,48 @@
     "title": "Lakes small multiples",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nLakes380 lists it as 151.77 km2, Fish and Game as 124 km2, and Queenstown Lakes District Council as 149 km2.↩︎"
+  },
+  {
+    "objectID": "posts/population-grid/index.html",
+    "href": "posts/population-grid/index.html",
+    "title": "Exploring the Estimated Resident Population Grid",
+    "section": "",
+    "text": "Understanding the distribution of human populations is crucial for various applications, from urban planning to environmental management. Statistics New Zealand’s recently released 2022 Estimated Resident Population Grid provides an invaluable new resource for researchers, policymakers, and spatial analysts.\nThis dataset stands out due to its fine resolution. Previously, the highest resolution population information was available at the Statistical Area 1 (SA1) level, with SA1s typically having between 100-200 residents, and a maximum population of about 500. The critical thing here is that SA1s vary in size, being smaller in urban areas and larger in rural ones1.\nNow, these population grid layers offer a much finer resolution, available at 250 metre2, 500 metre3, or 1000 metre4 sizes. To create these population grids, Stats NZ disaggregated population counts from larger geographic areas (i.e., meshblocks) into smaller regular grid cells. This was done using a combination of spatial interpolation methods and ancillary data, such as land use and residential building locations, to accurately distribute the population estimates across the grid.\n\n\nLibraries code\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(koordinatr)\nlibrary(ggdark)\nlibrary(ggfx)\nlibrary(ggtext)\n\n\n\n\nImport data code\n# 500m \ndat &lt;- koordinatr::get_layer_as_sf(api_key = Sys.getenv(\"koordinates_api_key\"),\n                                  agency = \"statsnz\",\n                                  id = \"115050\")\n\ncoastline &lt;- st_read(\"data/coastline_simplified/nz-coastlines-and-islands-polygons-topo-150k.shp\", crs = 2193)"
+  },
+  {
+    "objectID": "posts/population-grid/index.html#overview",
+    "href": "posts/population-grid/index.html#overview",
+    "title": "Exploring the Estimated Resident Population Grid",
+    "section": "",
+    "text": "Understanding the distribution of human populations is crucial for various applications, from urban planning to environmental management. Statistics New Zealand’s recently released 2022 Estimated Resident Population Grid provides an invaluable new resource for researchers, policymakers, and spatial analysts.\nThis dataset stands out due to its fine resolution. Previously, the highest resolution population information was available at the Statistical Area 1 (SA1) level, with SA1s typically having between 100-200 residents, and a maximum population of about 500. The critical thing here is that SA1s vary in size, being smaller in urban areas and larger in rural ones1.\nNow, these population grid layers offer a much finer resolution, available at 250 metre2, 500 metre3, or 1000 metre4 sizes. To create these population grids, Stats NZ disaggregated population counts from larger geographic areas (i.e., meshblocks) into smaller regular grid cells. This was done using a combination of spatial interpolation methods and ancillary data, such as land use and residential building locations, to accurately distribute the population estimates across the grid.\n\n\nLibraries code\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(koordinatr)\nlibrary(ggdark)\nlibrary(ggfx)\nlibrary(ggtext)\n\n\n\n\nImport data code\n# 500m \ndat &lt;- koordinatr::get_layer_as_sf(api_key = Sys.getenv(\"koordinates_api_key\"),\n                                  agency = \"statsnz\",\n                                  id = \"115050\")\n\ncoastline &lt;- st_read(\"data/coastline_simplified/nz-coastlines-and-islands-polygons-topo-150k.shp\", crs = 2193)"
+  },
+  {
+    "objectID": "posts/population-grid/index.html#inspiration",
+    "href": "posts/population-grid/index.html#inspiration",
+    "title": "Exploring the Estimated Resident Population Grid",
+    "section": "2 Inspiration",
+    "text": "2 Inspiration\nI wanted to create something that resembled a satellite image or a photo from the International Space Station looking down on New Zealand at night, with the lights of all the different cities shining back (ignoring the fact this is also known as light pollution!).\nHere’s two examples from Loss of the Night and NASA:"
+  },
+  {
+    "objectID": "posts/population-grid/index.html#creating-the-plot",
+    "href": "posts/population-grid/index.html#creating-the-plot",
+    "title": "Exploring the Estimated Resident Population Grid",
+    "section": "3 Creating the plot",
+    "text": "3 Creating the plot\nThe data were provided in a rectangular regular grid, with counts of the Estimated Resident Population per grid cell. To address the wide range of values and maintain aesthetic appeal, a log-transform of the counts was applied. The legend was back-transformed to improve readability.\nI used the ggfx package to add an outer glow to the coastline, and the ggdark package to create a dark theme for the plot. The colour scale was from the viridis palette, which is a perceptually uniform colour scale that is designed to be colour blind-friendly.\n\n\nShow the code\nggplot() +\n  with_outer_glow(\n    geom_sf(data = coastline, fill = \"black\", colour = NA),\n    colour = \"#262525\",\n    sigma = 60, \n    expand = 30\n  ) +\n  geom_sf(data = dat, aes(fill = log(ERP_2022)), colour = NA) +\n  scale_fill_viridis_c(\n    option = \"plasma\",\n    breaks = log(c(1, 5, 20, 100, 500)), # Adjust breaks for normal scale\n    labels = c(\"1\", \"5\", \"20\", \"100\", \"500\"), # Corresponding labels\n    guide = guide_colourbar(title.position = \"top\", title.hjust = 0.5, direction = \"horizontal\")\n  ) +\n  coord_sf(xlim = c(1050000, 2200000), ylim = c(4700000, 6200000)) +\n  ggdark::dark_theme_void(base_size = 14) +\n  theme(\n    legend.position = \"inside\",\n    legend.position.inside = c(0.75, 0.2),\n    legend.key.width = unit(1.25, \"cm\"),\n    legend.title = element_text(size = rel(0.7), hjust = 0.5, color = \"#847E89\"),\n    legend.text = element_text(color = \"#847E89\"),\n    plot.caption = element_text(color = \"#847E89\"),\n    plot.title = element_markdown(\n      family = \"Baskerville\", \n      size = rel(2.75),\n      color = \"#C2D3CD\",\n      hjust = 0.5,\n      margin = margin(14, 0, 4, 0)\n    ),\n    plot.subtitle = element_markdown(\n      family = \"Montserrat\", \n      color = \"#9FA4A9\",\n      hjust = 0.5\n    )\n  ) +\n  labs(\n    title = \"People patterns in Aotearoa\",\n    subtitle = \"Population density from StatsNZ 2023 census data\",\n    caption = \"isaacbain.com\",\n    fill = \"Estimated Resident Population\\n per 500m2\"\n  )"
+  },
+  {
+    "objectID": "posts/population-grid/index.html#conclusion",
+    "href": "posts/population-grid/index.html#conclusion",
+    "title": "Exploring the Estimated Resident Population Grid",
+    "section": "4 Conclusion",
+    "text": "4 Conclusion\nI had a lot of fun making this population density map in a dark theme. The resulting visualisation not only highlights population patterns but also provides a visually striking representation of New Zealand’s demographic landscape.\nThe improvement in spatial resolution offered by this data could significantly enhance research applications. For instance, it enables more accurate distribution of populations onto river networks, allowing us to answer questions such as how many people live upstream of any given river segment.\nStay tuned for a future post on this topic."
+  },
+  {
+    "objectID": "posts/population-grid/index.html#footnotes",
+    "href": "posts/population-grid/index.html#footnotes",
+    "title": "Exploring the Estimated Resident Population Grid",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThe largest SA1 is in the south-west corner of the South Island, in Fiordland National Park covering 5800 km2. Whilst the smallest SA1 is a single building in central Wellington, covering 0.00064 km2.↩︎\nhttps://datafinder.stats.govt.nz/layer/115047-new-zealand-2022-estimated-resident-population-grid-250-metre-2023/↩︎\nhttps://datafinder.stats.govt.nz/layer/115050-new-zealand-2022-estimated-resident-population-grid-500-metre-2023/↩︎\nhttps://datafinder.stats.govt.nz/layer/115051-new-zealand-2022-estimated-resident-population-grid-1-kilometre-2023/↩︎"
   },
   {
     "objectID": "posts/earthquakes-animation/index.html",

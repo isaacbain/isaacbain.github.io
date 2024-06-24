@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/population-grid/index.html",
       "/posts/koordinatr/index.html",
       "/posts/earthquakes-animation/index.html",
       "/posts/lakes-small-multiples/index.html",
