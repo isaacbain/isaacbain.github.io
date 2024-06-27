@@ -1,0 +1,214 @@
+---
+title: "Map of South Island remote huts"
+author: "Isaac Bain"
+date: "2024-07-2"
+categories: [code, maps]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+editor: visual
+lightbox: auto
+draft: true
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.2)
+          ),
+          /* bottom, image */ 
+          url(./image.jpeg);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 0.7; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
+---
+
+## Overview
+
+The Permolat Trust maintains a unique and iconic network of around 70 remote back-country huts and bivouacs in Central Westland. These huts were in a dilapidated state and under threat of disappearing due to lack of use and funding - however, the reason they weren't being used was because people of the difficulty in accessing them and obtaining up-to-date route information!
+
+## Data sources
+
+The Trust has created the [Remote Huts](https://www.remotehuts.co.nz/) website which is a fantastic resource for obtaining key details about each of their huts. Each individual hut page features a topographic map showing the hut and its surrounds. However, the site lacked an overview map displaying the relative location of all their huts - which would be useful for trip planning and discovering new huts to visit.
+
+After confirming with the site maintainer they did not have a database of their hut listings in the back-end, I scraped all the necessary details into a Google Sheet.
+
+Libraries
+
+```{r}
+#| label: libraries
+
+library(tidyverse)
+library(googlesheets4)
+library(mapview)
+library(sf)
+library(leaflet)
+library(htmltools)
+library(ggmap)
+```
+
+Import data
+
+```{r}
+#| label: import-data
+#| cache: true
+
+gs4_deauth()
+
+df <- read_sheet("https://docs.google.com/spreadsheets/d/1bh7kHtU--3jA8gb02yBaqBhp6PH5mdevNWOjkc41EXg/edit#gid=0") |>
+  st_as_sf(coords = c("X", "Y"), crs = 4326)
+
+```
+
+## Mapping
+
+### Static map
+
+The static map provides a visual overview of the Permolat Trust's network of huts across the South Island. Using the `ggmap` package, a base layer of the South Island was retrieved and plotted with the hut locations overlaid.
+
+```{r}
+#| label: static-map
+
+# bounding box for South Island
+si <- c(left = 166.25, bottom = -47.5, right = 174.5, top = -40.0)
+
+# retrieve base layer
+map <- get_stadiamap(si, zoom = 8, maptype = "stamen_terrain_background") 
+
+# Define a function to fix the bbox to be in EPSG:3857
+# https://stackoverflow.com/questions/47749078/how-to-put-a-geom-sf-produced-map-on-top-of-a-ggmap-produced-raster
+ggmap_bbox <- function(map) {
+  if (!inherits(map, "ggmap")) stop("map must be a ggmap object")
+  # Extract the bounding box (in lat/lon) from the ggmap to a numeric vector, 
+  # and set the names to what sf::st_bbox expects:
+  map_bbox <- setNames(unlist(attr(map, "bb")), 
+                       c("ymin", "xmin", "ymax", "xmax"))
+
+  # Coonvert the bbox to an sf polygon, transform it to 3857, 
+  # and convert back to a bbox (convoluted, but it works)
+  bbox_3857 <- st_bbox(st_transform(st_as_sfc(st_bbox(map_bbox, crs = 4326)), 3857))
+
+  # Overwrite the bbox of the ggmap object with the transformed coordinates 
+  attr(map, "bb")$ll.lat <- bbox_3857["ymin"]
+  attr(map, "bb")$ll.lon <- bbox_3857["xmin"]
+  attr(map, "bb")$ur.lat <- bbox_3857["ymax"]
+  attr(map, "bb")$ur.lon <- bbox_3857["xmax"]
+  map
+}
+
+# Use the function:
+map <- ggmap_bbox(map)
+
+# create the static map
+ggmap(map) +
+  coord_sf(crs = st_crs(3857)) + # force the ggplot2 map to be in 3857
+  geom_sf(data = df |> st_transform(3857),
+          inherit.aes = FALSE, 
+          aes(),
+          color = "blue",
+          size = 1.5)
+```
+
+### Interactive map
+
+The interactive map offers a dynamic way to explore the Permolat Trust's huts across the South Island. It includes several user-friendly features:
+
+-   **Hover to View Details:** Users can hover over any point to see the hut's name and a photo, making it easy to identify and learn more about each hut.
+
+-   **Clickable Points:** Clicking on any point takes users directly to the Remote Huts website for detailed information about the hut.
+
+-   **Customizable Base Maps:** Users can switch between different base maps, including terrain, Topographic 1:50k and 1:250k, and satellite views. This functionality, available via a control in the upper right corner, allows users to choose the most useful map type for their needs.
+
+The interactive map is created using the `leaflet` package, which provides powerful tools for building interactive maps. Here’s a breakdown of the key steps:
+
+1.  **Popup Content:** The hover popups display the hut's name and image, generated using HTML content.
+
+2.  **Click Event:** JavaScript is used to add click events to each point, linking to the corresponding hut page on the Remote Huts website.
+
+3.  **Base Layers:** Various base map layers are added using `addProviderTiles` and `addTiles`, giving users multiple perspectives of the terrain.
+
+```{r}
+#| label: html-map
+#| column: screen
+# column: screen-inset-shaded
+
+# create hover popup spec
+content <- paste0("<div style='text-align: center;'><b>", df$Name, "</b></div>", "<img src = '", df$Image, "', width = '175'>")
+
+# goto url on click
+jsCode <- paste0('
+ function(el, x, data) {
+  var markers = document.getElementsByClassName("leaflet-interactive");
+  for(var i = 0; i < markers.length; i++){
+    (function(){
+      var v = data.URL[i];
+      markers[i].addEventListener("click", function() { window.open(v); }, false);
+    }()); 
+  }
+ }
+')
+
+# setup xyz tiles
+topo50_tiles <- paste0(
+  "https://tiles-cdn.koordinates.com/services;key=", Sys.getenv("koordinates_tile_api"), "/tiles/v4/layer=50767/EPSG:3857/{z}/{x}/{y}.png"
+  )
+
+topo250_tiles <- paste0(
+  "https://tiles-cdn.koordinates.com/services;key=", Sys.getenv("koordinates_tile_api"), "/tiles/v4/layer=50798/EPSG:3857/{z}/{x}/{y}.png"
+)
+
+# create leaflet map
+map <- 
+  leaflet(df) %>%
+  addMapPane(name = "circles", zIndex = 410) %>%
+  addCircleMarkers(
+    color = "black",
+    fillColor = "blue",
+    radius = 5,
+    fillOpacity = 0.75, 
+    stroke = T, 
+    weight = 1,
+    opacity = 1,
+    label = lapply(content, htmltools::HTML),
+  ) %>%
+  addProviderTiles(providers$CartoDB.Voyager, group = "Terrain") %>%
+  addTiles(topo50_tiles, group = "Topo50") %>%
+  addTiles(topo250_tiles, group = "Topo250") %>%
+  addProviderTiles(providers$Esri.WorldImagery, group = "Satellite") %>%
+  addLayersControl(
+    baseGroups = c("Terrain", "Topo250", "Topo50", "Satellite"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) %>%
+  htmlwidgets::onRender(jsCode, data = df) 
+
+map
+```
+
+## Conclusion
+
+Finding Remote Huts is now much easier with the overview map of the South Island. I have also uploaded a copy of my map to the Remote Huts website, allowing users to explore by A-Z, by river catchment, and now [by map](https://www.remotehuts.co.nz/by-map.html)!
+
+This is a great result for backcountry users and the Permolat Trust, which now has a web-map integrated into their existing website infrastructure.
