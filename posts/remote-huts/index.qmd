@@ -16,7 +16,6 @@ format:
     number-sections: true
 editor: visual
 lightbox: auto
-draft: true
 title-block-banner: "#00000000"
 title-block-banner-color: "rgba(255, 255, 255, 0.9)"
 include-in-header:
@@ -48,18 +47,59 @@ include-in-header:
 
 ## Overview
 
-The Permolat Trust maintains a unique and iconic network of around 70 remote back-country huts and bivouacs in Central Westland. These huts were in a dilapidated state and under threat of disappearing due to lack of use and funding - however, the reason they weren't being used was because people of the difficulty in accessing them and obtaining up-to-date route information!
+The Permolat Trust maintains a unique and iconic network of around 70 remote back-country huts and bivouacs in Central Westland. Before the Trust took on their care, these huts were in a dilapidated state and under threat of disappearing due to lack of use and funding. The primary reason for their disuse was the difficulty in accessing them and obtaining up-to-date route information.
+
+These huts differ from the typical serviced DOC huts. They are all very small (typically 1 to 4 bunks), have long, challenging approaches, and are maintained by volunteer labour. Unlike the more accessible DOC huts, these remote huts offer a truly authentic and rugged back-country experience. They are nestled in some of the most untouched and pristine environments, requiring a good level of fitness, navigation skills, and a sense of adventure to reach.
+
+The Trust relies heavily on the dedication and hard work of volunteers, who invest countless hours in maintaining and restoring these huts. Their efforts ensure that these historic and culturally significant structures are preserved for future generations to explore and enjoy.
+
+Here's just a couple of my favourites:
+
+:::{layout-nrow=2}
+
+<div style="text-align: center;">
+  <a href="https://www.remotehuts.co.nz/dickie-spur-hut.html">
+    <img src="dickie.jpeg" alt="Dickie Spur Hut - Rob Brown" style="width:100%;"/>
+    <div style="font-size: smaller;">Dickie Spur Hut - Rob Brown</div>
+  </a>
+</div>
+
+<div style="text-align: center;">
+  <a href="https://www.remotehuts.co.nz/mungo-hut.html">
+    <img src="mungo.jpeg" alt="Mungo Hut - Rob Brown" style="width:100%;"/>
+    <div style="font-size: smaller;">Mungo Hut - Rob Brown</div>
+  </a>
+</div>
+
+<div style="text-align: center;">
+  <a href="https://www.remotehuts.co.nz/pfeifer-biv.html">
+    <img src="pfeifer.jpeg" alt="Pfeifer Biv - Andrew Buglass" style="width:100%;"/>
+    <div style="font-size: smaller;">Pfeifer Biv - Andrew Buglass</div>
+  </a>
+</div>
+
+<div style="text-align: center;">
+  <a href="https://www.remotehuts.co.nz/pinnacle-biv.html">
+    <img src="pinnacle.jpeg" alt="Pinnacle Biv - Geoff Spearpoint" style="width:100%;"/>
+    <div style="font-size: smaller;">Pinnacle Biv - Geoff Spearpoint</div>
+  </a>
+</div>
+
+:::
 
 ## Data sources
 
-The Trust has created the [Remote Huts](https://www.remotehuts.co.nz/) website which is a fantastic resource for obtaining key details about each of their huts. Each individual hut page features a topographic map showing the hut and its surrounds. However, the site lacked an overview map displaying the relative location of all their huts - which would be useful for trip planning and discovering new huts to visit.
+The Permolat Trust has created the [Remote Huts](https://www.remotehuts.co.nz/) website which is a fantastic resource for obtaining key details about each of their huts. Each individual hut page features a topographic map showing the hut and its surrounds, like so:
 
-After confirming with the site maintainer they did not have a database of their hut listings in the back-end, I scraped all the necessary details into a Google Sheet.
+```{=html}
+<iframe width="800" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.topomap.co.nz/NZTopoMapEmbedded?v=2&ll=-43.05891,170.8696&z=14"></iframe>
+```
 
-Libraries
+However, the site lacked an overview map displaying the relative location of all their huts - which would be useful for trip planning and discovering new huts to visit. After confirming with their webmaster they did not have a database of their hut listings, I scraped all the necessary data into a Google Sheet, from which my map is drawn. Using a Google Sheet is a good idea from a technical perspective because it allows for easy data manipulation, integration with various mapping and visualisation tools, and real-time collaboration and updates.
 
 ```{r}
 #| label: libraries
+#| code-summary: "Show libraries code"
 
 library(tidyverse)
 library(googlesheets4)
@@ -70,11 +110,10 @@ library(htmltools)
 library(ggmap)
 ```
 
-Import data
-
 ```{r}
 #| label: import-data
 #| cache: true
+#| code-summary: "Show data import code"
 
 gs4_deauth()
 
@@ -87,7 +126,7 @@ df <- read_sheet("https://docs.google.com/spreadsheets/d/1bh7kHtU--3jA8gb02yBaqB
 
 ### Static map
 
-The static map provides a visual overview of the Permolat Trust's network of huts across the South Island. Using the `ggmap` package, a base layer of the South Island was retrieved and plotted with the hut locations overlaid.
+The static map provides a basic visual overview of the Permolat Trust's network of huts across the South Island. Using the `ggmap` package, a base layer of the South Island was retrieved and plotted with the hut locations overlaid. But the real magic comes next...
 
 ```{r}
 #| label: static-map
@@ -209,6 +248,8 @@ map
 
 ## Conclusion
 
-Finding Remote Huts is now much easier with the overview map of the South Island. I have also uploaded a copy of my map to the Remote Huts website, allowing users to explore by A-Z, by river catchment, and now [by map](https://www.remotehuts.co.nz/by-map.html)!
+Exploring potential remote huts to visit is now much easier than ever before, with the overview map of the South Island. This same map is also available directly via the Remote Huts website, allowing users to explore by A-Z, by river catchment, and now [by map](https://www.remotehuts.co.nz/by-map.html)!
 
-This is a great result for backcountry users and the Permolat Trust, which now has a web-map integrated into their existing website infrastructure.
+This is a great result for backcountry users and the Permolat Trust, which now has a web-map integrated into their existing website infrastructure at zero cost.
+
+Which one do you plan on visiting?

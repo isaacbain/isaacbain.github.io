@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/remote-huts/index.html",
       "/posts/population-grid/index.html",
       "/posts/koordinatr/index.html",
       "/posts/earthquakes-animation/index.html",
