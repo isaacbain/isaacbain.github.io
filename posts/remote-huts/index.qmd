@@ -107,6 +107,7 @@ The Permolat Trust has created the [Remote Huts](https://www.remotehuts.co.nz/) 
   <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.topomap.co.nz/NZTopoMapEmbedded?v=2&ll=-43.05891,170.8696&z=14"></iframe>
 </div>
 ```
+
 However, the site lacked an overview map displaying the relative location of all their huts - which would be useful for trip planning and discovering new huts to visit. After confirming with their webmaster they did not have a database of their hut listings, I scraped all the necessary data into a Google Sheet, from which my map is drawn. Using a Google Sheet is a good idea from a technical perspective because it allows for easy data manipulation, integration with various mapping and visualisation tools, and real-time collaboration and updates.
 
 ```{r}
