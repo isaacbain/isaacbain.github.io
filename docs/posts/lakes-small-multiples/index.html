@@ -135,11 +135,15 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Isaac Bain - Lakes small multiples">
 <meta property="og:description" content="">
-<meta property="og:image" content="index_files/figure-html/unnamed-chunk-4-1.png">
+<meta property="og:image" content="https://isaacbain.com/posts/lakes-small-multiples/index_files/figure-html/unnamed-chunk-4-1.png">
 <meta property="og:site_name" content="Isaac Bain">
+<meta property="og:image:height" content="1920">
+<meta property="og:image:width" content="1344">
 <meta name="twitter:title" content="Isaac Bain - Lakes small multiples">
 <meta name="twitter:description" content="">
-<meta name="twitter:image" content="index_files/figure-html/unnamed-chunk-4-1.png">
+<meta name="twitter:image" content="https://isaacbain.com/posts/lakes-small-multiples/index_files/figure-html/unnamed-chunk-4-1.png">
+<meta name="twitter:image-height" content="1920">
+<meta name="twitter:image-width" content="1344">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -699,7 +703,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/isaacbain\.com");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
