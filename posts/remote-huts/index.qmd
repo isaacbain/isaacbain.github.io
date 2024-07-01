@@ -15,6 +15,7 @@ format:
     toc-location: left
     number-sections: true
 editor: visual
+image: "https://isaacbain.com/posts/remote-huts/dickie.jpeg"
 lightbox: auto
 title-block-banner: "#00000000"
 title-block-banner-color: "rgba(255, 255, 255, 0.9)"

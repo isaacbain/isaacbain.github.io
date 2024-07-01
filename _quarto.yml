@@ -5,7 +5,8 @@ project:
 website:
   title: "Isaac Bain"
   favicon: images/kakapo-logo.png
-  twitter-card: true
+  twitter-card:
+    creator: "@IsaacBain"
   site-url: https://isaacbain.com
   open-graph: true
   google-analytics: "G-0P0B7NPGM0"
