@@ -2,7 +2,7 @@
 title: "Map of South Island remote huts"
 author: "Isaac Bain"
 date: "2024-07-2"
-categories: [code, maps]
+categories: [code, maps, outdoors]
 execute:
   warning: false
   error: false
