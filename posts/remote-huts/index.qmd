@@ -136,7 +136,6 @@ df <- read_sheet("https://docs.google.com/spreadsheets/d/1bh7kHtU--3jA8gb02yBaqB
 ```
 
 ## Mapping
-
 ### Static map
 
 The static map provides a basic visual overview of the Permolat Trust's network of huts across the South Island. Using the `ggmap` package, a base layer of the South Island was retrieved and plotted with the hut locations overlaid. But the real magic comes next...
