@@ -1,0 +1,250 @@
+---
+title: "3D population density mapping"
+author: "Isaac Bain"
+date: "2024-07-04"
+categories: [code, population, maps]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+editor: visual
+lightbox: auto
+---
+
+```{r}
+#| label: setup
+#| echo: true 
+#| output: false
+
+options(rgl.useNULL = TRUE)
+rgl::setupKnitr(autoprint = TRUE)
+```
+
+## Introduction
+
+3D maps can be both informative and visually stunning. I recently created some 3D population density maps for New Zealand using the R package `rayshader`, mainly because they look cool! Let’s dive into how these maps were made and what they show.
+
+For more details on this same population grid, see my previous [post](https://isaacbain.com/posts/population-grid/).
+
+## Data and methods
+
+For these maps, I used the 2022 Estimated Resident Population Grid data for New Zealand. With R and the awesome `rayshader` package, I transformed this data into 3D visualisations that really pop. `Rayshader` makes it super easy to add depth and perspective, turning flat data into eye-catching 3D landscapes.
+
+I have to give credit to this [Medium](https://medium.com/@niloy.swe/how-to-create-a-3d-population-density-map-in-r-33dfaf7a71d7) post and sherifscript's GitHub [repo](https://github.com/sherifscript/RayshaderMaps) for providing inspiration for most of the code.
+
+```{r}
+#| echo: true 
+#| output: false
+#| cache: true
+
+# libraries
+library(tidyverse)
+library(sf)
+library(koordinatr)
+library(stars)
+library(rayshader)
+library(rayrender)
+library(magick)
+
+# import data 
+# 1km population grid
+dat <- koordinatr::get_layer_as_sf(api_key = Sys.getenv("koordinates_api_key"),
+                                   agency = "statsnz",
+                                   id = "115051")
+
+# set bounding box for mainland nz
+mainland_bbox_nztm <- st_bbox(c(xmin = 1060000, ymin = 4700000, xmax = 2080000, ymax = 6300000), crs = st_crs(2193))
+
+# crop the sf object to the bounding box
+dat <- st_crop(dat, mainland_bbox_nztm)
+
+# get the bounding box of the final data
+bbox <- st_bbox(dat)
+
+# finding the aspect ratio
+bottom_left <- st_point(c(bbox[["xmin"]], bbox[["ymin"]])) %>%
+  st_sfc(crs = 2193)
+bottom_right <- st_point(c(bbox[["xmax"]], bbox[["ymin"]])) %>%
+  st_sfc(crs = 2193)
+top_left <- st_point(c(bbox[["xmin"]], bbox[["ymax"]])) %>%
+  st_sfc(crs = 2193)
+top_right <- st_point(c(bbox[["xmin"]], bbox[["ymax"]])) %>%
+  st_sfc(crs = 2193)
+
+# calculate width and height
+width <- st_distance(bottom_left, bottom_right)
+height <- st_distance(bottom_left, top_left)
+
+# calculate aspect ratio
+if(width > height) {
+  w_ratio = 1
+  h_ratio = height / width
+  
+} else {
+  h_ratio = 1.1
+  w_ratio = width / height
+}
+
+# convert to raster to convert to matrix
+size = 1000 * 3.5
+
+pop_raster <- st_rasterize(
+  dat,
+  nx = floor(size * w_ratio) %>% as.numeric(),
+  ny = floor(size * h_ratio) %>% as.numeric()
+)
+
+pop_matrix <- matrix(pop_raster$ERP_2022,
+                     nrow = floor(size * w_ratio),
+                     ncol = floor(size * h_ratio))
+
+# setup colour palette
+color <- MetBrewer::met.brewer(name = "Benedictus", direction = -1)
+
+tx <- grDevices::colorRampPalette(color, bias = 4.5)(256)
+colorspace::swatchplot(tx)
+
+# create the 3d plot
+pop_matrix %>%
+  height_shade(texture = tx) %>%
+  plot_3d(heightmap = pop_matrix,
+          zscale = 20,
+          solid = F,
+          shadowdepth = 0)
+
+# adjusting camera angle for oblique view
+render_camera(theta = 0,
+              phi = 30,
+              zoom = 0.5,
+              fov = 100,
+              shift_vertical = -300
+)
+
+# render
+render_highquality(
+  filename = "plot/oblique_nz.png",
+  interactive = F,
+  lightdirection = 280, 
+  lightaltitude = c(30, 80),
+  lightcolor = c('white', 'white'),  # Set both lights to white
+  lightintensity = c(600, 100),
+  width = 3000,
+  height = 3000,
+  samples = 200) #200
+
+# adjusting camera angle for top down view
+render_camera(theta = 0,
+              phi = 89,
+              zoom = 0.5,
+              fov = 100,
+              shift_vertical = 0
+)
+
+# render
+render_highquality(
+  filename = "plot/top_down_nz.png",
+  interactive = F,
+  lightdirection = 280, 
+  lightaltitude = c(30, 80),
+  lightcolor = c('white', 'white'),  # Set both lights to white
+  lightintensity = c(600, 100),
+  width = 2000,
+  height = 3000,
+  samples = 200) # 200 
+
+# text colour 
+text_color <- colorspace::darken(color[3], .4)
+colorspace::swatchplot(text_color)
+
+# read file back in
+top_down_nz <- image_read("plot/top_down_nz.png")
+
+# add annotations
+top_down_nz |> 
+  image_annotate("New Zealand",
+                 gravity = "northeast",
+                 location = "+50+50",
+                 color = text_color,
+                 size = 160,
+                 font = "Philosopher",
+                 weight = 700,
+  ) |> 
+  image_annotate("2022 POPULATION DENSITY MAP",
+                 gravity = "northeast",
+                 location = "+50+195",
+                 color = text_color,
+                 size = 50,
+                 font = "Philosopher",  # Corrected font name
+                 weight = 500,
+  ) |> 
+  image_annotate("isaacbain.com",
+                 gravity = "southwest",
+                 location = "+20+20",
+                 color = alpha(text_color, .8),
+                 font = "Philosopher",  # Corrected font name
+                 size = 35,
+  ) |> 
+  image_write("plot/annotated_top_down_nz.png", format = "png", quality = 100)
+
+# read file back in
+oblique_nz <- image_read("plot/oblique_nz.png")
+
+# crop, then add annotations
+oblique_nz |> 
+  image_crop(
+    "2500x2500-0+500"
+  ) |> 
+  image_annotate("New Zealand",
+                 gravity = "northeast",
+                 location = "+50+50",
+                 color = text_color,
+                 size = 160,
+                 font = "Philosopher",
+                 weight = 700,
+  ) |> 
+  image_annotate("2022 POPULATION DENSITY MAP",
+                 gravity = "northeast",
+                 location = "+50+195",
+                 color = text_color,
+                 size = 50,
+                 font = "Philosopher",  # Corrected font name
+                 weight = 500,
+  ) |> 
+  image_annotate("isaacbain.com",
+                 gravity = "southwest",
+                 location = "+20+20",
+                 color = alpha(text_color, .8),
+                 font = "Philosopher",  # Corrected font name
+                 size = 35,
+  ) |> 
+  image_write("plot/annotated_oblique_nz.png", format = "png", quality = 100)
+```
+
+## Results and interpretation
+
+Check out these maps! They highlight where people are clustered, with taller spikes indicating higher population densities. You can clearly see urban centres like Auckland, Wellington, and Christchurch standing out, while rural areas have much shorter peaks.
+
+(click to zoom in)
+
+![](plot/annotated_top_down_nz.png){width="65%"}
+
+![](plot/annotated_oblique_nz.png){width="65%"}
+
+## Why 3D maps?
+
+-   Visual Appeal: Let’s be honest, they just look amazing. The 3D effect adds a whole new dimension (literally!) to the data.
+
+-   Easy to Understand: Even at a glance, you can see where the population is concentrated.
+
+-   Engaging: These maps can grab attention and spark interest in data that might otherwise seem dry.
+
+## Conclusion
+
+3D population density maps aren’t just for data geeks—they’re a fantastic way to make information visually appealing and accessible. Give `rayshader` a try if you’re into data visualisation. Who knew population data could look this good?
