@@ -1,9 +1,11 @@
 .Rproj.user
 .Rhistory
 .RData
+*.RData
 .Ruserdata
-.rds
-.rdb
+*.rds
+*.rdb
+*.rdx
 /.quarto/
 .Rdata
 .httr-oauth
