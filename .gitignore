@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+.rds
+.rdb
 /.quarto/
 .Rdata
 .httr-oauth
