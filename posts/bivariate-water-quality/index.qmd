@@ -1,5 +1,6 @@
 ---
-title: "Bivariate colour scales: livestock density and water quality"
+title: "Bivariate colour scales"
+subtitle: "Mapping livestock density and water quality"
 author: "Isaac Bain"
 date: "2024-07-09"
 categories: [code, water quality, maps]
@@ -17,6 +18,33 @@ format:
 editor: visual
 lightbox: auto
 draft: true
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.2)
+          ),
+          /* bottom, image */ 
+          url(./cows.jpg);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 0.7; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
 ---
 
 ## Overview
@@ -33,8 +61,8 @@ For example, in NIWA's most recent random forest modelling of river water qualit
 
 [^3]: <https://environment.govt.nz/assets/publications/spatial-modelling-river-quality.pdf>
 
-| Predictor Rank | NNN Predictors                   | *E. coli* Predictors             |
-|-----------------|----------------------------|----------------------------|
+| Predictor rank | NNN predictors                   | *E. coli* predictors             |
+|------------------|---------------------------|---------------------------|
 | 1              | Stock density                    | Catchment elevation              |
 | 2              | Dairy density                    | Rainfall variability             |
 | 3              | Beef density                     | Stock density                    |
@@ -46,6 +74,7 @@ For example, in NIWA's most recent random forest modelling of river water qualit
 | 9              | Number of warm days              | Local elevation                  |
 | 10             | Catchment elevation              | Catchment phosphorus             |
 
+\ 
 In this analysis, I'm interested in finding out which areas of New Zealand have relatively high or low levels of contamination given relativley high or low livestock density. Which lends itself well to visualising using a bivariate colour scale.
 
 ## Bivariate maps
@@ -57,6 +86,7 @@ Typically, one colour gradient is represented on the x-axis and the other on the
 ```{r}
 #| label: libraries
 #| output: false
+#| code-summary: "Show libraries code"
 
 library(tidyverse)
 library(sf)
@@ -76,6 +106,7 @@ For this example, river water quality data modelled for every stream segment in 
 #| label: import
 #| cache: true
 #| output: false
+#| code-summary: "Show data sources code"
 
 # water quality
 # ecoli_raw <- get_layer_as_sf(Sys.getenv("mfe_api_key"), "mfe", "109886")
@@ -83,10 +114,11 @@ For this example, river water quality data modelled for every stream segment in 
 ecoli_raw <- readRDS("data/ecoli_raw.rds")
 
 ecoli <- ecoli_raw |>
-  filter(mesrmnt == "Median") |> 
+  filter(mesrmnt == "Median") |>
   select(nzsgmnt,
-         median_ecoli = value,
-         strm_rd)
+    median_ecoli = value,
+    strm_rd
+  )
 
 rm(ecoli_raw)
 
@@ -95,10 +127,11 @@ rm(ecoli_raw)
 nitrogen_raw <- readRDS("data/nitrogen_raw.rds")
 
 nitrogen <- nitrogen_raw |>
-  filter(measr_b == "NNN") |> 
+  filter(measr_b == "NNN") |>
   select(nzsgmnt,
-         median_nitrogen = value)
-  
+    median_nitrogen = value
+  )
+
 rm(nitrogen_raw)
 
 # load predictors
@@ -106,30 +139,51 @@ load("data/REC2.4_lcdb5_predictors.RData")
 rm(ThesePredictors)
 
 ecoli |>
-  left_join(nitrogen |> st_drop_geometry(), by = join_by(nzsgmnt)) |> 
-  left_join(REC2.4_predictors, by = c("nzsgmnt" = "nzsegment")) |> 
-  select(nzsgmnt,
-         median_ecoli,
-         median_nitrogen,
-         PropDairy_2017,
-         PropSheep_2017,
-         SUDensityTotal_2017,
-         StreamOrder) |> 
+  left_join(nitrogen |> st_drop_geometry(), by = join_by(nzsgmnt)) |>
+  left_join(REC2.4_predictors, by = c("nzsgmnt" = "nzsegment")) |>
+  select(
+    nzsgmnt,
+    median_ecoli,
+    median_nitrogen,
+    PropDairy_2017,
+    PropSheep_2017,
+    SUDensityTotal_2017,
+    StreamOrder
+  ) |>
   filter(StreamOrder > 1) -> dat
 ```
 
-## Univariate maps
+## Livestock vs water quality
 
-Let's take a look at our data sources using traditional maps which just use a single colour scale to display a single variable. They are not bad - but it's pretty hard to image where has high dairy density and low *E. coli* (and vice versa) right? That's where bivariate maps come in.
+Let's start by looking at the relationship between dairy density and median *E. coli* levels. We can see that there is a positive relationship between the two variables - areas with higher dairy density tend to have higher *E. coli* levels (@fig-scatter-plot). 
+
+However, the relationship is not perfect - there are areas with high dairy density and low *E. coli* levels, and vice versa. This is where bivariate maps come in - they allow us to visualise the relationship between two variables across a geographic space.
 
 ```{r}
-#| label: uni-maps
+#| label: fig-scatter-plot
+#| fig-cap: "Scatter plot of dairy density and median E. coli levels."
+
+dat |> 
+  ggplot(aes(PropDairy_2017, median_ecoli)) +
+  geom_point(alpha = 0.01, size = 1) +
+  geom_smooth(method = "lm") +
+  theme_minimal() +
+  labs(x = "Dairy density", y = "Median E. coli")
+```
+## Univariate maps
+
+Let's take a look at our data sources using traditional maps which just use a single colour scale to display a single variable (@fig-uni-maps). They are not bad - but it's pretty hard to imagine where has high dairy density and low *E. coli* (and vice versa) right? That's where bivariate maps come in.
+
+```{r}
+#| label: fig-uni-maps
+#| fig-cap: "Univariate maps of median E. coli levels and dairy density."
+#| code-summary: "Show univariate code"
 
 dat |>
-  arrange(median_ecoli) |> 
+  arrange(median_ecoli) |>
   ggplot() +
   geom_sf(aes(colour = median_ecoli)) +
-  #scale_colour_viridis_c() +
+  # scale_colour_viridis_c() +
   scale_colour_gradient(low = "#f2f2f2", high = "#0295ff") +
   theme_void() +
   labs(title = "E. coli concentrations") -> ecoli_map
@@ -138,15 +192,18 @@ dat |>
   ggplot() +
   geom_sf(aes(colour = PropDairy_2017)) +
   scale_colour_gradient(low = "#f2f2f2", high = "#ff9400") +
-  #scale_fill_viridis_c() +
+  # scale_fill_viridis_c() +
   theme_void() +
   labs(title = "Dairy density") -> dairy_dens_map
 
 ecoli_map + dairy_dens_map
 ```
 
+## Bivariate colour scale maps
+
 ```{r}
 #| label: spatial-join
+#| code-summary: "Show prep code"
 
 custom_pal4 <- c(
   "1-1" = "#f2f2f2", # low x, low y #ffffff
@@ -167,88 +224,169 @@ custom_pal4 <- c(
   "4-4" = "#000000" # high x, high y
 )
 
-#bi_pal(custom_pal4, dim = 4, flip_axes = TRUE)
+# bi_pal(custom_pal4, dim = 4, flip_axes = TRUE)
 
 finalplot <- function(data, xlab = "Higher X", ylab = "Higher Y") {
   map <- ggplot() +
-    geom_sf(data = data, mapping = aes(colour = bi_class), linewidth = 0.5, show.legend = FALSE,
-    #color = "white"
+    geom_sf(
+      data = data, mapping = aes(colour = bi_class), linewidth = 0.5, show.legend = FALSE,
+      # color = "white"
     ) +
     bi_scale_color(pal = custom_pal4, dim = 4) +
     bi_theme()
 
-  legend <- bi_legend(pal = custom_pal4,
-                      dim = 4,
-                      xlab = xlab,
-                      ylab = ylab,
-                      size = 7,
-                      pad_width = 0.5)
+  legend <- bi_legend(
+    pal = custom_pal4,
+    dim = 4,
+    xlab = xlab,
+    ylab = ylab,
+    size = 7,
+    pad_width = 0.5
+  )
 
   finalPlot <- ggdraw() +
     draw_plot(map, 0, 0, 1, 1) +
     draw_plot(legend, 0.2, .65, 0.2, 0.2, 1.8)
-  
+
   return(finalPlot)
 }
   
 ```
 
-## Bivariate colour scale maps
-
 ### Total livestock density
 
+::: panel-tabset
+## E. coli
+
 ```{r, dpi=300}
-#| label: bi-maps-total
+#| label: fig-bi-maps-total-ecoli
 
 # create classes
-bi_class(dat, x = median_ecoli, y = SUDensityTotal_2017, style = "fisher", dim = 4) |> 
-finalplot(xlab = "Higher E.coli", ylab = "Higher stock") -> finalPlotTotalEcoli
+bi_class(
+  dat,
+  x = median_ecoli,
+  y = SUDensityTotal_2017,
+  style = "fisher", dim = 4
+) |>
+  finalplot(
+    xlab = "Higher E.coli",
+    ylab = "Higher stock"
+  ) -> finalPlotTotalEcoli
 
 finalPlotTotalEcoli
+```
 
-bi_class(dat, x = median_nitrogen, y = SUDensityTotal_2017, style = "fisher", dim = 4) |>
-finalplot(xlab = "Higher nitrogen", ylab = "Higher stock") -> finalPlotTotalNitrogen
+## Nitrogen
+
+```{r, dpi=300}
+#| label: fig-bi-maps-total-nitrogen
+
+bi_class(
+  dat,
+  x = median_nitrogen,
+  y = SUDensityTotal_2017,
+  style = "fisher",
+  dim = 4
+) |>
+  finalplot(
+    xlab = "Higher nitrogen",
+    ylab = "Higher stock"
+  ) -> finalPlotTotalNitrogen
 
 finalPlotTotalNitrogen
 ```
+:::
 
 ### Sheep density
 
-```{r}
-#| label: bi-maps-sheep
+::: panel-tabset
 
-bi_class(dat, x = median_ecoli, y = PropSheep_2017, style = "fisher", dim = 4) |> finalplot(xlab = "Higher E.coli", ylab = "Higher sheep") -> finalPlotSheepEcoli
+## E. coli
+
+```{r}
+#| label: fig-bi-maps-sheep-ecoli
+
+bi_class(
+  dat,
+  x = median_ecoli,
+  y = PropSheep_2017,
+  style = "fisher",
+  dim = 4
+) |>
+  finalplot(
+    xlab = "Higher E.coli",
+    ylab = "Higher sheep"
+  ) -> finalPlotSheepEcoli
 
 finalPlotSheepEcoli
+```
 
-bi_class(dat, x = median_nitrogen, y = PropSheep_2017, style = "fisher", dim = 4) |> finalplot(xlab = "Higher nitrogen", ylab = "Higher sheep") -> finalPlotSheepNitrogen
+## Nitrogen
+
+```{r}
+#| label: fig-bi-maps-sheep-nitrogen
+
+bi_class(
+  dat,
+  x = median_nitrogen,
+  y = PropSheep_2017,
+  style = "fisher",
+  dim = 4
+) |>
+  finalplot(
+    xlab = "Higher nitrogen",
+    ylab = "Higher sheep"
+  ) -> finalPlotSheepNitrogen
 
 finalPlotSheepNitrogen
 ```
+:::
+
 
 ### Dairy density
 
+::: panel-tabset
+
+## E. coli
+
 ```{r}
-#| label: bi-maps-dairy
+#| label: fig-bi-maps-dairy-ecoli
 
 # create classes
-bi_class(dat, x = median_ecoli, y = PropDairy_2017, style = "fisher", dim = 4) |> 
-finalplot(xlab = "Higher E.coli", ylab = "Higher dairy") -> finalPlotDairyEcoli
+bi_class(
+  dat,
+  x = median_ecoli,
+  y = PropDairy_2017,
+  style = "fisher",
+  dim = 4
+) |>
+  finalplot(
+    xlab = "Higher E.coli",
+    ylab = "Higher dairy"
+  ) -> finalPlotDairyEcoli
 
 finalPlotDairyEcoli
+```
 
-bi_class(dat, x = median_nitrogen, y = PropDairy_2017, style = "fisher", dim = 4) |>
-finalplot(xlab = "Higher nitrogen", ylab = "Higher dairy") -> finalPlotDairyNitrogen
+## Nitrogen
+
+```{r}
+#| label: fig-bi-maps-dairy-nitrogen
+
+bi_class(
+  dat,
+  x = median_nitrogen,
+  y = PropDairy_2017,
+  style = "fisher",
+  dim = 4
+) |>
+  finalplot(
+    xlab = "Higher nitrogen",
+    ylab = "Higher dairy"
+  ) -> finalPlotDairyNitrogen
 
 finalPlotDairyNitrogen
 ```
+:::
 
-### Patchwork
-
-```{r}
-#| label: bi-maps-patchwork
-
-finalPlotSheepEcoli + finalPlotDairyEcoli
-
-finalPlotSheepNitrogen + finalPlotDairyNitrogen
-```
+## Conclusion

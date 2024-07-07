@@ -9,7 +9,7 @@
 <meta name="author" content="Isaac Bain">
 <meta name="dcterms.date" content="2024-07-09">
 
-<title>Isaac Bain - Bivariate colour scales: livestock density and water quality</title>
+<title>Isaac Bain - Bivariate colour scales</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,14 +115,54 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 </script>
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: rgba(255, 255, 255, 0.9);
+background: #00000000;
+      }
+</style>
+<style>
+#title-block-header.quarto-title-block.default .quarto-title-meta {
+  color: rgba(255, 255, 255, 0.9);
+}
+.quarto-title-block .quarto-title-banner {
+  height: 0; /* hide */
+}
+#title-block-header {
+  background:
+    /* top, transparent black, faked with gradient */
+    linear-gradient(
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0.2)
+    ),
+    /* bottom, image */
+    url(./cows.jpg);
+  background-size: cover;
+  background-position-y: center;
+  height: 300px;
+  opacity: 0.7; /* image opacity, lower means lighter */
+  z-index: -1;
+}
+</style>
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Isaac Bain - Bivariate colour scales: livestock density and water quality">
-<meta property="og:description" content="">
+<meta property="og:title" content="Isaac Bain - Bivariate colour scales">
+<meta property="og:description" content="Mapping livestock density and water quality">
 <meta property="og:site_name" content="Isaac Bain">
-<meta name="twitter:title" content="Isaac Bain - Bivariate colour scales: livestock density and water quality">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="Isaac Bain - Bivariate colour scales">
+<meta name="twitter:description" content="Mapping livestock density and water quality">
 <meta name="twitter:creator" content="@IsaacBain">
 <meta name="twitter:card" content="summary">
 </head>
@@ -192,7 +232,8 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Bivariate colour scales: livestock density and water quality</h1>
+      <h1 class="title">Bivariate colour scales</h1>
+            <p class="subtitle lead">Livestock density and water quality</p>
                                 <div class="quarto-categories">
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">water quality</div>
@@ -232,13 +273,13 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
   <li><a href="#bivariate-maps" id="toc-bivariate-maps" class="nav-link" data-scroll-target="#bivariate-maps"><span class="header-section-number">2</span> Bivariate maps</a></li>
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources"><span class="header-section-number">3</span> Data sources</a></li>
-  <li><a href="#univariate-maps" id="toc-univariate-maps" class="nav-link" data-scroll-target="#univariate-maps"><span class="header-section-number">4</span> Univariate maps</a></li>
-  <li><a href="#bivariate-colour-scale-maps" id="toc-bivariate-colour-scale-maps" class="nav-link" data-scroll-target="#bivariate-colour-scale-maps"><span class="header-section-number">5</span> Bivariate colour scale maps</a>
+  <li><a href="#livestock-vs-water-quality" id="toc-livestock-vs-water-quality" class="nav-link" data-scroll-target="#livestock-vs-water-quality"><span class="header-section-number">4</span> Livestock vs water quality</a></li>
+  <li><a href="#univariate-maps" id="toc-univariate-maps" class="nav-link" data-scroll-target="#univariate-maps"><span class="header-section-number">5</span> Univariate maps</a></li>
+  <li><a href="#bivariate-colour-scale-maps" id="toc-bivariate-colour-scale-maps" class="nav-link" data-scroll-target="#bivariate-colour-scale-maps"><span class="header-section-number">6</span> Bivariate colour scale maps</a>
   <ul class="collapse">
-  <li><a href="#total-livestock-density" id="toc-total-livestock-density" class="nav-link" data-scroll-target="#total-livestock-density"><span class="header-section-number">5.1</span> Total livestock density</a></li>
-  <li><a href="#sheep-density" id="toc-sheep-density" class="nav-link" data-scroll-target="#sheep-density"><span class="header-section-number">5.2</span> Sheep density</a></li>
-  <li><a href="#dairy-density" id="toc-dairy-density" class="nav-link" data-scroll-target="#dairy-density"><span class="header-section-number">5.3</span> Dairy density</a></li>
-  <li><a href="#patchwork" id="toc-patchwork" class="nav-link" data-scroll-target="#patchwork"><span class="header-section-number">5.4</span> Patchwork</a></li>
+  <li><a href="#total-livestock-density" id="toc-total-livestock-density" class="nav-link" data-scroll-target="#total-livestock-density"><span class="header-section-number">6.1</span> Total livestock density</a></li>
+  <li><a href="#sheep-density" id="toc-sheep-density" class="nav-link" data-scroll-target="#sheep-density"><span class="header-section-number">6.2</span> Sheep density</a></li>
+  <li><a href="#dairy-density" id="toc-dairy-density" class="nav-link" data-scroll-target="#dairy-density"><span class="header-section-number">6.3</span> Dairy density</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -261,9 +302,9 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <p>For example, in NIWA’s most recent random forest modelling of river water quality<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, the top ten most important predictors of nitrate + nitrite-nitrogen (NNN) and <em>E. coli</em> were:</p>
 <table class="table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 38%">
-<col style="width: 38%">
+<col style="width: 25%">
+<col style="width: 37%">
+<col style="width: 37%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -333,7 +374,7 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <p>Typically, one colour gradient is represented on the x-axis and the other on the y-axis. The intersection of these gradients results in a grid of colours, each representing a different combination of the two variables’ values.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Show the code</summary>
+<summary>Show libraries code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapview)</span>
@@ -349,259 +390,400 @@ gtag('config', 'G-0P0B7NPGM0', { 'anonymize_ip': true});
 <p>For this example, river water quality data modelled for every stream segment in the digital river network - this was done by NIWA on behalf of MfE.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Show the code</summary>
+<summary>Show data sources code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># water quality</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ecoli_raw &lt;- get_layer_as_sf(Sys.getenv("mfe_api_key"), "mfe", "109886")</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(ecoli_raw, "data/ecoli_raw.rds")</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ecoli_raw <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/ecoli_raw.rds"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ecoli <span class="ot">&lt;-</span> ecoli_raw <span class="sc">|&gt;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(mesrmnt <span class="sc">==</span> <span class="st">"Median"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(mesrmnt <span class="sc">==</span> <span class="st">"Median"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(nzsgmnt,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">median_ecoli =</span> value,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         strm_rd)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(ecoli_raw)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># nitrogen_raw &lt;- get_layer_as_sf(Sys.getenv("mfe_api_key"), "mfe", "109888")</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(nitrogen_raw, "data/nitrogen_raw.rds")</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>nitrogen_raw <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/nitrogen_raw.rds"</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>nitrogen <span class="ot">&lt;-</span> nitrogen_raw <span class="sc">|&gt;</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(measr_b <span class="sc">==</span> <span class="st">"NNN"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(nzsgmnt,</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">median_nitrogen =</span> value)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(nitrogen_raw)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_ecoli =</span> value,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    strm_rd</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(ecoli_raw)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># nitrogen_raw &lt;- get_layer_as_sf(Sys.getenv("mfe_api_key"), "mfe", "109888")</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(nitrogen_raw, "data/nitrogen_raw.rds")</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>nitrogen_raw <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/nitrogen_raw.rds"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>nitrogen <span class="ot">&lt;-</span> nitrogen_raw <span class="sc">|&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(measr_b <span class="sc">==</span> <span class="st">"NNN"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(nzsgmnt,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_nitrogen =</span> value</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># load predictors</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/REC2.4_lcdb5_predictors.RData"</span>)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(ThesePredictors)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>ecoli <span class="sc">|&gt;</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(nitrogen <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>(), <span class="at">by =</span> <span class="fu">join_by</span>(nzsgmnt)) <span class="sc">|&gt;</span> </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(REC2<span class="fl">.4</span>_predictors, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"nzsgmnt"</span> <span class="ot">=</span> <span class="st">"nzsegment"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(nzsgmnt,</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>         median_ecoli,</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>         median_nitrogen,</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>         PropDairy_2017,</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>         PropSheep_2017,</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>         SUDensityTotal_2017,</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>         StreamOrder) <span class="sc">|&gt;</span> </span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(StreamOrder <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="ot">-&gt;</span> dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(nitrogen_raw)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># load predictors</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/REC2.4_lcdb5_predictors.RData"</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(ThesePredictors)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>ecoli <span class="sc">|&gt;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(nitrogen <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>(), <span class="at">by =</span> <span class="fu">join_by</span>(nzsgmnt)) <span class="sc">|&gt;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(REC2<span class="fl">.4</span>_predictors, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"nzsgmnt"</span> <span class="ot">=</span> <span class="st">"nzsegment"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    nzsgmnt,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    median_ecoli,</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    median_nitrogen,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    PropDairy_2017,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    PropSheep_2017,</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    SUDensityTotal_2017,</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    StreamOrder</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(StreamOrder <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="ot">-&gt;</span> dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="univariate-maps" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="univariate-maps"><span class="header-section-number">4</span> Univariate maps</h2>
-<p>Let’s take a look at our data sources using traditional maps which just use a single colour scale to display a single variable. They are not bad - but it’s pretty hard to image where has high dairy density and low <em>E. coli</em> (and vice versa) right? That’s where bivariate maps come in.</p>
+<section id="livestock-vs-water-quality" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="livestock-vs-water-quality"><span class="header-section-number">4</span> Livestock vs water quality</h2>
+<p>Let’s start by looking at the relationship between dairy density and median <em>E. coli</em> levels. We can see that there is a positive relationship between the two variables - areas with higher dairy density tend to have higher <em>E. coli</em> levels (<a href="#fig-scatter-plot" class="quarto-xref">Figure&nbsp;1</a>).</p>
+<p>However, the relationship is not perfect - there are areas with high dairy density and low <em>E. coli</em> levels, and vice versa. This is where bivariate maps come in - they allow us to visualise the relationship between two variables across a geographic space.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(median_ecoli) <span class="sc">|&gt;</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">colour =</span> median_ecoli)) <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_colour_viridis_c() +</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#0295ff"</span>) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"E. coli concentrations"</span>) <span class="ot">-&gt;</span> ecoli_map</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">colour =</span> PropDairy_2017)) <span class="sc">+</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#ff9400"</span>) <span class="sc">+</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_fill_viridis_c() +</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dairy density"</span>) <span class="ot">-&gt;</span> dairy_dens_map</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>ecoli_map <span class="sc">+</span> dairy_dens_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PropDairy_2017, median_ecoli)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.01</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Dairy density"</span>, <span class="at">y =</span> <span class="st">"Median E. coli"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="index_files/figure-html/uni-maps-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/uni-maps-1.png" class="img-fluid figure-img" width="672"></a></p>
-</figure>
+<div id="fig-scatter-plot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scatter-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-scatter-plot-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/fig-scatter-plot-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>custom_pal4 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-1"</span> <span class="ot">=</span> <span class="st">"#f2f2f2"</span>, <span class="co"># low x, low y #ffffff</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-1"</span> <span class="ot">=</span> <span class="st">"#b9ddff"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-1"</span> <span class="ot">=</span> <span class="st">"#64bbff"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-1"</span> <span class="ot">=</span> <span class="st">"#0295ff"</span>, <span class="co"># high x, low y</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-2"</span> <span class="ot">=</span> <span class="st">"#fedcb7"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-2"</span> <span class="ot">=</span> <span class="st">"#b8b8b8"</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-2"</span> <span class="ot">=</span> <span class="st">"#6691bb"</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-2"</span> <span class="ot">=</span> <span class="st">"#0069ba"</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-3"</span> <span class="ot">=</span> <span class="st">"#ffb869"</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-3"</span> <span class="ot">=</span> <span class="st">"#b89168"</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-3"</span> <span class="ot">=</span> <span class="st">"#676767"</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-3"</span> <span class="ot">=</span> <span class="st">"#003867"</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-4"</span> <span class="ot">=</span> <span class="st">"#ff9400"</span>, <span class="co"># low x, high y</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-4"</span> <span class="ot">=</span> <span class="st">"#bb6800"</span>,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-4"</span> <span class="ot">=</span> <span class="st">"#693800"</span>,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-4"</span> <span class="ot">=</span> <span class="st">"#000000"</span> <span class="co"># high x, high y</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#bi_pal(custom_pal4, dim = 4, flip_axes = TRUE)</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>finalplot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">xlab =</span> <span class="st">"Higher X"</span>, <span class="at">ylab =</span> <span class="st">"Higher Y"</span>) {</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">colour =</span> bi_class), <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#color = "white"</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bi_scale_color</span>(<span class="at">pal =</span> custom_pal4, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bi_theme</span>()</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  legend <span class="ot">&lt;-</span> <span class="fu">bi_legend</span>(<span class="at">pal =</span> custom_pal4,</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dim =</span> <span class="dv">4</span>,</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> xlab,</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> ylab,</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                      <span class="at">size =</span> <span class="dv">7</span>,</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pad_width =</span> <span class="fl">0.5</span>)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  finalPlot <span class="ot">&lt;-</span> <span class="fu">ggdraw</span>() <span class="sc">+</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw_plot</span>(map, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw_plot</span>(legend, <span class="fl">0.2</span>, .<span class="dv">65</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">1.8</span>)</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(finalPlot)</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="bivariate-colour-scale-maps" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="bivariate-colour-scale-maps"><span class="header-section-number">5</span> Bivariate colour scale maps</h2>
-<section id="total-livestock-density" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="total-livestock-density"><span class="header-section-number">5.1</span> Total livestock density</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create classes</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(dat, <span class="at">x =</span> median_ecoli, <span class="at">y =</span> SUDensityTotal_2017, <span class="at">style =</span> <span class="st">"fisher"</span>, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">finalplot</span>(<span class="at">xlab =</span> <span class="st">"Higher E.coli"</span>, <span class="at">ylab =</span> <span class="st">"Higher stock"</span>) <span class="ot">-&gt;</span> finalPlotTotalEcoli</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>finalPlotTotalEcoli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="index_files/figure-html/bi-maps-total-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/bi-maps-total-1.png" class="img-fluid figure-img" width="2100"></a></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(dat, <span class="at">x =</span> median_nitrogen, <span class="at">y =</span> SUDensityTotal_2017, <span class="at">style =</span> <span class="st">"fisher"</span>, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">finalplot</span>(<span class="at">xlab =</span> <span class="st">"Higher nitrogen"</span>, <span class="at">ylab =</span> <span class="st">"Higher stock"</span>) <span class="ot">-&gt;</span> finalPlotTotalNitrogen</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>finalPlotTotalNitrogen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="index_files/figure-html/bi-maps-total-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/bi-maps-total-2.png" class="img-fluid figure-img" width="2100"></a></p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatter-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Scatter plot of dairy density and median E. coli levels.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="sheep-density" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="sheep-density"><span class="header-section-number">5.2</span> Sheep density</h3>
+<section id="univariate-maps" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="univariate-maps"><span class="header-section-number">5</span> Univariate maps</h2>
+<p>Let’s take a look at our data sources using traditional maps which just use a single colour scale to display a single variable (<strong>?@fig-uni-map</strong>). They are not bad - but it’s pretty hard to image where has high dairy density and low <em>E. coli</em> (and vice versa) right? That’s where bivariate maps come in.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show univariate code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(median_ecoli) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">colour =</span> median_ecoli)) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_colour_viridis_c() +</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#0295ff"</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"E. coli concentrations"</span>) <span class="ot">-&gt;</span> ecoli_map</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">colour =</span> PropDairy_2017)) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#ff9400"</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_fill_viridis_c() +</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dairy density"</span>) <span class="ot">-&gt;</span> dairy_dens_map</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>ecoli_map <span class="sc">+</span> dairy_dens_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-uni-maps" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uni-maps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-uni-maps-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/fig-uni-maps-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uni-maps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Univariate maps of median E. coli levels and dairy density.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show prep code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>custom_pal4 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-1"</span> <span class="ot">=</span> <span class="st">"#f2f2f2"</span>, <span class="co"># low x, low y #ffffff</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-1"</span> <span class="ot">=</span> <span class="st">"#b9ddff"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-1"</span> <span class="ot">=</span> <span class="st">"#64bbff"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-1"</span> <span class="ot">=</span> <span class="st">"#0295ff"</span>, <span class="co"># high x, low y</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-2"</span> <span class="ot">=</span> <span class="st">"#fedcb7"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-2"</span> <span class="ot">=</span> <span class="st">"#b8b8b8"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-2"</span> <span class="ot">=</span> <span class="st">"#6691bb"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-2"</span> <span class="ot">=</span> <span class="st">"#0069ba"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-3"</span> <span class="ot">=</span> <span class="st">"#ffb869"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-3"</span> <span class="ot">=</span> <span class="st">"#b89168"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-3"</span> <span class="ot">=</span> <span class="st">"#676767"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-3"</span> <span class="ot">=</span> <span class="st">"#003867"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-4"</span> <span class="ot">=</span> <span class="st">"#ff9400"</span>, <span class="co"># low x, high y</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-4"</span> <span class="ot">=</span> <span class="st">"#bb6800"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-4"</span> <span class="ot">=</span> <span class="st">"#693800"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-4"</span> <span class="ot">=</span> <span class="st">"#000000"</span> <span class="co"># high x, high y</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># bi_pal(custom_pal4, dim = 4, flip_axes = TRUE)</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>finalplot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">xlab =</span> <span class="st">"Higher X"</span>, <span class="at">ylab =</span> <span class="st">"Higher Y"</span>) {</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">colour =</span> bi_class), <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>      <span class="co"># color = "white"</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bi_scale_color</span>(<span class="at">pal =</span> custom_pal4, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bi_theme</span>()</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  legend <span class="ot">&lt;-</span> <span class="fu">bi_legend</span>(</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">pal =</span> custom_pal4,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">dim =</span> <span class="dv">4</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> xlab,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> ylab,</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">7</span>,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_width =</span> <span class="fl">0.5</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>  finalPlot <span class="ot">&lt;-</span> <span class="fu">ggdraw</span>() <span class="sc">+</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw_plot</span>(map, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw_plot</span>(legend, <span class="fl">0.2</span>, .<span class="dv">65</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">1.8</span>)</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(finalPlot)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="bivariate-colour-scale-maps" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="bivariate-colour-scale-maps"><span class="header-section-number">6</span> Bivariate colour scale maps</h2>
+<section id="total-livestock-density" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="total-livestock-density"><span class="header-section-number">6.1</span> Total livestock density</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">E. coli</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Nitrogen</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(dat, <span class="at">x =</span> median_ecoli, <span class="at">y =</span> PropSheep_2017, <span class="at">style =</span> <span class="st">"fisher"</span>, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> <span class="fu">finalplot</span>(<span class="at">xlab =</span> <span class="st">"Higher E.coli"</span>, <span class="at">ylab =</span> <span class="st">"Higher sheep"</span>) <span class="ot">-&gt;</span> finalPlotSheepEcoli</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>finalPlotSheepEcoli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create classes</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  dat,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_ecoli,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> SUDensityTotal_2017,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>, <span class="at">dim =</span> <span class="dv">4</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalplot</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Higher E.coli"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Higher stock"</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> finalPlotTotalEcoli</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>finalPlotTotalEcoli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="index_files/figure-html/bi-maps-sheep-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/bi-maps-sheep-1.png" class="img-fluid figure-img" width="672"></a></p>
+<div id="fig-bi-maps-total-ecoli" class="quarto-figure quarto-figure-center quarto-float anchored" width="2100">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bi-maps-total-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" id="fig-bi-maps-total-ecoli" class="img-fluid figure-img" width="2100"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-total-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3
+</figcaption>
 </figure>
 </div>
 </div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(dat, <span class="at">x =</span> median_nitrogen, <span class="at">y =</span> PropSheep_2017, <span class="at">style =</span> <span class="st">"fisher"</span>, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> <span class="fu">finalplot</span>(<span class="at">xlab =</span> <span class="st">"Higher nitrogen"</span>, <span class="at">ylab =</span> <span class="st">"Higher sheep"</span>) <span class="ot">-&gt;</span> finalPlotSheepNitrogen</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>finalPlotSheepNitrogen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  dat,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_nitrogen,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> SUDensityTotal_2017,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">4</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalplot</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Higher nitrogen"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Higher stock"</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> finalPlotTotalNitrogen</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>finalPlotTotalNitrogen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="index_files/figure-html/bi-maps-sheep-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="index_files/figure-html/bi-maps-sheep-2.png" class="img-fluid figure-img" width="672"></a></p>
+<div id="fig-bi-maps-total-nitrogen" class="quarto-figure quarto-figure-center quarto-float anchored" width="2100">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bi-maps-total-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" id="fig-bi-maps-total-nitrogen" class="img-fluid figure-img" width="2100"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-total-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4
+</figcaption>
 </figure>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 </section>
-<section id="dairy-density" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="dairy-density"><span class="header-section-number">5.3</span> Dairy density</h3>
+<section id="sheep-density" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="sheep-density"><span class="header-section-number">6.2</span> Sheep density</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">E. coli</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Nitrogen</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create classes</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(dat, <span class="at">x =</span> median_ecoli, <span class="at">y =</span> PropDairy_2017, <span class="at">style =</span> <span class="st">"fisher"</span>, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">finalplot</span>(<span class="at">xlab =</span> <span class="st">"Higher E.coli"</span>, <span class="at">ylab =</span> <span class="st">"Higher dairy"</span>) <span class="ot">-&gt;</span> finalPlotDairyEcoli</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>finalPlotDairyEcoli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dat,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_ecoli,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> PropSheep_2017,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">4</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalplot</span>(</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Higher E.coli"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Higher sheep"</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> finalPlotSheepEcoli</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>finalPlotSheepEcoli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="index_files/figure-html/bi-maps-dairy-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="index_files/figure-html/bi-maps-dairy-1.png" class="img-fluid figure-img" width="672"></a></p>
+<div id="fig-bi-maps-sheep-ecoli" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bi-maps-sheep-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" id="fig-bi-maps-sheep-ecoli" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-sheep-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5
+</figcaption>
 </figure>
 </div>
 </div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(dat, <span class="at">x =</span> median_nitrogen, <span class="at">y =</span> PropDairy_2017, <span class="at">style =</span> <span class="st">"fisher"</span>, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">finalplot</span>(<span class="at">xlab =</span> <span class="st">"Higher nitrogen"</span>, <span class="at">ylab =</span> <span class="st">"Higher dairy"</span>) <span class="ot">-&gt;</span> finalPlotDairyNitrogen</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>finalPlotDairyNitrogen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  dat,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_nitrogen,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> PropSheep_2017,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">4</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalplot</span>(</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Higher nitrogen"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Higher sheep"</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> finalPlotSheepNitrogen</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>finalPlotSheepNitrogen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="index_files/figure-html/bi-maps-dairy-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="index_files/figure-html/bi-maps-dairy-2.png" class="img-fluid figure-img" width="672"></a></p>
+<div id="fig-bi-maps-sheep-nitrogen" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bi-maps-sheep-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" id="fig-bi-maps-sheep-nitrogen" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-sheep-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6
+</figcaption>
 </figure>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 </section>
-<section id="patchwork" class="level3" data-number="5.4">
-<h3 data-number="5.4" class="anchored" data-anchor-id="patchwork"><span class="header-section-number">5.4</span> Patchwork</h3>
+<section id="dairy-density" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="dairy-density"><span class="header-section-number">6.3</span> Dairy density</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">E. coli</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Nitrogen</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>finalPlotSheepEcoli <span class="sc">+</span> finalPlotDairyEcoli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create classes</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  dat,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_ecoli,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> PropDairy_2017,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">4</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalplot</span>(</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Higher E.coli"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Higher dairy"</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> finalPlotDairyEcoli</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>finalPlotDairyEcoli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="index_files/figure-html/bi-maps-patchwork-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="index_files/figure-html/bi-maps-patchwork-1.png" class="img-fluid figure-img" width="672"></a></p>
+<div id="fig-bi-maps-dairy-ecoli" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bi-maps-dairy-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" id="fig-bi-maps-dairy-ecoli" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-dairy-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7
+</figcaption>
 </figure>
 </div>
 </div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>finalPlotSheepNitrogen <span class="sc">+</span> finalPlotDairyNitrogen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  dat,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_nitrogen,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> PropDairy_2017,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">4</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalplot</span>(</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Higher nitrogen"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Higher dairy"</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> finalPlotDairyNitrogen</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>finalPlotDairyNitrogen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="index_files/figure-html/bi-maps-patchwork-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="index_files/figure-html/bi-maps-patchwork-2.png" class="img-fluid figure-img" width="672"></a></p>
+<div id="fig-bi-maps-dairy-nitrogen" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bi-maps-dairy-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" id="fig-bi-maps-dairy-nitrogen" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-dairy-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8
+</figcaption>
 </figure>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Scatter plot of dairy density and median E. coli levels.</span>
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Univariate maps of median E. coli levels and dairy density.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3: </span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;4: </span>
+<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;5: </span>
+<span class="glightbox-desc lightbox-desc-6">Figure&nbsp;6: </span>
+<span class="glightbox-desc lightbox-desc-7">Figure&nbsp;7: </span>
+<span class="glightbox-desc lightbox-desc-8">Figure&nbsp;8: </span>
+</div>
 </section>
 </section>
 
@@ -1024,7 +1206,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom","loop":false});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"openEffect":"zoom","descPosition":"bottom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

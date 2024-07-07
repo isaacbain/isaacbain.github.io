@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Isaac Bain">
-<meta name="dcterms.date" content="2024-07-06">
+<meta name="dcterms.date" content="2024-07-08">
 
-<title>Isaac Bain - Climate projections</title>
+<title>Isaac Bain - Updated climate change projections released</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,11 +158,11 @@ background: #00000000;
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Isaac Bain - Climate projections">
-<meta property="og:description" content="">
+<meta property="og:title" content="Isaac Bain - Updated climate change projections released">
+<meta property="og:description" content="New datasets available for download on Climate Data Initiative">
 <meta property="og:site_name" content="Isaac Bain">
-<meta name="twitter:title" content="Isaac Bain - Climate projections">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="Isaac Bain - Updated climate change projections released">
+<meta name="twitter:description" content="New datasets available for download on Climate Data Initiative">
 <meta name="twitter:creator" content="@IsaacBain">
 <meta name="twitter:card" content="summary">
 </head>
@@ -232,7 +232,8 @@ background: #00000000;
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Climate projections</h1>
+      <h1 class="title">Updated climate change projections released</h1>
+            <p class="subtitle lead">New datasets available for download on Climate Data Initiative</p>
                                 <div class="quarto-categories">
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">climate</div>
@@ -254,7 +255,7 @@ background: #00000000;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 6, 2024</p>
+        <p class="date">July 8, 2024</p>
       </div>
     </div>
     
@@ -294,8 +295,8 @@ background: #00000000;
 
 <section id="climate-change-projections" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="climate-change-projections"><span class="header-section-number">1</span> Climate change projections</h2>
-<p><a href="https://niwa.co.nz/">NIWA</a> have recently updated their national climate change projections for New Zealand, by downscaling six global models and three regional climate models through a series of machine learning approaches. This process was quite complex, with the model runs taking over a year to complete on a <em>literal</em> supercomputer, consuming a total of 12 million core hours). More details on the process can be found <a href="https://niwa.co.nz/climate-and-weather/updated-national-climate-projections-aotearoa-new-zealand">here</a>.</p>
-<p>This work was publically funded by the Ministry for Business, Innovation and Employment (MBIE) and Ministry for the Environment (MfE), making the model outputs freely available for everyone. The climate projections data can be downloaded in NetCDF format from the new Climate Data Initiative website: <a href="https://climatedata.environment.govt.nz/" class="uri">https://climatedata.environment.govt.nz/</a>.</p>
+<p><a href="https://niwa.co.nz/">NIWA</a> have recently updated their national climate change projections for New Zealand, by downscaling six global models and three regional climate models through a series of machine learning approaches. This process was quite complex, with the model runs taking over a year to complete on a <em>literal</em> supercomputer, consuming a total of 12 million core hours. More details on the downscaling process can be found <a href="https://niwa.co.nz/climate-and-weather/updated-national-climate-projections-aotearoa-new-zealand">here</a>.</p>
+<p>This work was publically funded by the Ministry for Business, Innovation and Employment (MBIE) and Ministry for the Environment (MfE), making the model outputs freely available for everyone to use. The climate projections data can be downloaded in NetCDF format from the new Climate Data Initiative website: <a href="https://climatedata.environment.govt.nz/" class="uri">https://climatedata.environment.govt.nz/</a>.</p>
 </section>
 <section id="a-quick-primer-on-ssp-and-rcp" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="a-quick-primer-on-ssp-and-rcp"><span class="header-section-number">2</span> A quick primer on SSP and RCP</h2>
@@ -434,8 +435,8 @@ background: #00000000;
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">paste0</span>(x, <span class="st">"%"</span>)) <span class="sc">+</span></span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Projected change in total rainfall under SSP-3 RCP-7.0"</span>,</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">'Period: {closest_state}'</span>,</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Change from </span><span class="sc">\n</span><span class="st">1986—2005"</span>,</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">'Baseline of 1986—2005 compared to: {closest_state}'</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Change from </span><span class="sc">\n</span><span class="st">baseline"</span>,</span>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>, </span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Latitude"</span></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
@@ -892,7 +893,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"openEffect":"zoom","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
