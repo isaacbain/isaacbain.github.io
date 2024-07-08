@@ -53,7 +53,7 @@ We all want river that are safe to swim in, clean water to drink, and healthy fr
 
 [^1]: <https://environment.govt.nz/publications/our-freshwater-2023/>
 
-Land use intensity is consistently identified as a key pressure on water quality in New Zealand.[^2] In both process-based and statistical models predicting water quality it is often the most, or one of the most, significant predictors of *E. coli* and nitrogen concentrations.
+In order for management actions to be effective, they should be based on predictive relationships between land use, stressor levels in receiving waters, and the ecological and cultural responses to these stressors.[^2] Land use intensity is consistently identified as a key pressure on water quality in New Zealand. In both process-based and statistical models predicting water quality it is often the most, or one of the most, significant predictors of *E. coli* and nitrogen concentrations.
 
 [^2]: Scott T. Larned, Jonathan Moores, Jenni Gadd, Brenda Baillie & Marc Schallenberg (2020) Evidence for the effects of land use on freshwater ecosystems in New Zealand, New Zealand Journal of Marine and Freshwater Research, 54:3, 551-591, DOI: 10.1080/00288330.2019.1695634
 
@@ -62,7 +62,7 @@ For example, in NIWA's most recent random forest modelling of river water qualit
 [^3]: <https://environment.govt.nz/assets/publications/spatial-modelling-river-quality.pdf>
 
 | Predictor rank | NNN predictors                   | *E. coli* predictors             |
-|------------------|---------------------------|---------------------------|
+|----------------|----------------------------------|----------------------------------|
 | 1              | Stock density                    | Catchment elevation              |
 | 2              | Dairy density                    | Rainfall variability             |
 | 3              | Beef density                     | Stock density                    |
@@ -74,18 +74,13 @@ For example, in NIWA's most recent random forest modelling of river water qualit
 | 9              | Number of warm days              | Local elevation                  |
 | 10             | Catchment elevation              | Catchment phosphorus             |
 
-\ 
-In this analysis, I'm interested in finding out which areas of New Zealand have relatively high or low levels of contamination given relativley high or low livestock density. Which lends itself well to visualising using a bivariate colour scale.
+: {.sm .hover}
 
-## Bivariate maps
+In this analysis, I'm interested in finding out which areas of New Zealand have relatively high or low levels of contamination given relatively high or low livestock density. Which lends itself well to visualising using a bivariate colour scale.
 
-Bivariate colour scale maps are thematic maps that use two different colour scales to simultaneously display two variables on the same map. This approach allows for the visualisation of the relationship between the two variables across a geographic space. Each colour on the map represents a unique combination of the two variables' values.
-
-Typically, one colour gradient is represented on the x-axis and the other on the y-axis. The intersection of these gradients results in a grid of colours, each representing a different combination of the two variables' values.
+Livestock density is, of course, only one of a number of interacting pressures determining the state of water quality. But this technique only stretches to exploring two variables at once... Trivariate maps would be almost impossible to interpret! I suggest exploring more than two variables at a time may require moving to a full modelling approach and looking at plots like [Partial Dependence Plots](https://scikit-learn.org/stable/modules/partial_dependence.html) (PDP) or [**SH**apley **A**dditive ex**P**lanations](https://towardsdatascience.com/using-shap-values-to-explain-how-your-machine-learning-model-works-732b3f40e137) (SHAP) values.
 
 ```{r}
-#| label: libraries
-#| output: false
 #| code-summary: "Show libraries code"
 
 library(tidyverse)
@@ -95,12 +90,62 @@ library(koordinatr)
 library(biscale)
 library(cowplot)
 library(patchwork)
+library(ggtext)
+
+custom_pal4 <- c(
+  "1-1" = "#f2f2f2", # low x, low y #ffffff
+  "2-1" = "#b9ddff",
+  "3-1" = "#64bbff",
+  "4-1" = "#0295ff", # high x, low y
+  "1-2" = "#fedcb7",
+  "2-2" = "#b8b8b8",
+  "3-2" = "#6691bb",
+  "4-2" = "#0069ba",
+  "1-3" = "#ffb869",
+  "2-3" = "#b89168",
+  "3-3" = "#676767",
+  "4-3" = "#003867",
+  "1-4" = "#ff9400", # low x, high y
+  "2-4" = "#bb6800",
+  "3-4" = "#693800",
+  "4-4" = "#000000" # high x, high y
+)
+```
+
+## A primer on bivariate maps
+
+```{r}
+#| label: fig-pal
+#| fig-cap: "Example of bivariate colour scale grid."
+#| column: margin
+#| echo: false
+
+bi_pal(custom_pal4, dim = 4, flip_axes = TRUE) +
+  theme_classic(base_size = 20) +
+  theme(
+    axis.text = element_blank(),  # Remove axis text
+    axis.ticks = element_blank(),  # Remove axis ticks
+    axis.line = element_blank()   # Remove axis lines
+  )
 
 ```
 
-## Data sources
+Bivariate colour scale maps are thematic maps that use two different colour scales to simultaneously display two variables on the same map. This approach allows for the visualisation of the relationship between the two variables across a geographic space. Each colour on the map represents a unique combination of the two variables' values.
 
-For this example, river water quality data modelled for every stream segment in the digital river network - this was done by NIWA on behalf of MfE.
+Typically, one colour gradient is represented on the x-axis and the other on the y-axis. The intersection of these gradients results in a grid of colours, each representing a different combination of the two variables' values (@fig-pal).
+
+## Livestock vs water quality
+
+### Data sources
+
+The data for stocking density, *E. coli*, and nitrogen were obtained from the NIWA's latest report on spatial modelling of river water quality in New Zealand. This report utilised monitoring data from 2016 to 2020 to develop model-based predictions for approximately 590,000 unique river segments across the national river network.
+[The study utilised random forest models to predict water quality states. This method involves using an ensemble of regression trees to improve prediction accuracy and handle complex, non-linear relationships between predictors and response variables.]{.aside}
+
+The data used in this analysis includes:
+
+-   **Stocking Density**: Represented as the number of livestock units per hectare. Derived from the Agricultural Production Survey hex grids.
+-   **E. coli**: Modelled concentrations measured in colony-forming units per 100 millilitres (cfu/100ml). E. coli serves as an indicator of faecal contamination in water bodies.
+-   **Nitrogen**: Modelled NNN concentrations measured in milligrams per litre (mg/L). Nitrogen levels are indicative of nutrient pollution, primarily from agricultural runoff.
 
 ```{r}
 #| label: import
@@ -150,33 +195,36 @@ ecoli |>
     SUDensityTotal_2017,
     StreamOrder
   ) |>
-  filter(StreamOrder > 1) -> dat
+  filter(StreamOrder > 1) |> 
+  # filter extreme outliers 
+  filter(SUDensityTotal_2017 < 40) -> dat
 ```
 
-## Livestock vs water quality
+### Scatter plot
 
-Let's start by looking at the relationship between dairy density and median *E. coli* levels. We can see that there is a positive relationship between the two variables - areas with higher dairy density tend to have higher *E. coli* levels (@fig-scatter-plot). 
+Let's start by looking at the relationship between total stock density and median *E. coli* levels. We can see that there is a positive relationship between the two variables - areas with stock density tend to have higher *E. coli* levels (@fig-scatter-plot).
 
-However, the relationship is not perfect - there are areas with high dairy density and low *E. coli* levels, and vice versa. This is where bivariate maps come in - they allow us to visualise the relationship between two variables across a geographic space.
+However, the relationship is not perfect - there are areas with high stock density and low *E. coli* levels, and vice versa. This is where bivariate maps come in - they allow us to visualise the relationship between two variables across a geographic space.
 
 ```{r}
 #| label: fig-scatter-plot
 #| fig-cap: "Scatter plot of dairy density and median E. coli levels."
 
 dat |> 
-  ggplot(aes(PropDairy_2017, median_ecoli)) +
+  ggplot(aes(SUDensityTotal_2017, median_ecoli)) +
   geom_point(alpha = 0.01, size = 1) +
   geom_smooth(method = "lm") +
   theme_minimal() +
   labs(x = "Dairy density", y = "Median E. coli")
 ```
-## Univariate maps
 
-Let's take a look at our data sources using traditional maps which just use a single colour scale to display a single variable (@fig-uni-maps). They are not bad - but it's pretty hard to imagine where has high dairy density and low *E. coli* (and vice versa) right? That's where bivariate maps come in.
+### Univariate maps
+
+Traditional maps use just a single colour scale to display a single variable (@fig-uni-maps). Displaying them side by side isn't a bad option - but it's pretty hard to make the comparison of locations with high dairy density and low *E. coli* (and vice versa) right? Well, that's where bivariate maps come in.
 
 ```{r}
 #| label: fig-uni-maps
-#| fig-cap: "Univariate maps of median E. coli levels and dairy density."
+#| fig-cap: "Univariate maps of median E. coli levels and dairy density. The maps show the distribution of each variable across New Zealand, with high values represented in the traditional farming regions."
 #| code-summary: "Show univariate code"
 
 dat |>
@@ -185,46 +233,37 @@ dat |>
   geom_sf(aes(colour = median_ecoli)) +
   # scale_colour_viridis_c() +
   scale_colour_gradient(low = "#f2f2f2", high = "#0295ff") +
-  theme_void() +
-  labs(title = "E. coli concentrations") -> ecoli_map
+  theme_void(base_size = 8) +
+  theme(plot.title = element_markdown(
+    family = "sans", size = rel(1.5), face = "bold", color = "#4b015b"
+  )) +
+  labs(
+    title = "E. coli concentrations",
+    colour = "Modelled median \nconcentration of E. coli \n(cfu/100mL)"
+  ) -> ecoli_map
 
 dat |>
   ggplot() +
-  geom_sf(aes(colour = PropDairy_2017)) +
+  geom_sf(aes(colour = SUDensityTotal_2017)) +
   scale_colour_gradient(low = "#f2f2f2", high = "#ff9400") +
   # scale_fill_viridis_c() +
-  theme_void() +
-  labs(title = "Dairy density") -> dairy_dens_map
+  theme_void(base_size = 8) +
+  theme(plot.title = element_markdown(
+    family = "sans", size = rel(1.5), face = "bold", color = "#4b015b"
+  )) +
+  labs(
+    title = "Total stock units",
+    colour = "Catchment density \nof total stock units \n(SU/ha)"
+  ) -> dairy_dens_map
 
 ecoli_map + dairy_dens_map
 ```
 
-## Bivariate colour scale maps
+### Bivariate colour scale maps
 
 ```{r}
 #| label: spatial-join
 #| code-summary: "Show prep code"
-
-custom_pal4 <- c(
-  "1-1" = "#f2f2f2", # low x, low y #ffffff
-  "2-1" = "#b9ddff",
-  "3-1" = "#64bbff",
-  "4-1" = "#0295ff", # high x, low y
-  "1-2" = "#fedcb7",
-  "2-2" = "#b8b8b8",
-  "3-2" = "#6691bb",
-  "4-2" = "#0069ba",
-  "1-3" = "#ffb869",
-  "2-3" = "#b89168",
-  "3-3" = "#676767",
-  "4-3" = "#003867",
-  "1-4" = "#ff9400", # low x, high y
-  "2-4" = "#bb6800",
-  "3-4" = "#693800",
-  "4-4" = "#000000" # high x, high y
-)
-
-# bi_pal(custom_pal4, dim = 4, flip_axes = TRUE)
 
 finalplot <- function(data, xlab = "Higher X", ylab = "Higher Y") {
   map <- ggplot() +
@@ -246,14 +285,14 @@ finalplot <- function(data, xlab = "Higher X", ylab = "Higher Y") {
 
   finalPlot <- ggdraw() +
     draw_plot(map, 0, 0, 1, 1) +
-    draw_plot(legend, 0.2, .65, 0.2, 0.2, 1.8)
+    draw_plot(legend, 0.2, .65, 0.2, 0.2, 1.25)
 
   return(finalPlot)
 }
   
 ```
 
-### Total livestock density
+#### Total livestock density
 
 ::: panel-tabset
 ## E. coli
@@ -270,7 +309,7 @@ bi_class(
 ) |>
   finalplot(
     xlab = "Higher E.coli",
-    ylab = "Higher stock"
+    ylab = "Higher Stock"
   ) -> finalPlotTotalEcoli
 
 finalPlotTotalEcoli
@@ -297,10 +336,9 @@ finalPlotTotalNitrogen
 ```
 :::
 
-### Sheep density
+#### Sheep density
 
 ::: panel-tabset
-
 ## E. coli
 
 ```{r}
@@ -342,11 +380,9 @@ finalPlotSheepNitrogen
 ```
 :::
 
-
-### Dairy density
+#### Dairy density
 
 ::: panel-tabset
-
 ## E. coli
 
 ```{r}

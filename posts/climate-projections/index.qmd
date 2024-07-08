@@ -119,10 +119,15 @@ baseline_nc_fname <- paste(ncpath, ncvar, baseline_nc_file, ".nc", sep="")
 baseline_data <- tidync(baseline_nc_fname) |>  
     hyper_tibble()
 
-ggplot(baseline_data, aes(x = longitude, y = latitude, fill = PR)) +
+ggplot(baseline_data, aes(x = longitude, y = latitude, fill = log(PR))) +
   geom_tile(width = 0.07, height = 0.07) +
   coord_map() +
-  scale_fill_viridis_c(labels = function(x) paste0(x, " mm")) +
+  scale_fill_distiller(
+    palette = "Blues",
+    direction = 1,
+    labels = function(x) paste0(round(exp(x), 0), " mm")) +
+    # breaks = log(c(300, 1000, 3000, 5000, 10000, 14500)),
+    # labels = c("300 mm", "1000 mm", "3000 mm", "5000 mm", "10000 mm", "14500 mm")) +
   theme_minimal(base_size = 8) +
   theme(plot.title = element_markdown(
     family = "sans", size = rel(1.5), face = "bold", color = "#4b015b"
@@ -183,8 +188,11 @@ pr_range <- range(all_data$PR, na.rm = TRUE)
 p <- ggplot(all_data, aes(x = longitude, y = latitude, fill = PR)) +
   geom_tile(width = 0.07, height = 0.07) +
   coord_map() +
-  scale_fill_viridis_c(limits = pr_range, direction = -1, 
-                       labels = function(x) paste0(x, "%")) +
+  scale_fill_distiller(
+    palette = "RdBu",
+    limits = pr_range,
+    direction = 1,
+    labels = function(x) paste0(x, "%")) +
   labs(
     title = "Projected change in total rainfall under SSP-3 RCP-7.0",
     subtitle = 'Baseline of 1986–2005 compared to: {closest_state}',
@@ -196,13 +204,13 @@ p <- ggplot(all_data, aes(x = longitude, y = latitude, fill = PR)) +
     "text", x = 168.546875, y = -42.836828, label = "The west gets \n", hjust = 0.5, color = "black", size = rel(3)
   ) +
   annotate(
-    "text", x = 168.546875, y = -43.036828, label = "wetter", hjust = 0.5, color = "#342263", size = rel(3.5), face = "bold"
+    "text", x = 168.546875, y = -43.036828, label = "wetter", hjust = 0.5, color = "#2257a0", size = rel(3.5), face = "bold"
   ) +
   annotate(
     "text", x = 177.873145, y = -40.89288, label = "The east gets \n", hjust = 0.5, color = "black", size = rel(3)
   ) +
   annotate(
-    "text", x = 177.873145, y = -41.09288, label = "drier", hjust = 0.5, color = "#d9df27", size = rel(3.5), face = "bold"
+    "text", x = 177.873145, y = -41.09288, label = "drier", hjust = 0.5, color = "#a61729", size = rel(3.5), face = "bold"
   ) +
   theme_minimal(base_size = 8) +
   theme(legend.position = "right") + 

@@ -167,7 +167,7 @@ background: #00000000;
 <meta name="twitter:card" content="summary">
 </head>
 
-<body class="floating nav-fixed">
+<body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -233,7 +233,7 @@ background: #00000000;
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Bivariate colour scales</h1>
-            <p class="subtitle lead">Livestock density and water quality</p>
+            <p class="subtitle lead">Mapping livestock density and water quality</p>
                                 <div class="quarto-categories">
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">water quality</div>
@@ -271,16 +271,15 @@ background: #00000000;
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#bivariate-maps" id="toc-bivariate-maps" class="nav-link" data-scroll-target="#bivariate-maps"><span class="header-section-number">2</span> Bivariate maps</a></li>
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources"><span class="header-section-number">3</span> Data sources</a></li>
-  <li><a href="#livestock-vs-water-quality" id="toc-livestock-vs-water-quality" class="nav-link" data-scroll-target="#livestock-vs-water-quality"><span class="header-section-number">4</span> Livestock vs water quality</a></li>
-  <li><a href="#univariate-maps" id="toc-univariate-maps" class="nav-link" data-scroll-target="#univariate-maps"><span class="header-section-number">5</span> Univariate maps</a></li>
-  <li><a href="#bivariate-colour-scale-maps" id="toc-bivariate-colour-scale-maps" class="nav-link" data-scroll-target="#bivariate-colour-scale-maps"><span class="header-section-number">6</span> Bivariate colour scale maps</a>
+  <li><a href="#a-primer-on-bivariate-maps" id="toc-a-primer-on-bivariate-maps" class="nav-link" data-scroll-target="#a-primer-on-bivariate-maps"><span class="header-section-number">2</span> A primer on bivariate maps</a></li>
+  <li><a href="#livestock-vs-water-quality" id="toc-livestock-vs-water-quality" class="nav-link" data-scroll-target="#livestock-vs-water-quality"><span class="header-section-number">3</span> Livestock vs water quality</a>
   <ul class="collapse">
-  <li><a href="#total-livestock-density" id="toc-total-livestock-density" class="nav-link" data-scroll-target="#total-livestock-density"><span class="header-section-number">6.1</span> Total livestock density</a></li>
-  <li><a href="#sheep-density" id="toc-sheep-density" class="nav-link" data-scroll-target="#sheep-density"><span class="header-section-number">6.2</span> Sheep density</a></li>
-  <li><a href="#dairy-density" id="toc-dairy-density" class="nav-link" data-scroll-target="#dairy-density"><span class="header-section-number">6.3</span> Dairy density</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources"><span class="header-section-number">3.1</span> Data sources</a></li>
+  <li><a href="#scatter-plot" id="toc-scatter-plot" class="nav-link" data-scroll-target="#scatter-plot"><span class="header-section-number">3.2</span> Scatter plot</a></li>
+  <li><a href="#univariate-maps" id="toc-univariate-maps" class="nav-link" data-scroll-target="#univariate-maps"><span class="header-section-number">3.3</span> Univariate maps</a></li>
+  <li><a href="#bivariate-colour-scale-maps" id="toc-bivariate-colour-scale-maps" class="nav-link" data-scroll-target="#bivariate-colour-scale-maps"><span class="header-section-number">3.4</span> Bivariate colour scale maps</a></li>
   </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4</span> Conclusion</a></li>
   </ul>
 </nav>
 </nav>
@@ -289,7 +288,7 @@ background: #00000000;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
@@ -298,19 +297,19 @@ background: #00000000;
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <p>We all want river that are safe to swim in, clean water to drink, and healthy freshwater ecosystems. But many areas in New Zealand are not living up to our communities’ expectations and require improvement.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Knowing where to target efforts to improve water quality is crucial, and a solid understanding of pressures is needed.</p>
-<p>Land use intensity is consistently identified as a key pressure on water quality in New Zealand.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In both process-based and statistical models predicting water quality it is often the most, or one of the most, significant predictors of <em>E. coli</em> and nitrogen concentrations.</p>
+<p>In order for management actions to be effective, they should be based on predictive relationships between land use, stressor levels in receiving waters, and the ecological and cultural responses to these stressors.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Land use intensity is consistently identified as a key pressure on water quality in New Zealand. In both process-based and statistical models predicting water quality it is often the most, or one of the most, significant predictors of <em>E. coli</em> and nitrogen concentrations.</p>
 <p>For example, in NIWA’s most recent random forest modelling of river water quality<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, the top ten most important predictors of nitrate + nitrite-nitrogen (NNN) and <em>E. coli</em> were:</p>
-<table class="table">
+<table class="table-sm table-hover small table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 37%">
-<col style="width: 37%">
+<col style="width: 19%">
+<col style="width: 40%">
+<col style="width: 40%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Predictor Rank</th>
-<th>NNN Predictors</th>
-<th><em>E. coli</em> Predictors</th>
+<th>Predictor rank</th>
+<th>NNN predictors</th>
+<th><em>E. coli</em> predictors</th>
 </tr>
 </thead>
 <tbody>
@@ -366,12 +365,8 @@ background: #00000000;
 </tr>
 </tbody>
 </table>
-<p>In this analysis, I’m interested in finding out which areas of New Zealand have relatively high or low levels of contamination given relativley high or low livestock density. Which lends itself well to visualising using a bivariate colour scale.</p>
-</section>
-<section id="bivariate-maps" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="bivariate-maps"><span class="header-section-number">2</span> Bivariate maps</h2>
-<p>Bivariate colour scale maps are thematic maps that use two different colour scales to simultaneously display two variables on the same map. This approach allows for the visualisation of the relationship between the two variables across a geographic space. Each colour on the map represents a unique combination of the two variables’ values.</p>
-<p>Typically, one colour gradient is represented on the x-axis and the other on the y-axis. The intersection of these gradients results in a grid of colours, each representing a different combination of the two variables’ values.</p>
+<p>In this analysis, I’m interested in finding out which areas of New Zealand have relatively high or low levels of contamination given relatively high or low livestock density. Which lends itself well to visualising using a bivariate colour scale.</p>
+<p>Livestock density is, of course, only one of a number of interacting pressures determining the state of water quality. But this technique only stretches to exploring two variables at once… Trivariate maps would be almost impossible to interpret! I suggest exploring more than two variables at a time may require moving to a full modelling approach and looking at plots like <a href="https://scikit-learn.org/stable/modules/partial_dependence.html">Partial Dependence Plots</a> (PDP) or <a href="https://towardsdatascience.com/using-shap-values-to-explain-how-your-machine-learning-model-works-732b3f40e137"><strong>SH</strong>apley <strong>A</strong>dditive ex<strong>P</strong>lanations</a> (SHAP) values.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show libraries code</summary>
@@ -381,13 +376,60 @@ background: #00000000;
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(koordinatr)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(biscale)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>custom_pal4 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-1"</span> <span class="ot">=</span> <span class="st">"#f2f2f2"</span>, <span class="co"># low x, low y #ffffff</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-1"</span> <span class="ot">=</span> <span class="st">"#b9ddff"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-1"</span> <span class="ot">=</span> <span class="st">"#64bbff"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-1"</span> <span class="ot">=</span> <span class="st">"#0295ff"</span>, <span class="co"># high x, low y</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-2"</span> <span class="ot">=</span> <span class="st">"#fedcb7"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-2"</span> <span class="ot">=</span> <span class="st">"#b8b8b8"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-2"</span> <span class="ot">=</span> <span class="st">"#6691bb"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-2"</span> <span class="ot">=</span> <span class="st">"#0069ba"</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-3"</span> <span class="ot">=</span> <span class="st">"#ffb869"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-3"</span> <span class="ot">=</span> <span class="st">"#b89168"</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-3"</span> <span class="ot">=</span> <span class="st">"#676767"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-3"</span> <span class="ot">=</span> <span class="st">"#003867"</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-4"</span> <span class="ot">=</span> <span class="st">"#ff9400"</span>, <span class="co"># low x, high y</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-4"</span> <span class="ot">=</span> <span class="st">"#bb6800"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-4"</span> <span class="ot">=</span> <span class="st">"#693800"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-4"</span> <span class="ot">=</span> <span class="st">"#000000"</span> <span class="co"># high x, high y</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="data-sources" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="data-sources"><span class="header-section-number">3</span> Data sources</h2>
-<p>For this example, river water quality data modelled for every stream segment in the digital river network - this was done by NIWA on behalf of MfE.</p>
+<section id="a-primer-on-bivariate-maps" class="level2 page-columns page-full" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="a-primer-on-bivariate-maps"><span class="header-section-number">2</span> A primer on bivariate maps</h2>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-pal" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-pal-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/fig-pal-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Example of bivariate colour scale grid.
+</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>Bivariate colour scale maps are thematic maps that use two different colour scales to simultaneously display two variables on the same map. This approach allows for the visualisation of the relationship between the two variables across a geographic space. Each colour on the map represents a unique combination of the two variables’ values.</p>
+<p>Typically, one colour gradient is represented on the x-axis and the other on the y-axis. The intersection of these gradients results in a grid of colours, each representing a different combination of the two variables’ values (<a href="#fig-pal" class="quarto-xref">Figure&nbsp;1</a>).</p>
+</section>
+<section id="livestock-vs-water-quality" class="level2 page-columns page-full" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="livestock-vs-water-quality"><span class="header-section-number">3</span> Livestock vs water quality</h2>
+<section id="data-sources" class="level3 page-columns page-full" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="data-sources"><span class="header-section-number">3.1</span> Data sources</h3>
+<div class="page-columns page-full"><p>The data for stocking density, <em>E. coli</em>, and nitrogen were obtained from the NIWA’s latest report on spatial modelling of river water quality in New Zealand. This report utilised monitoring data from 2016 to 2020 to develop model-based predictions for approximately 590,000 unique river segments across the national river network. </p><div class="no-row-height column-margin column-container"><span class="margin-aside">The study utilised random forest models to predict water quality states. This method involves using an ensemble of regression trees to improve prediction accuracy and handle complex, non-linear relationships between predictors and response variables.</span></div></div>
+<p>The data used in this analysis includes:</p>
+<ul>
+<li><strong>Stocking Density</strong>: Represented as the number of livestock units per hectare. Derived from the Agricultural Production Survey hex grids.</li>
+<li><strong>E. coli</strong>: Modelled concentrations measured in colony-forming units per 100 millilitres (cfu/100ml). E. coli serves as an indicator of faecal contamination in water bodies.</li>
+<li><strong>Nitrogen</strong>: Modelled NNN concentrations measured in milligrams per litre (mg/L). Nitrogen levels are indicative of nutrient pollution, primarily from agricultural runoff.</li>
+</ul>
 <div class="cell">
 <details class="code-fold">
 <summary>Show data sources code</summary>
@@ -433,19 +475,21 @@ background: #00000000;
 <span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    SUDensityTotal_2017,</span>
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    StreamOrder</span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(StreamOrder <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="ot">-&gt;</span> dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(StreamOrder <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filter extreme outliers </span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SUDensityTotal_2017 <span class="sc">&lt;</span> <span class="dv">40</span>) <span class="ot">-&gt;</span> dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="livestock-vs-water-quality" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="livestock-vs-water-quality"><span class="header-section-number">4</span> Livestock vs water quality</h2>
-<p>Let’s start by looking at the relationship between dairy density and median <em>E. coli</em> levels. We can see that there is a positive relationship between the two variables - areas with higher dairy density tend to have higher <em>E. coli</em> levels (<a href="#fig-scatter-plot" class="quarto-xref">Figure&nbsp;1</a>).</p>
-<p>However, the relationship is not perfect - there are areas with high dairy density and low <em>E. coli</em> levels, and vice versa. This is where bivariate maps come in - they allow us to visualise the relationship between two variables across a geographic space.</p>
+<section id="scatter-plot" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="scatter-plot"><span class="header-section-number">3.2</span> Scatter plot</h3>
+<p>Let’s start by looking at the relationship between total stock density and median <em>E. coli</em> levels. We can see that there is a positive relationship between the two variables - areas with stock density tend to have higher <em>E. coli</em> levels (<a href="#fig-scatter-plot" class="quarto-xref">Figure&nbsp;2</a>).</p>
+<p>However, the relationship is not perfect - there are areas with high stock density and low <em>E. coli</em> levels, and vice versa. This is where bivariate maps come in - they allow us to visualise the relationship between two variables across a geographic space.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PropDairy_2017, median_ecoli)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(SUDensityTotal_2017, median_ecoli)) <span class="sc">+</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.01</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
@@ -455,19 +499,19 @@ background: #00000000;
 <div id="fig-scatter-plot" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-scatter-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-scatter-plot-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/fig-scatter-plot-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-scatter-plot-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/fig-scatter-plot-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatter-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Scatter plot of dairy density and median E. coli levels.
+Figure&nbsp;2: Scatter plot of dairy density and median E. coli levels.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="univariate-maps" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="univariate-maps"><span class="header-section-number">5</span> Univariate maps</h2>
-<p>Let’s take a look at our data sources using traditional maps which just use a single colour scale to display a single variable (<strong>?@fig-uni-map</strong>). They are not bad - but it’s pretty hard to image where has high dairy density and low <em>E. coli</em> (and vice versa) right? That’s where bivariate maps come in.</p>
+<section id="univariate-maps" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="univariate-maps"><span class="header-section-number">3.3</span> Univariate maps</h3>
+<p>Traditional maps use just a single colour scale to display a single variable (<a href="#fig-uni-maps" class="quarto-xref">Figure&nbsp;3</a>). Displaying them side by side isn’t a bad option - but it’s pretty hard to make the comparison of locations with high dairy density and low <em>E. coli</em> (and vice versa) right? Well, that’s where bivariate maps come in.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show univariate code</summary>
@@ -477,87 +521,78 @@ Figure&nbsp;1: Scatter plot of dairy density and median E. coli levels.
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">colour =</span> median_ecoli)) <span class="sc">+</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_colour_viridis_c() +</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#0295ff"</span>) <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"E. coli concentrations"</span>) <span class="ot">-&gt;</span> ecoli_map</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">colour =</span> PropDairy_2017)) <span class="sc">+</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#ff9400"</span>) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_fill_viridis_c() +</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dairy density"</span>) <span class="ot">-&gt;</span> dairy_dens_map</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>ecoli_map <span class="sc">+</span> dairy_dens_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"sans"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.5</span>), <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#4b015b"</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"E. coli concentrations"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Modelled median </span><span class="sc">\n</span><span class="st">concentration of E. coli </span><span class="sc">\n</span><span class="st">(cfu/100mL)"</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> ecoli_map</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">colour =</span> SUDensityTotal_2017)) <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#ff9400"</span>) <span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_fill_viridis_c() +</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"sans"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.5</span>), <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#4b015b"</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Total stock units"</span>,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Catchment density </span><span class="sc">\n</span><span class="st">of total stock units </span><span class="sc">\n</span><span class="st">(SU/ha)"</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> dairy_dens_map</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>ecoli_map <span class="sc">+</span> dairy_dens_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-uni-maps" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-uni-maps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-uni-maps-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/fig-uni-maps-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-uni-maps-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/fig-uni-maps-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uni-maps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Univariate maps of median E. coli levels and dairy density.
+Figure&nbsp;3: Univariate maps of median E. coli levels and dairy density. The maps show the distribution of each variable across New Zealand, with high values represented in the traditional farming regions.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+</section>
+<section id="bivariate-colour-scale-maps" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="bivariate-colour-scale-maps"><span class="header-section-number">3.4</span> Bivariate colour scale maps</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Show prep code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>custom_pal4 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-1"</span> <span class="ot">=</span> <span class="st">"#f2f2f2"</span>, <span class="co"># low x, low y #ffffff</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-1"</span> <span class="ot">=</span> <span class="st">"#b9ddff"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-1"</span> <span class="ot">=</span> <span class="st">"#64bbff"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-1"</span> <span class="ot">=</span> <span class="st">"#0295ff"</span>, <span class="co"># high x, low y</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-2"</span> <span class="ot">=</span> <span class="st">"#fedcb7"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-2"</span> <span class="ot">=</span> <span class="st">"#b8b8b8"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-2"</span> <span class="ot">=</span> <span class="st">"#6691bb"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-2"</span> <span class="ot">=</span> <span class="st">"#0069ba"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-3"</span> <span class="ot">=</span> <span class="st">"#ffb869"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-3"</span> <span class="ot">=</span> <span class="st">"#b89168"</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-3"</span> <span class="ot">=</span> <span class="st">"#676767"</span>,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-3"</span> <span class="ot">=</span> <span class="st">"#003867"</span>,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1-4"</span> <span class="ot">=</span> <span class="st">"#ff9400"</span>, <span class="co"># low x, high y</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2-4"</span> <span class="ot">=</span> <span class="st">"#bb6800"</span>,</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3-4"</span> <span class="ot">=</span> <span class="st">"#693800"</span>,</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4-4"</span> <span class="ot">=</span> <span class="st">"#000000"</span> <span class="co"># high x, high y</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># bi_pal(custom_pal4, dim = 4, flip_axes = TRUE)</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>finalplot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">xlab =</span> <span class="st">"Higher X"</span>, <span class="at">ylab =</span> <span class="st">"Higher Y"</span>) {</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">colour =</span> bi_class), <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>      <span class="co"># color = "white"</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bi_scale_color</span>(<span class="at">pal =</span> custom_pal4, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bi_theme</span>()</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  legend <span class="ot">&lt;-</span> <span class="fu">bi_legend</span>(</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">pal =</span> custom_pal4,</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">dim =</span> <span class="dv">4</span>,</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> xlab,</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> ylab,</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">7</span>,</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_width =</span> <span class="fl">0.5</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>  finalPlot <span class="ot">&lt;-</span> <span class="fu">ggdraw</span>() <span class="sc">+</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw_plot</span>(map, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw_plot</span>(legend, <span class="fl">0.2</span>, .<span class="dv">65</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">1.8</span>)</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(finalPlot)</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>finalplot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">xlab =</span> <span class="st">"Higher X"</span>, <span class="at">ylab =</span> <span class="st">"Higher Y"</span>) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">colour =</span> bi_class), <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># color = "white"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bi_scale_color</span>(<span class="at">pal =</span> custom_pal4, <span class="at">dim =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bi_theme</span>()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  legend <span class="ot">&lt;-</span> <span class="fu">bi_legend</span>(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">pal =</span> custom_pal4,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">dim =</span> <span class="dv">4</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> xlab,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> ylab,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">7</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_width =</span> <span class="fl">0.5</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  finalPlot <span class="ot">&lt;-</span> <span class="fu">ggdraw</span>() <span class="sc">+</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw_plot</span>(map, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw_plot</span>(legend, <span class="fl">0.2</span>, .<span class="dv">65</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">1.25</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(finalPlot)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-<section id="bivariate-colour-scale-maps" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="bivariate-colour-scale-maps"><span class="header-section-number">6</span> Bivariate colour scale maps</h2>
-<section id="total-livestock-density" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="total-livestock-density"><span class="header-section-number">6.1</span> Total livestock density</h3>
+<section id="total-livestock-density" class="level4" data-number="3.4.1">
+<h4 data-number="3.4.1" class="anchored" data-anchor-id="total-livestock-density"><span class="header-section-number">3.4.1</span> Total livestock density</h4>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">E. coli</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Nitrogen</a></li></ul>
 <div class="tab-content">
@@ -573,8 +608,8 @@ Figure&nbsp;2: Univariate maps of median E. coli levels and dairy density.
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>, <span class="at">dim =</span> <span class="dv">4</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalplot</span>(</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Higher E.coli"</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Higher stock"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"E.coli"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Stock"</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> finalPlotTotalEcoli</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>finalPlotTotalEcoli</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -583,10 +618,10 @@ Figure&nbsp;2: Univariate maps of median E. coli levels and dairy density.
 <div id="fig-bi-maps-total-ecoli" class="quarto-figure quarto-figure-center quarto-float anchored" width="2100">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-total-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" id="fig-bi-maps-total-ecoli" class="img-fluid figure-img" width="2100"></a>
+<a href="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" id="fig-bi-maps-total-ecoli" class="img-fluid figure-img" width="2100"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-total-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3
+Figure&nbsp;4
 </figcaption>
 </figure>
 </div>
@@ -615,10 +650,10 @@ Figure&nbsp;3
 <div id="fig-bi-maps-total-nitrogen" class="quarto-figure quarto-figure-center quarto-float anchored" width="2100">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-total-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" id="fig-bi-maps-total-nitrogen" class="img-fluid figure-img" width="2100"></a>
+<a href="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" id="fig-bi-maps-total-nitrogen" class="img-fluid figure-img" width="2100"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-total-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4
+Figure&nbsp;5
 </figcaption>
 </figure>
 </div>
@@ -628,8 +663,8 @@ Figure&nbsp;4
 </div>
 </div>
 </section>
-<section id="sheep-density" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="sheep-density"><span class="header-section-number">6.2</span> Sheep density</h3>
+<section id="sheep-density" class="level4" data-number="3.4.2">
+<h4 data-number="3.4.2" class="anchored" data-anchor-id="sheep-density"><span class="header-section-number">3.4.2</span> Sheep density</h4>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">E. coli</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Nitrogen</a></li></ul>
 <div class="tab-content">
@@ -655,10 +690,10 @@ Figure&nbsp;4
 <div id="fig-bi-maps-sheep-ecoli" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-sheep-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" id="fig-bi-maps-sheep-ecoli" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" id="fig-bi-maps-sheep-ecoli" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-sheep-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5
+Figure&nbsp;6
 </figcaption>
 </figure>
 </div>
@@ -687,10 +722,10 @@ Figure&nbsp;5
 <div id="fig-bi-maps-sheep-nitrogen" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-sheep-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" id="fig-bi-maps-sheep-nitrogen" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" id="fig-bi-maps-sheep-nitrogen" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-sheep-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6
+Figure&nbsp;7
 </figcaption>
 </figure>
 </div>
@@ -700,8 +735,8 @@ Figure&nbsp;6
 </div>
 </div>
 </section>
-<section id="dairy-density" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="dairy-density"><span class="header-section-number">6.3</span> Dairy density</h3>
+<section id="dairy-density" class="level4" data-number="3.4.3">
+<h4 data-number="3.4.3" class="anchored" data-anchor-id="dairy-density"><span class="header-section-number">3.4.3</span> Dairy density</h4>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">E. coli</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Nitrogen</a></li></ul>
 <div class="tab-content">
@@ -728,10 +763,10 @@ Figure&nbsp;6
 <div id="fig-bi-maps-dairy-ecoli" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-dairy-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" id="fig-bi-maps-dairy-ecoli" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" id="fig-bi-maps-dairy-ecoli" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-dairy-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7
+Figure&nbsp;8
 </figcaption>
 </figure>
 </div>
@@ -760,10 +795,10 @@ Figure&nbsp;7
 <div id="fig-bi-maps-dairy-nitrogen" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-dairy-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" id="fig-bi-maps-dairy-nitrogen" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" id="fig-bi-maps-dairy-nitrogen" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bi-maps-dairy-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8
+Figure&nbsp;9
 </figcaption>
 </figure>
 </div>
@@ -772,19 +807,24 @@ Figure&nbsp;8
 </div>
 </div>
 </div>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4</span> Conclusion</h2>
 
 
 <div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Scatter plot of dairy density and median E. coli levels.</span>
-<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Univariate maps of median E. coli levels and dairy density.</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3: </span>
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Example of bivariate colour scale grid.</span>
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Scatter plot of dairy density and median E. coli levels.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3: Univariate maps of median E. coli levels and dairy density. The maps show the distribution of each variable across New Zealand, with high values represented in the traditional farming regions.</span>
 <span class="glightbox-desc lightbox-desc-4">Figure&nbsp;4: </span>
 <span class="glightbox-desc lightbox-desc-5">Figure&nbsp;5: </span>
 <span class="glightbox-desc lightbox-desc-6">Figure&nbsp;6: </span>
 <span class="glightbox-desc lightbox-desc-7">Figure&nbsp;7: </span>
 <span class="glightbox-desc lightbox-desc-8">Figure&nbsp;8: </span>
+<span class="glightbox-desc lightbox-desc-9">Figure&nbsp;9: </span>
 </div>
-</section>
 </section>
 
 
@@ -1206,7 +1246,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"openEffect":"zoom","descPosition":"bottom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
