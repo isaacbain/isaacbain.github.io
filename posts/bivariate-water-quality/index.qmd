@@ -62,7 +62,7 @@ For example, in NIWA's recent random forest modelling of river water quality[^3]
 [^3]: Snelder T. H., Fraser C., Larned S. T., Monaghan R., De Malmanche S., Whitehead A. L. (2022) Attribution of river water-quality trends to agricultural land use and climate variability in New Zealand. Marine and Freshwater Research 73, 1-19.
 
 | Predictor rank | NNN predictors                   | *E. coli* predictors             |
-|-------------------|---------------------------|---------------------------|
+|----------------|----------------------------------|----------------------------------|
 | 1              | Stock density                    | Catchment elevation              |
 | 2              | Dairy density                    | Rainfall variability             |
 | 3              | Beef density                     | Stock density                    |

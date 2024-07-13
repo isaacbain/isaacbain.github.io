@@ -1,6 +1,5 @@
 ---
 title: "Updated climate change projections released"
-subtitle: "New datasets available for download on Climate Data Initiative"
 author: "Isaac Bain"
 date: "2024-07-08"
 categories: [code, climate, maps]
