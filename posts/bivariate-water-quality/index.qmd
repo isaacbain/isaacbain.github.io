@@ -2,7 +2,7 @@
 title: "Bivariate colour scales"
 subtitle: "Mapping livestock density and water quality"
 author: "Isaac Bain"
-date: "2024-07-09"
+date: "2024-07-15"
 categories: [code, water quality, maps]
 execute:
   warning: false
@@ -49,36 +49,36 @@ include-in-header:
 
 ## Overview
 
-We all want river that are safe to swim in, clean water to drink, and healthy freshwater ecosystems. But many areas in New Zealand are not living up to our communities' expectations and require improvement.[^1] Knowing where to target efforts to improve water quality is crucial, and a solid understanding of pressures is needed.
+We all want rivers that are safe to swim in, clean water to drink, and healthy freshwater ecosystems. However, many areas in New Zealand are not meeting our communities' expectations and require improvement.[^1] Knowing where to target efforts to improve water quality is crucial, and a solid understanding of pressures is needed.
 
 [^1]: <https://environment.govt.nz/publications/our-freshwater-2023/>
 
-In order for management actions to be effective, they should be based on predictive relationships between land use, stressor levels in receiving waters, and the ecological and cultural responses to these stressors.[^2] Land use intensity is consistently identified as a key pressure on water quality in New Zealand. In both process-based and statistical models predicting water quality it is often the most, or one of the most, significant predictors of *E. coli* and nitrogen concentrations.
+For management actions to be effective, they should be based on predictive relationships between land use, stressor levels in receiving waters, and the ecological and cultural responses to these stressors.[^2] Land use intensity is consistently identified as a key pressure on water quality in New Zealand. In both process-based and statistical models predicting water quality, land use is a significant predictor of *E. coli* and nitrogen concentrations.
 
 [^2]: Scott T. Larned, Jonathan Moores, Jenni Gadd, Brenda Baillie & Marc Schallenberg (2020) Evidence for the effects of land use on freshwater ecosystems in New Zealand, New Zealand Journal of Marine and Freshwater Research, 54:3, 551-591, DOI: 10.1080/00288330.2019.1695634
 
-For example, in NIWA's most recent random forest modelling of river water quality[^3], the top ten most important predictors of nitrate + nitrite-nitrogen (NNN) and *E. coli* were:
+For example, in NIWA's recent random forest modelling of river water quality[^3], the top ten most important predictors of nitrate + nitrite-nitrogen (NNN) and *E. coli* were:
 
-[^3]: <https://environment.govt.nz/assets/publications/spatial-modelling-river-quality.pdf>
+[^3]: Snelder T. H., Fraser C., Larned S. T., Monaghan R., De Malmanche S., Whitehead A. L. (2022) Attribution of river water-quality trends to agricultural land use and climate variability in New Zealand. Marine and Freshwater Research 73, 1-19.
 
-| Predictor rank | NNN predictors                   | *E. coli* predictors             |
-|----------------|----------------------------------|----------------------------------|
-| 1              | Stock density                    | Catchment elevation              |
-| 2              | Dairy density                    | Rainfall variability             |
-| 3              | Beef density                     | Stock density                    |
-| 4              | Intensive agriculture land cover | Bare land cover                  |
-| 5              | Urban land cover                 | Intensive agriculture land cover |
-| 6              | Catchment slope                  | Slope                            |
-| 7              | Temperature Minimum              | Urban land cover                 |
-| 8              | Rainfall variability             | Exotic forest land cover         |
-| 9              | Number of warm days              | Local elevation                  |
-| 10             | Catchment elevation              | Catchment phosphorus             |
+| Predictor rank | NNN predictors | *E. coli* predictors |
+|-------------------|---------------------------|---------------------------|
+| 1 | Stock density | Catchment elevation |
+| 2 | Dairy density | Rainfall variability |
+| 3 | Beef density | Stock density |
+| 4 | Intensive agriculture land cover | Bare land cover |
+| 5 | Urban land cover | Intensive agriculture land cover |
+| 6 | Catchment slope | Slope |
+| 7 | Temperature Minimum | Urban land cover |
+| 8 | Rainfall variability | Exotic forest land cover |
+| 9 | Number of warm days | Local elevation |
+| 10 | Catchment elevation | Catchment phosphorus |
 
 : {.sm .hover}
 
-In this analysis, I'm interested in finding out which areas of New Zealand have relatively high or low levels of contamination given relatively high or low livestock density. Which lends itself well to visualising using a bivariate colour scale.
+In this analysis, I aim to identify which areas of New Zealand have relatively high or low levels of contamination given relatively high or low livestock density. This is well-suited for visualisation using a bivariate colour scale.
 
-Livestock density is, of course, only one of a number of interacting pressures determining the state of water quality. But this technique only stretches to exploring two variables at once... Trivariate maps would be almost impossible to interpret! I suggest exploring more than two variables at a time may require moving to a full modelling approach and looking at plots like [Partial Dependence Plots](https://scikit-learn.org/stable/modules/partial_dependence.html) (PDP) or [**SH**apley **A**dditive ex**P**lanations](https://towardsdatascience.com/using-shap-values-to-explain-how-your-machine-learning-model-works-732b3f40e137) (SHAP) values.
+Livestock density is one of many interacting pressures determining the state of water quality. This technique allows exploring two variables at once, but trivariate maps would be almost impossible to interpret! Exploring more than two variables at a time may require moving to a full modelling approach and looking at plots like [Partial Dependence Plots](https://scikit-learn.org/stable/modules/partial_dependence.html) (PDP) or [**SH**apley **A**dditive ex**P**lanations](https://towardsdatascience.com/using-shap-values-to-explain-how-your-machine-learning-model-works-732b3f40e137) (SHAP) values.
 
 ```{r}
 #| code-summary: "Show libraries code"
@@ -112,7 +112,7 @@ custom_pal4 <- c(
 )
 ```
 
-## A primer on bivariate maps
+## A Primer on Bivariate Maps
 
 ```{r}
 #| label: fig-pal
@@ -134,24 +134,23 @@ Bivariate colour scale maps are thematic maps that use two different colour scal
 
 Typically, one colour gradient is represented on the x-axis and the other on the y-axis. The intersection of these gradients results in a grid of colours, each representing a different combination of the two variables' values (@fig-pal).
 
-## Livestock vs water quality
+## Livestock vs Water Quality
 
 ### Data sources
 
-The data for stocking density, *E. coli*, and nitrogen were obtained from the NIWA's latest report on spatial modelling of river water quality in New Zealand. This report utilised monitoring data from 2016 to 2020 to develop model-based predictions for approximately 590,000 unique river segments across the national river network.
-[The study utilised random forest models to predict water quality states. This method involves using an ensemble of regression trees to improve prediction accuracy and handle complex, non-linear relationships between predictors and response variables.]{.aside}
+The data for stocking density, *E. coli*, and nitrogen (NNN) were obtained from the NIWA's latest report on spatial modelling of river water quality in New Zealand. This report utilised monitoring data from 2016 to 2020 to develop model-based predictions for approximately 590,000 unique river segments across the national river network. [The study utilised random forest models to predict water quality state. This method involves using an ensemble of regression trees to improve prediction accuracy and handle complex, non-linear relationships between predictors and response variables.]{.aside}
 
-The data used in this analysis includes:
+Selected data used in this analysis includes:
 
 -   **Stocking Density**: Represented as the number of livestock units per hectare. Derived from the Agricultural Production Survey hex grids.
--   **E. coli**: Modelled concentrations measured in colony-forming units per 100 millilitres (cfu/100ml). E. coli serves as an indicator of faecal contamination in water bodies.
+-   **E. coli**: Modelled concentrations measured in colony-forming units per 100 millilitres (cfu/100ml). *E. coli* serves as an indicator of faecal contamination in water bodies.
 -   **Nitrogen**: Modelled NNN concentrations measured in milligrams per litre (mg/L). Nitrogen levels are indicative of nutrient pollution, primarily from agricultural runoff.
 
 ```{r}
 #| label: import
 #| cache: true
 #| output: false
-#| code-summary: "Show data sources code"
+#| code-summary: "Show data code"
 
 # water quality
 # ecoli_raw <- get_layer_as_sf(Sys.getenv("mfe_api_key"), "mfe", "109886")
@@ -195,36 +194,36 @@ ecoli |>
     SUDensityTotal_2017,
     StreamOrder
   ) |>
-  filter(StreamOrder > 1) |> 
+  filter(StreamOrder > 2) |> 
   # filter extreme outliers 
   filter(SUDensityTotal_2017 < 40) -> dat
 ```
 
 ### Scatter plot
 
-Let's start by looking at the relationship between total stock density and median *E. coli* levels. We can see that there is a positive relationship between the two variables - areas with stock density tend to have higher *E. coli* levels (@fig-scatter-plot).
+Let's start by looking at the relationship between total stock density and median *E. coli* levels. There is a positive relationship between the two variables: areas with higher stock density tend to have higher *E. coli* levels (@fig-scatter-plot).
 
-However, the relationship is not perfect - there are areas with high stock density and low *E. coli* levels, and vice versa. This is where bivariate maps come in - they allow us to visualise the relationship between two variables across a geographic space.
+However, the relationship is not perfect. Some areas have high stock density and low *E. coli* levels, and vice versa. This is where bivariate maps come in, allowing us to visualise the relationship between two variables across a geographic space.
 
 ```{r}
 #| label: fig-scatter-plot
-#| fig-cap: "Scatter plot of dairy density and median E. coli levels."
+#| fig-cap: "Scatter plot of total stock density and median E. coli levels."
 
 dat |> 
   ggplot(aes(SUDensityTotal_2017, median_ecoli)) +
   geom_point(alpha = 0.01, size = 1) +
   geom_smooth(method = "lm") +
   theme_minimal() +
-  labs(x = "Dairy density", y = "Median E. coli")
+  labs(x = "Total stock density", y = "Median E. coli")
 ```
 
 ### Univariate maps
 
-Traditional maps use just a single colour scale to display a single variable (@fig-uni-maps). Displaying them side by side isn't a bad option - but it's pretty hard to make the comparison of locations with high dairy density and low *E. coli* (and vice versa) right? Well, that's where bivariate maps come in.
+Traditional maps use just a single colour scale to display a single variable (@fig-uni-maps). Displaying them side by side isn't a bad option, but it's challenging but it’s challenging to compare locations with high stock density and low *E. coli* (and vice versa). Bivariate maps address this challenge.
 
 ```{r}
 #| label: fig-uni-maps
-#| fig-cap: "Univariate maps of median E. coli levels and dairy density. The maps show the distribution of each variable across New Zealand, with high values represented in the traditional farming regions."
+#| fig-cap: "Univariate maps of median E. coli levels and dairy density."
 #| code-summary: "Show univariate code"
 
 dat |>
@@ -261,6 +260,8 @@ ecoli_map + dairy_dens_map
 
 ### Bivariate colour scale maps
 
+In these bivariate maps, we use two intersecting colour scales to display two variables on a single map. The colour scale is divided into four quadrants, each representing a combination of high and low values of the two variables.
+
 ```{r}
 #| label: spatial-join
 #| code-summary: "Show prep code"
@@ -294,11 +295,20 @@ finalplot <- function(data, xlab = "Higher X", ylab = "Higher Y") {
 
 #### Total livestock density
 
+Remembering from above that total livestock density is "the catchment density of total stock units (SU) on pastoral land", i.e. the density of all the livestock types on all the land upstream of the relevant river segment, where the water quality is also modelled.
+
 ::: panel-tabset
 ## E. coli
 
-```{r, dpi=300}
+Key findings:
+
+-   Large areas of the Waikato have both high stock density and high *E. coli* levels.
+-   Cities like Auckland, Wellington, and Christchurch have low stock density but high *E. coli* levels.
+-   Hawke's Bay has relatively high stock density but low *E. coli* levels.
+
+```{r}
 #| label: fig-bi-maps-total-ecoli
+#| fig-cap: "Bivariate maps of median E. coli levels and total stock density."
 
 # create classes
 bi_class(
@@ -310,15 +320,21 @@ bi_class(
   finalplot(
     xlab = "Higher E.coli",
     ylab = "Higher Stock"
-  ) -> finalPlotTotalEcoli
+  )
 
-finalPlotTotalEcoli
 ```
 
 ## Nitrogen
 
-```{r, dpi=300}
+Key findings:
+
+-   Canterbury and Southland have high nitrogen levels and high stock density, although some areas have high nitrogen levels and low stock density.
+-   Northland, Hawke's Bay, and eastern Wairarapa have low nitrogen levels and high stock density.
+-   Waikato and Taranaki have high stock densities but relatively lower nitrogen levels compared to Canterbury and Southland.
+
+```{r}
 #| label: fig-bi-maps-total-nitrogen
+#| fig-cap: "Bivariate maps of median nitrogen levels and total stock density."
 
 bi_class(
   dat,
@@ -338,11 +354,20 @@ finalPlotTotalNitrogen
 
 #### Sheep density
 
+We can also separate the total stock density predictor into specific livestock types to see if the patterns differ for different types of livestock. Here, we show the results for sheep density.
+
 ::: panel-tabset
 ## E. coli
 
+Key findings:
+
+-   Waikato and Northland have low sheep density for relatively high *E. coli* levels.
+-   The Canterbury high country, and Otago have high sheep density for relatively low *E. coli* levels.
+-   The Canterbury plains have low sheep density for a relatively high *E. coli* levels.
+
 ```{r}
 #| label: fig-bi-maps-sheep-ecoli
+#| fig-cap: "Bivariate maps of median E. coli levels and sheep density."
 
 bi_class(
   dat,
@@ -361,8 +386,14 @@ finalPlotSheepEcoli
 
 ## Nitrogen
 
+Key findings:
+
+-   Manawatū-Whanganui, Hawke's Bay, Wairarapa, Marlborough, Canterbury high country, and Otago have high sheep density but relatively low levels of nitrogen.
+-   The Canterbury plains, and to a lesser extent Waikato, have low sheep density but relatively high levels of nitrogen.
+
 ```{r}
 #| label: fig-bi-maps-sheep-nitrogen
+#| fig-cap: "Bivariate maps of median nitrogen levels and sheep density."
 
 bi_class(
   dat,
@@ -382,11 +413,20 @@ finalPlotSheepNitrogen
 
 #### Dairy density
 
+Here's a similar analysis for dairy density.
+
 ::: panel-tabset
 ## E. coli
 
+Key findings:
+
+-   Some areas of Northland, Waikato, Taranaki, Manawatū-Whanganui, and Southland have both high levels of dairy density and *E. coli*.
+-   Canterbury has high levels of dairy density throughout, but lower levels of *E. coli* in some rivers, presumably due to the large alpine-fed systems.
+-   Bay of Plenty and the West Coast have relatively lower *E. coli* levels for a given dairy density.
+
 ```{r}
 #| label: fig-bi-maps-dairy-ecoli
+#| fig-cap: "Bivariate maps of median E. coli levels and dairy density."
 
 # create classes
 bi_class(
@@ -406,8 +446,14 @@ finalPlotDairyEcoli
 
 ## Nitrogen
 
+Key findings:
+
+-   Canterbury, Southland, and the lower Waikato have both high dairy density and nitrogen levels.
+-   Hawke's Bay and eastern Wairarapa have medium level nitrogen levels despite having low dairy density.
+
 ```{r}
 #| label: fig-bi-maps-dairy-nitrogen
+#| fig-cap: "Bivariate maps of median nitrogen levels and dairy density."
 
 bi_class(
   dat,
@@ -425,4 +471,6 @@ finalPlotDairyNitrogen
 ```
 :::
 
-## Conclusion
+## Conclusions
+
+This analysis highlights the complex relationship between livestock density and water quality in New Zealand. Using bivariate colour scale maps, we can visually explore these interactions and identify regions where specific patterns emerge.
