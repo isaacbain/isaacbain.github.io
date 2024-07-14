@@ -208,7 +208,7 @@ ecoli |>
     SUDensityTotal_2017,
     StreamOrder
   ) |>
-  filter(StreamOrder > 2) |> 
+  filter(StreamOrder > 1) |> 
   # filter extreme outliers 
   filter(SUDensityTotal_2017 < 40) -> dat
 ```
@@ -221,7 +221,7 @@ However, the relationship is not perfect. Some areas have high stock density and
 
 ```{r}
 #| label: fig-scatter-plot
-#| fig-cap: "Scatter plot of total stock density and median *E. coli* levels."
+#| fig-cap: "Scatter plot of total stock density and modelled median *E. coli* levels in river segments."
 
 dat |> 
   ggplot(aes(SUDensityTotal_2017, median_ecoli)) +
@@ -235,44 +235,70 @@ dat |>
 
 ### Univariate maps
 
-Traditional maps use just a single colour scale to display a single variable (@fig-uni-maps). Displaying them side by side isn't a bad option, but it's challenging but it’s challenging to compare locations with high stock density and low *E. coli* (and vice versa). Bivariate maps address this challenge.
+Traditional maps use just a single colour scale to display a single variable (@fig-uni-maps). Displaying them side by side isn't a bad option, but it’s challenging to compare locations with high stock density and low *E. coli* or nitrogen (and vice versa). Bivariate maps address this challenge.
 
 ```{r}
 #| label: fig-uni-maps
-#| fig-cap: "Univariate maps of median E. coli levels and dairy density."
+#| fig-cap: "Univariate maps of modelled median *E. coli*, nitrogen levels in river segments and upstream stock density."
 #| code-summary: "Show univariate code"
+#| fig-height: 8
 
 dat |>
-  arrange(median_ecoli) |>
+  arrange(StreamOrder) |>
   ggplot() +
-  geom_sf(aes(colour = median_ecoli)) +
-  # scale_colour_viridis_c() +
+  geom_sf(aes(colour = median_ecoli, linewidth = log(StreamOrder)), show.legend = c(colour = TRUE, linewidth = FALSE)) +
+  scale_linewidth_continuous(range = c(0.1, 0.8)) +
   scale_colour_gradient(low = "#f2f2f2", high = "#0295ff") +
-  theme_void(base_size = 8) +
+  theme_void(base_size = 7) +
   theme(plot.title = element_markdown(
-    family = "sans", size = rel(1.5), face = "bold", color = "#4b015b"),
+    family = "sans", size = rel(1.5), face = "bold", color = "#4b015b", hjust = 0.5),
     legend.title = element_markdown()
   ) +
   labs(
     title = "*E. coli* concentrations",
-    colour = "Modelled median <br>concentration of *E. coli* <br>(cfu/100mL)"
+    colour = "*E.coli*<br>(cfu/100mL)"
   ) -> ecoli_map
 
 dat |>
+  arrange(StreamOrder) |>
   ggplot() +
-  geom_sf(aes(colour = SUDensityTotal_2017)) +
-  scale_colour_gradient(low = "#f2f2f2", high = "#ff9400") +
-  # scale_fill_viridis_c() +
-  theme_void(base_size = 8) +
+  geom_sf(aes(colour = median_nitrogen, linewidth = log(StreamOrder)), show.legend = c(colour = TRUE, linewidth = FALSE)) +
+  scale_linewidth_continuous(range = c(0.1, 0.8)) +
+  scale_colour_gradient(low = "#f2f2f2", high = "#0295ff") +
+  theme_void(base_size = 7) +
   theme(plot.title = element_markdown(
-    family = "sans", size = rel(1.5), face = "bold", color = "#4b015b"
+    family = "sans", size = rel(1.5), face = "bold", color = "#4b015b", hjust = 0.5),
+    legend.title = element_markdown()
+  ) +
+  labs(
+    title = "Nitrogen concentrations",
+    colour = "NNN<br>(mg/L)"
+  ) -> nnn_map
+
+dat |>
+  arrange(StreamOrder) |>
+  ggplot() +
+  geom_sf(aes(colour = SUDensityTotal_2017, linewidth = log(StreamOrder)), show.legend = c(colour = TRUE, linewidth = FALSE)) +
+  scale_linewidth_continuous(range = c(0.1, 0.8)) +
+  scale_colour_gradient(low = "#f2f2f2", high = "#ff9400") +
+  theme_void(base_size = 7) +
+  theme(plot.title = element_markdown(
+    family = "sans", size = rel(1.5), face = "bold", color = "#4b015b", hjust = 0.5
   )) +
   labs(
     title = "Total stock units",
-    colour = "Catchment density \nof total stock units \n(SU/ha)"
+    colour = "Total stock units \n(SU/ha)"
   ) -> dairy_dens_map
 
-ecoli_map + dairy_dens_map
+# Arrange the plots using cowplot
+top_row <- plot_grid(ecoli_map, nnn_map, ncol = 2)
+bottom_row <- plot_grid(dairy_dens_map, ncol = 1)
+
+# Combine top and bottom rows
+combined_plot <- plot_grid(top_row, bottom_row, ncol = 1, rel_heights = c(1, 1))
+
+# Print the combined plot
+print(combined_plot)
 ```
 
 ### Bivariate colour scale maps
@@ -284,12 +310,15 @@ In these bivariate maps, we use two intersecting colour scales to represent two 
 #| code-summary: "Show prep code"
 
 finalplot <- function(data, xlab = "Higher X", ylab = "Higher Y") {
-  map <- ggplot() +
+  map <- data |> 
+    arrange(StreamOrder) |>
+    ggplot() +
     geom_sf(
-      data = data, mapping = aes(colour = bi_class), linewidth = 0.5, show.legend = FALSE,
-      # color = "white"
-    ) +
+    mapping = aes(colour = bi_class,
+                           linewidth = log(StreamOrder)),
+                           show.legend = FALSE) +
     bi_scale_color(pal = custom_pal4, dim = 4) +
+    scale_linewidth_continuous(range = c(0.1, 0.8)) +
     bi_theme()
 
   legend <- bi_legend(
@@ -328,7 +357,8 @@ Key findings:
 
 ```{r}
 #| label: fig-bi-maps-total-ecoli
-#| fig-cap: "Bivariate maps of median *E. coli* levels and total stock density."
+#| fig-cap: "Bivariate maps of modelled median *E. coli* levels in river segments and total upstream stock density."
+#| fig-height: 8
 
 # create classes
 bi_class(
@@ -354,7 +384,8 @@ Key findings:
 
 ```{r}
 #| label: fig-bi-maps-total-nitrogen
-#| fig-cap: "Bivariate maps of median nitrogen levels and total stock density."
+#| fig-cap: "Bivariate maps of modelled median nitrogen levels in river segments and total upstream stock density."
+#| fig-height: 8
 
 bi_class(
   dat,
@@ -387,7 +418,8 @@ Key findings:
 
 ```{r}
 #| label: fig-bi-maps-sheep-ecoli
-#| fig-cap: "Bivariate maps of median *E. coli* levels and sheep density."
+#| fig-cap: "Bivariate maps of modelled median *E. coli* levels in river segments and upstream sheep density."
+#| fig-height: 8
 
 bi_class(
   dat,
@@ -413,7 +445,8 @@ Key findings:
 
 ```{r}
 #| label: fig-bi-maps-sheep-nitrogen
-#| fig-cap: "Bivariate maps of median nitrogen levels and sheep density."
+#| fig-cap: "Bivariate maps of modelled median nitrogen levels in river segments and upstream sheep density."
+#| fig-height: 8
 
 bi_class(
   dat,
@@ -441,12 +474,13 @@ Here's a similar analysis for dairy density.
 Key findings:
 
 -   Some areas of Northland, Waikato, Taranaki, Manawatū-Whanganui, and Southland have both high levels of dairy density and *E. coli*.
--   Canterbury has high levels of dairy density throughout, but lower levels of *E. coli* in some rivers, presumably due to the large alpine-fed systems.
+-   Canterbury has high levels of dairy density throughout, but lower levels of *E. coli* in some rivers, due to the large alpine-fed systems.
 -   Bay of Plenty and the West Coast have relatively lower *E. coli* levels for a given dairy density.
 
 ```{r}
 #| label: fig-bi-maps-dairy-ecoli
-#| fig-cap: "Bivariate maps of median *E. coli* levels and dairy density."
+#| fig-cap: "Bivariate maps of modelled median *E. coli* levels in river segments and upstream dairy density."
+#| fig-height: 8
 
 # create classes
 bi_class(
@@ -476,7 +510,8 @@ Key findings:
 
 ```{r}
 #| label: fig-bi-maps-dairy-nitrogen
-#| fig-cap: "Bivariate maps of median nitrogen levels and dairy density."
+#| fig-cap: "Bivariate maps of modelled median nitrogen levels in river segments and upstream dairy density."
+#| fig-height: 8
 
 bi_class(
   dat,
@@ -498,4 +533,4 @@ finalPlotDairyNitrogen
 
 This analysis highlights the complex relationship between livestock density and water quality in New Zealand (@fig-overview). Using bivariate colour scale maps, we can visually explore these interactions and identify regions where specific patterns emerge.
 
-![Bivariate comparison of upstream livestock density to river water quality.](labelled-total-ecoli.png){#fig-overview}
+![Bivariate comparison of upstream livestock density and modelled river water quality.](labelled-total-ecoli.png){#fig-overview}
