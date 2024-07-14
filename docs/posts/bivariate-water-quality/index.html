@@ -271,16 +271,17 @@ background: #00000000;
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#a-primer-on-bivariate-maps" id="toc-a-primer-on-bivariate-maps" class="nav-link" data-scroll-target="#a-primer-on-bivariate-maps"><span class="header-section-number">2</span> A Primer on Bivariate Maps</a></li>
-  <li><a href="#livestock-vs-water-quality" id="toc-livestock-vs-water-quality" class="nav-link" data-scroll-target="#livestock-vs-water-quality"><span class="header-section-number">3</span> Livestock vs Water Quality</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#aims" id="toc-aims" class="nav-link" data-scroll-target="#aims"><span class="header-section-number">2</span> Aims</a></li>
+  <li><a href="#a-primer-on-bivariate-maps" id="toc-a-primer-on-bivariate-maps" class="nav-link" data-scroll-target="#a-primer-on-bivariate-maps"><span class="header-section-number">3</span> A Primer on Bivariate Maps</a></li>
+  <li><a href="#livestock-vs-water-quality" id="toc-livestock-vs-water-quality" class="nav-link" data-scroll-target="#livestock-vs-water-quality"><span class="header-section-number">4</span> Livestock vs Water Quality</a>
   <ul class="collapse">
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources"><span class="header-section-number">3.1</span> Data sources</a></li>
-  <li><a href="#scatter-plot" id="toc-scatter-plot" class="nav-link" data-scroll-target="#scatter-plot"><span class="header-section-number">3.2</span> Scatter plot</a></li>
-  <li><a href="#univariate-maps" id="toc-univariate-maps" class="nav-link" data-scroll-target="#univariate-maps"><span class="header-section-number">3.3</span> Univariate maps</a></li>
-  <li><a href="#bivariate-colour-scale-maps" id="toc-bivariate-colour-scale-maps" class="nav-link" data-scroll-target="#bivariate-colour-scale-maps"><span class="header-section-number">3.4</span> Bivariate colour scale maps</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources"><span class="header-section-number">4.1</span> Data sources</a></li>
+  <li><a href="#scatter-plot" id="toc-scatter-plot" class="nav-link" data-scroll-target="#scatter-plot"><span class="header-section-number">4.2</span> Scatter plot</a></li>
+  <li><a href="#univariate-maps" id="toc-univariate-maps" class="nav-link" data-scroll-target="#univariate-maps"><span class="header-section-number">4.3</span> Univariate maps</a></li>
+  <li><a href="#bivariate-colour-scale-maps" id="toc-bivariate-colour-scale-maps" class="nav-link" data-scroll-target="#bivariate-colour-scale-maps"><span class="header-section-number">4.4</span> Bivariate colour scale maps</a></li>
   </ul></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">4</span> Conclusions</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">5</span> Conclusions</a></li>
   </ul>
 </nav>
 </nav>
@@ -295,16 +296,16 @@ background: #00000000;
 
 
 
-<section id="overview" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
 <p>We all want rivers that are safe to swim in, clean water to drink, and healthy freshwater ecosystems. However, many areas in New Zealand are not meeting our communities’ expectations and require improvement.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Knowing where to target efforts to improve water quality is crucial, and a solid understanding of pressures is needed.</p>
 <p>For management actions to be effective, they should be based on predictive relationships between land use, stressor levels in receiving waters, and the ecological and cultural responses to these stressors.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Land use intensity is consistently identified as a key pressure on water quality in New Zealand. In both process-based and statistical models predicting water quality, land use is a significant predictor of <em>E. coli</em> and nitrogen concentrations.</p>
 <p>For example, in NIWA’s recent random forest modelling of river water quality<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, the top ten most important predictors of nitrate + nitrite-nitrogen (NNN) and <em>E. coli</em> were:</p>
 <table class="table-sm table-hover small caption-top table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 36%">
-<col style="width: 36%">
+<col style="width: 25%">
+<col style="width: 37%">
+<col style="width: 37%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -366,8 +367,12 @@ background: #00000000;
 </tr>
 </tbody>
 </table>
+</section>
+<section id="aims" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="aims"><span class="header-section-number">2</span> Aims</h2>
 <p>In this analysis, I aim to identify which areas of New Zealand have relatively high or low levels of contamination given relatively high or low livestock density. This is well-suited for visualisation using a bivariate colour scale.</p>
-<p>Livestock density is one of many interacting pressures determining the state of water quality. This technique allows exploring two variables at once, but trivariate maps would be almost impossible to interpret! Exploring more than two variables at a time may require moving to a full modelling approach and looking at plots like <a href="https://scikit-learn.org/stable/modules/partial_dependence.html">Partial Dependence Plots</a> (PDP) or <a href="https://towardsdatascience.com/using-shap-values-to-explain-how-your-machine-learning-model-works-732b3f40e137"><strong>SH</strong>apley <strong>A</strong>dditive ex<strong>P</strong>lanations</a> (SHAP) values.</p>
+<p>Of course, this will be an exploration of just one of many interacting pressures determining the state of water quality. This technique allows exploring two variables at once, but trivariate maps would be almost impossible to interpret!</p>
+<p>Exploring more than two variables at a time may require moving to a full modelling approach and looking at plots like <a href="https://scikit-learn.org/stable/modules/partial_dependence.html">Partial Dependence Plots</a> (PDP) or <a href="https://towardsdatascience.com/using-shap-values-to-explain-how-your-machine-learning-model-works-732b3f40e137"><strong>SH</strong>apley <strong>A</strong>dditive ex<strong>P</strong>lanations</a> (SHAP) values.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show libraries code</summary>
@@ -401,8 +406,8 @@ background: #00000000;
 </details>
 </div>
 </section>
-<section id="a-primer-on-bivariate-maps" class="level2 page-columns page-full" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="a-primer-on-bivariate-maps"><span class="header-section-number">2</span> A Primer on Bivariate Maps</h2>
+<section id="a-primer-on-bivariate-maps" class="level2 page-columns page-full" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="a-primer-on-bivariate-maps"><span class="header-section-number">3</span> A Primer on Bivariate Maps</h2>
 <div class="cell page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
@@ -419,16 +424,29 @@ Figure&nbsp;1: Example of bivariate colour scale grid.
 </div></div></div>
 <p>Bivariate colour scale maps are thematic maps that use two different colour scales to simultaneously display two variables on the same map. This approach allows for the visualisation of the relationship between the two variables across a geographic space. Each colour on the map represents a unique combination of the two variables’ values.</p>
 <p>Typically, one colour gradient is represented on the x-axis and the other on the y-axis. The intersection of these gradients results in a grid of colours, each representing a different combination of the two variables’ values (<a href="#fig-pal" class="quarto-xref">Figure&nbsp;1</a>).</p>
+<p>For example, here’s a bivariate map of COVID-19 case and death rates in the USA (<a href="#fig-covid" class="quarto-xref">Figure&nbsp;2</a>).<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div id="fig-covid" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-covid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="covid-map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Bivariate choropleth map demonstrates the county wise distribution (per 10,000 population) of COVID-19 cases and deaths from January 22 to July 26, 2020. From Maiti et al.&nbsp;2021."><img src="covid-map.png" class="img-fluid figure-img" width="500"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-covid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Bivariate choropleth map demonstrates the county wise distribution (per 10,000 population) of COVID-19 cases and deaths from January 22 to July 26, 2020. From Maiti et al.&nbsp;2021.
+</figcaption>
+</figure>
+</div>
+<p>You can get a large amount of information from just this one map; you can see areas that had both low cases and death rates (doing very well), you can see areas that had an unexpectedly large number of deaths given a low number of cases (doing very poorly), you can see areas that had an unexpectedly low number of deaths given a high number of cases (doing quite well), etc.</p>
+<p>But I’m interested in applying this to explore the relationship between livestock density and water quality.</p>
 </section>
-<section id="livestock-vs-water-quality" class="level2 page-columns page-full" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="livestock-vs-water-quality"><span class="header-section-number">3</span> Livestock vs Water Quality</h2>
-<section id="data-sources" class="level3 page-columns page-full" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="data-sources"><span class="header-section-number">3.1</span> Data sources</h3>
+<section id="livestock-vs-water-quality" class="level2 page-columns page-full" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="livestock-vs-water-quality"><span class="header-section-number">4</span> Livestock vs Water Quality</h2>
+<section id="data-sources" class="level3 page-columns page-full" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="data-sources"><span class="header-section-number">4.1</span> Data sources</h3>
 <div class="page-columns page-full"><p>The data for stocking density, <em>E. coli</em>, and nitrogen (NNN) were obtained from the NIWA’s latest report on spatial modelling of river water quality in New Zealand. This report utilised monitoring data from 2016 to 2020 to develop model-based predictions for approximately 590,000 unique river segments across the national river network. </p><div class="no-row-height column-margin column-container"><span class="margin-aside">The study utilised random forest models to predict water quality state. This method involves using an ensemble of regression trees to improve prediction accuracy and handle complex, non-linear relationships between predictors and response variables.</span></div></div>
 <p>Selected data used in this analysis includes:</p>
 <ul>
 <li><strong>Stocking Density</strong>: Represented as the number of livestock units per hectare. Derived from the Agricultural Production Survey hex grids.</li>
-<li><strong>E. coli</strong>: Modelled concentrations measured in colony-forming units per 100 millilitres (cfu/100ml). <em>E. coli</em> serves as an indicator of faecal contamination in water bodies.</li>
+<li><strong><em>E. coli</em></strong>: Modelled concentrations measured in colony-forming units per 100 millilitres (cfu/100ml). <em>E. coli</em> serves as an indicator of faecal contamination in water bodies.</li>
 <li><strong>Nitrogen</strong>: Modelled NNN concentrations measured in milligrams per litre (mg/L). Nitrogen levels are indicative of nutrient pollution, primarily from agricultural runoff.</li>
 </ul>
 <div class="cell">
@@ -482,9 +500,9 @@ Figure&nbsp;1: Example of bivariate colour scale grid.
 </details>
 </div>
 </section>
-<section id="scatter-plot" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="scatter-plot"><span class="header-section-number">3.2</span> Scatter plot</h3>
-<p>Let’s start by looking at the relationship between total stock density and median <em>E. coli</em> levels. There is a positive relationship between the two variables: areas with higher stock density tend to have higher <em>E. coli</em> levels (<a href="#fig-scatter-plot" class="quarto-xref">Figure&nbsp;2</a>).</p>
+<section id="scatter-plot" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="scatter-plot"><span class="header-section-number">4.2</span> Scatter plot</h3>
+<p>Let’s start by looking at the relationship between total stock density and median <em>E. coli</em> levels. There is a positive relationship between the two variables: areas with higher stock density tend to have higher <em>E. coli</em> levels (<a href="#fig-scatter-plot" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <p>However, the relationship is not perfect. Some areas have high stock density and low <em>E. coli</em> levels, and vice versa. This is where bivariate maps come in, allowing us to visualise the relationship between two variables across a geographic space.</p>
 <div class="cell">
 <details class="code-fold">
@@ -494,25 +512,27 @@ Figure&nbsp;1: Example of bivariate colour scale grid.
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.01</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total stock density"</span>, <span class="at">y =</span> <span class="st">"Median E. coli"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_markdown</span>(),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_markdown</span>()) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total stock density (SU/ha)"</span>, <span class="at">y =</span> <span class="st">"Median *E. coli* (cfu/100mL)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-scatter-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-scatter-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-scatter-plot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Scatter plot of total stock density and median E. coli levels."><img src="index_files/figure-html/fig-scatter-plot-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-scatter-plot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Scatter plot of total stock density and median E. coli levels."><img src="index_files/figure-html/fig-scatter-plot-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatter-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Scatter plot of total stock density and median E. coli levels.
+Figure&nbsp;3: Scatter plot of total stock density and median <em>E. coli</em> levels.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="univariate-maps" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="univariate-maps"><span class="header-section-number">3.3</span> Univariate maps</h3>
-<p>Traditional maps use just a single colour scale to display a single variable (<a href="#fig-uni-maps" class="quarto-xref">Figure&nbsp;3</a>). Displaying them side by side isn’t a bad option, but it’s challenging but it’s challenging to compare locations with high stock density and low <em>E. coli</em> (and vice versa). Bivariate maps address this challenge.</p>
+<section id="univariate-maps" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="univariate-maps"><span class="header-section-number">4.3</span> Univariate maps</h3>
+<p>Traditional maps use just a single colour scale to display a single variable (<a href="#fig-uni-maps" class="quarto-xref">Figure&nbsp;4</a>). Displaying them side by side isn’t a bad option, but it’s challenging but it’s challenging to compare locations with high stock density and low <em>E. coli</em> (and vice versa). Bivariate maps address this challenge.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show univariate code</summary>
@@ -524,46 +544,47 @@ Figure&nbsp;2: Scatter plot of total stock density and median E. coli levels.
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#0295ff"</span>) <span class="sc">+</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"sans"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.5</span>), <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#4b015b"</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"E. coli concentrations"</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Modelled median </span><span class="sc">\n</span><span class="st">concentration of E. coli </span><span class="sc">\n</span><span class="st">(cfu/100mL)"</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> ecoli_map</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">colour =</span> SUDensityTotal_2017)) <span class="sc">+</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#ff9400"</span>) <span class="sc">+</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_fill_viridis_c() +</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"sans"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.5</span>), <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#4b015b"</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Total stock units"</span>,</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Catchment density </span><span class="sc">\n</span><span class="st">of total stock units </span><span class="sc">\n</span><span class="st">(SU/ha)"</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> dairy_dens_map</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>ecoli_map <span class="sc">+</span> dairy_dens_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"sans"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.5</span>), <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#4b015b"</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_markdown</span>()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"*E. coli* concentrations"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Modelled median &lt;br&gt;concentration of *E. coli* &lt;br&gt;(cfu/100mL)"</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> ecoli_map</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">colour =</span> SUDensityTotal_2017)) <span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">"#f2f2f2"</span>, <span class="at">high =</span> <span class="st">"#ff9400"</span>) <span class="sc">+</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_fill_viridis_c() +</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"sans"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.5</span>), <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#4b015b"</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Total stock units"</span>,</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Catchment density </span><span class="sc">\n</span><span class="st">of total stock units </span><span class="sc">\n</span><span class="st">(SU/ha)"</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> dairy_dens_map</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>ecoli_map <span class="sc">+</span> dairy_dens_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-uni-maps" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-uni-maps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-uni-maps-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Univariate maps of median E. coli levels and dairy density."><img src="index_files/figure-html/fig-uni-maps-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-uni-maps-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Univariate maps of median E. coli levels and dairy density."><img src="index_files/figure-html/fig-uni-maps-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uni-maps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Univariate maps of median E. coli levels and dairy density.
+Figure&nbsp;4: Univariate maps of median E. coli levels and dairy density.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="bivariate-colour-scale-maps" class="level3" data-number="3.4">
-<h3 data-number="3.4" class="anchored" data-anchor-id="bivariate-colour-scale-maps"><span class="header-section-number">3.4</span> Bivariate colour scale maps</h3>
-<p>In these bivariate maps, we use two intersecting colour scales to display two variables on a single map. The colour scale is divided into four quadrants, each representing a combination of high and low values of the two variables.</p>
+<section id="bivariate-colour-scale-maps" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="bivariate-colour-scale-maps"><span class="header-section-number">4.4</span> Bivariate colour scale maps</h3>
+<p>In these bivariate maps, we use two intersecting colour scales to represent two variables on a single map. The colour scale is divided into four quadrants, each representing a combination of high and low values of the two variables.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show prep code</summary>
@@ -593,11 +614,11 @@ Figure&nbsp;3: Univariate maps of median E. coli levels and dairy density.
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="total-livestock-density" class="level4" data-number="3.4.1">
-<h4 data-number="3.4.1" class="anchored" data-anchor-id="total-livestock-density"><span class="header-section-number">3.4.1</span> Total livestock density</h4>
-<p>Remembering from above that total livestock density is “the catchment density of total stock units (SU) on pastoral land”, i.e.&nbsp;the density of all the livestock types on all the land upstream of the relevant river segment, where the water quality is also modelled.</p>
+<section id="total-livestock-density" class="level4" data-number="4.4.1">
+<h4 data-number="4.4.1" class="anchored" data-anchor-id="total-livestock-density"><span class="header-section-number">4.4.1</span> Total livestock density</h4>
+<p>Remembering from above that total livestock density is “<em>the catchment density of total stock units (SU) on pastoral land</em>”, i.e.&nbsp;the density of all the livestock types on all the land upstream of the relevant river segment (where the water quality is also modelled).</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">E. coli</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Nitrogen</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true"><em>E. coli</em></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Nitrogen</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>Key findings:</p>
@@ -625,10 +646,10 @@ Figure&nbsp;3: Univariate maps of median E. coli levels and dairy density.
 <div id="fig-bi-maps-total-ecoli" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-total-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Bivariate maps of median E. coli levels and total stock density."><img src="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Bivariate maps of median E. coli levels and total stock density."><img src="index_files/figure-html/fig-bi-maps-total-ecoli-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bi-maps-total-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Bivariate maps of median E. coli levels and total stock density.
+Figure&nbsp;5: Bivariate maps of median <em>E. coli</em> levels and total stock density.
 </figcaption>
 </figure>
 </div>
@@ -663,10 +684,10 @@ Figure&nbsp;4: Bivariate maps of median E. coli levels and total stock density.
 <div id="fig-bi-maps-total-nitrogen" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-total-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Bivariate maps of median nitrogen levels and total stock density."><img src="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Bivariate maps of median nitrogen levels and total stock density."><img src="index_files/figure-html/fig-bi-maps-total-nitrogen-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bi-maps-total-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Bivariate maps of median nitrogen levels and total stock density.
+Figure&nbsp;6: Bivariate maps of median nitrogen levels and total stock density.
 </figcaption>
 </figure>
 </div>
@@ -676,11 +697,11 @@ Figure&nbsp;5: Bivariate maps of median nitrogen levels and total stock density.
 </div>
 </div>
 </section>
-<section id="sheep-density" class="level4" data-number="3.4.2">
-<h4 data-number="3.4.2" class="anchored" data-anchor-id="sheep-density"><span class="header-section-number">3.4.2</span> Sheep density</h4>
+<section id="sheep-density" class="level4" data-number="4.4.2">
+<h4 data-number="4.4.2" class="anchored" data-anchor-id="sheep-density"><span class="header-section-number">4.4.2</span> Sheep density</h4>
 <p>We can also separate the total stock density predictor into specific livestock types to see if the patterns differ for different types of livestock. Here, we show the results for sheep density.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">E. coli</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Nitrogen</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true"><em>E. coli</em></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Nitrogen</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p>Key findings:</p>
@@ -710,10 +731,10 @@ Figure&nbsp;5: Bivariate maps of median nitrogen levels and total stock density.
 <div id="fig-bi-maps-sheep-ecoli" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-sheep-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Bivariate maps of median E. coli levels and sheep density."><img src="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Bivariate maps of median E. coli levels and sheep density."><img src="index_files/figure-html/fig-bi-maps-sheep-ecoli-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bi-maps-sheep-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Bivariate maps of median E. coli levels and sheep density.
+Figure&nbsp;7: Bivariate maps of median <em>E. coli</em> levels and sheep density.
 </figcaption>
 </figure>
 </div>
@@ -747,10 +768,10 @@ Figure&nbsp;6: Bivariate maps of median E. coli levels and sheep density.
 <div id="fig-bi-maps-sheep-nitrogen" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-sheep-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Bivariate maps of median nitrogen levels and sheep density."><img src="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Bivariate maps of median nitrogen levels and sheep density."><img src="index_files/figure-html/fig-bi-maps-sheep-nitrogen-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bi-maps-sheep-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Bivariate maps of median nitrogen levels and sheep density.
+Figure&nbsp;8: Bivariate maps of median nitrogen levels and sheep density.
 </figcaption>
 </figure>
 </div>
@@ -760,11 +781,11 @@ Figure&nbsp;7: Bivariate maps of median nitrogen levels and sheep density.
 </div>
 </div>
 </section>
-<section id="dairy-density" class="level4" data-number="3.4.3">
-<h4 data-number="3.4.3" class="anchored" data-anchor-id="dairy-density"><span class="header-section-number">3.4.3</span> Dairy density</h4>
+<section id="dairy-density" class="level4" data-number="4.4.3">
+<h4 data-number="4.4.3" class="anchored" data-anchor-id="dairy-density"><span class="header-section-number">4.4.3</span> Dairy density</h4>
 <p>Here’s a similar analysis for dairy density.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">E. coli</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Nitrogen</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true"><em>E. coli</em></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Nitrogen</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <p>Key findings:</p>
@@ -795,10 +816,10 @@ Figure&nbsp;7: Bivariate maps of median nitrogen levels and sheep density.
 <div id="fig-bi-maps-dairy-ecoli" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-dairy-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Bivariate maps of median E. coli levels and dairy density."><img src="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Bivariate maps of median E. coli levels and dairy density."><img src="index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bi-maps-dairy-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Bivariate maps of median E. coli levels and dairy density.
+Figure&nbsp;9: Bivariate maps of median <em>E. coli</em> levels and dairy density.
 </figcaption>
 </figure>
 </div>
@@ -832,10 +853,10 @@ Figure&nbsp;8: Bivariate maps of median E. coli levels and dairy density.
 <div id="fig-bi-maps-dairy-nitrogen" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bi-maps-dairy-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Bivariate maps of median nitrogen levels and dairy density."><img src="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Bivariate maps of median nitrogen levels and dairy density."><img src="index_files/figure-html/fig-bi-maps-dairy-nitrogen-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bi-maps-dairy-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Bivariate maps of median nitrogen levels and dairy density.
+Figure&nbsp;10: Bivariate maps of median nitrogen levels and dairy density.
 </figcaption>
 </figure>
 </div>
@@ -847,9 +868,19 @@ Figure&nbsp;9: Bivariate maps of median nitrogen levels and dairy density.
 </section>
 </section>
 </section>
-<section id="conclusions" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">4</span> Conclusions</h2>
-<p>This analysis highlights the complex relationship between livestock density and water quality in New Zealand. Using bivariate colour scale maps, we can visually explore these interactions and identify regions where specific patterns emerge.</p>
+<section id="conclusions" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">5</span> Conclusions</h2>
+<p>This analysis highlights the complex relationship between livestock density and water quality in New Zealand (<a href="#fig-overview" class="quarto-xref">Figure&nbsp;11</a>). Using bivariate colour scale maps, we can visually explore these interactions and identify regions where specific patterns emerge.</p>
+<div id="fig-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="labelled-total-ecoli.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Bivariate comparison of upstream livestock density to river water quality."><img src="labelled-total-ecoli.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Bivariate comparison of upstream livestock density to river water quality.
+</figcaption>
+</figure>
+</div>
 
 
 </section>
@@ -861,6 +892,7 @@ Figure&nbsp;9: Bivariate maps of median nitrogen levels and dairy density.
 <li id="fn1"><p><a href="https://environment.govt.nz/publications/our-freshwater-2023/" class="uri">https://environment.govt.nz/publications/our-freshwater-2023/</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Scott T. Larned, Jonathan Moores, Jenni Gadd, Brenda Baillie &amp; Marc Schallenberg (2020) Evidence for the effects of land use on freshwater ecosystems in New Zealand, New Zealand Journal of Marine and Freshwater Research, 54:3, 551-591, DOI: 10.1080/00288330.2019.1695634<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Snelder T. H., Fraser C., Larned S. T., Monaghan R., De Malmanche S., Whitehead A. L. (2022) Attribution of river water-quality trends to agricultural land use and climate variability in New Zealand. Marine and Freshwater Research 73, 1-19.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Maiti, Arabinda &amp; Zhang, Qi &amp; Sannigrahi, Srikanta &amp; Pramanik, Suvamoy &amp; Chakraborti, Suman &amp; Cerdà, Artemi &amp; Pilla, Francesco. (2021). Exploring spatiotemporal effects of the driving factors on COVID-19 incidences in the contiguous United States. Sustainable Cities and Society. 68. 102784.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1284,7 +1316,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","loop":false,"selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
