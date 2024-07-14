@@ -1,8 +1,7 @@
 ---
-title: "Bivariate colour scales"
-subtitle: "Mapping livestock density and water quality"
+title: "Bivariate maps for water quality"
 author: "Isaac Bain"
-date: "2024-07-15"
+date: "2024-07-16"
 categories: [code, water quality, maps]
 execute:
   warning: false
@@ -323,6 +322,9 @@ Key findings:
 -   Large areas of the Waikato have both high stock density and high *E. coli* levels.
 -   Cities like Auckland, Wellington, and Christchurch have low stock density but high *E. coli* levels.
 -   Hawke's Bay has relatively high stock density but low *E. coli* levels.
+\
+\
+\
 
 ```{r}
 #| label: fig-bi-maps-total-ecoli
@@ -468,6 +470,9 @@ Key findings:
 
 -   Canterbury, Southland, and the lower Waikato have both high dairy density and nitrogen levels.
 -   Hawke's Bay and eastern Wairarapa have medium level nitrogen levels despite having low dairy density.
+\
+\
+\
 
 ```{r}
 #| label: fig-bi-maps-dairy-nitrogen
