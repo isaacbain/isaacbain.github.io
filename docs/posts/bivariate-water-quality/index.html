@@ -302,9 +302,9 @@ background: #00000000;
 <p>For example, in NIWA’s recent random forest modelling of river water quality<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, the top ten most important predictors of nitrate + nitrite-nitrogen (NNN) and <em>E. coli</em> were:</p>
 <table class="table-sm table-hover small caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 37%">
-<col style="width: 37%">
+<col style="width: 26%">
+<col style="width: 36%">
+<col style="width: 36%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -903,14 +903,27 @@ Figure&nbsp;10: Bivariate maps of modelled median nitrogen levels in river segme
 </section>
 <section id="conclusions" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">5</span> Conclusions</h2>
-<p>This analysis highlights the complex relationship between livestock density and water quality in New Zealand (<a href="#fig-overview" class="quarto-xref">Figure&nbsp;11</a>). Using bivariate colour scale maps, we can visually explore these interactions and identify regions where specific patterns emerge.</p>
-<div id="fig-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>This analysis highlights the complex relationship between livestock density and water quality in New Zealand, for both <em>E. coli</em> (<a href="#fig-ecoli" class="quarto-xref">Figure&nbsp;11</a>) and nitrogen (<a href="#fig-nitrogen" class="quarto-xref">Figure&nbsp;12</a>). Using bivariate colour scale maps, we can visually explore these interactions and identify regions where specific patterns emerge.</p>
+<p>This analysis only covered two water quality indicators, but the same approach can be used for other indicators, such as phosphorus or sediment. Likewise, livestock density is only one of many predictors that can be used to model water quality. Other predictors, such as urban land use, climate, and topography, can also be visualised in similar way to provide a more comprehensive understanding of the relationship between livestock density and water quality.</p>
+<div id="fig-ecoli" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="labelled-total-ecoli.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Bivariate comparison of upstream livestock density and modelled river water quality."><img src="labelled-total-ecoli.png" class="img-fluid figure-img"></a>
+<div aria-describedby="fig-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="labelled-total-ecoli.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Bivariate comparison of upstream livestock density and modelled E. coli concentration in river segments."><img src="labelled-total-ecoli.png" class="img-fluid figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: Bivariate comparison of upstream livestock density and modelled river water quality.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ecoli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Bivariate comparison of upstream livestock density and modelled <em>E. coli</em> concentration in river segments.
+</figcaption>
+</figure>
+</div>
+<p><br>
+</p>
+<div id="fig-nitrogen" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="labelled-total-nitrogen.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: Bivariate comparison of upstream livestock density and modelled nitrogen concentration in river segments."><img src="labelled-total-nitrogen.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nitrogen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Bivariate comparison of upstream livestock density and modelled nitrogen concentration in river segments.
 </figcaption>
 </figure>
 </div>
@@ -1349,7 +1362,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

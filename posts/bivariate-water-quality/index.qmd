@@ -62,7 +62,7 @@ For example, in NIWA's recent random forest modelling of river water quality[^3]
 [^3]: Snelder T. H., Fraser C., Larned S. T., Monaghan R., De Malmanche S., Whitehead A. L. (2022) Attribution of river water-quality trends to agricultural land use and climate variability in New Zealand. Marine and Freshwater Research 73, 1-19.
 
 | Predictor rank | NNN predictors                   | *E. coli* predictors             |
-|------------------|---------------------------|---------------------------|
+|-------------------|---------------------------|---------------------------|
 | 1              | Stock density                    | Catchment elevation              |
 | 2              | Dairy density                    | Rainfall variability             |
 | 3              | Beef density                     | Stock density                    |
@@ -350,10 +350,9 @@ Key findings:
 
 -   Large areas of the Waikato have both high stock density and high *E. coli* levels.
 -   Cities like Auckland, Wellington, and Christchurch have low stock density but high *E. coli* levels.
--   Hawke's Bay has relatively high stock density but low *E. coli* levels.
-\
-\
-\
+-   Hawke's Bay has relatively high stock density but low *E. coli* levels.\
+    \
+    \
 
 ```{r}
 #| label: fig-bi-maps-total-ecoli
@@ -503,10 +502,9 @@ finalPlotDairyEcoli
 Key findings:
 
 -   Canterbury, Southland, and the lower Waikato have both high dairy density and nitrogen levels.
--   Hawke's Bay and eastern Wairarapa have medium level nitrogen levels despite having low dairy density.
-\
-\
-\
+-   Hawke's Bay and eastern Wairarapa have medium level nitrogen levels despite having low dairy density.\
+    \
+    \
 
 ```{r}
 #| label: fig-bi-maps-dairy-nitrogen
@@ -531,6 +529,12 @@ finalPlotDairyNitrogen
 
 ## Conclusions
 
-This analysis highlights the complex relationship between livestock density and water quality in New Zealand (@fig-overview). Using bivariate colour scale maps, we can visually explore these interactions and identify regions where specific patterns emerge.
+This analysis highlights the complex relationship between livestock density and water quality in New Zealand, for both *E. coli* (@fig-ecoli) and nitrogen (@fig-nitrogen). Using bivariate colour scale maps, we can visually explore these interactions and identify regions where specific patterns emerge.
 
-![Bivariate comparison of upstream livestock density and modelled river water quality.](labelled-total-ecoli.png){#fig-overview}
+This analysis only covered two water quality indicators, but the same approach can be used for other indicators, such as phosphorus or sediment. Likewise, livestock density is only one of many predictors that can be used to model water quality. Other predictors, such as urban land use, climate, and topography, can also be visualised in similar way to provide a more comprehensive understanding of the relationship between livestock density and water quality.
+
+![Bivariate comparison of upstream livestock density and modelled *E. coli* concentration in river segments.](labelled-total-ecoli.png){#fig-ecoli}
+
+\
+
+![Bivariate comparison of upstream livestock density and modelled nitrogen concentration in river segments.](labelled-total-nitrogen.png){#fig-nitrogen}
