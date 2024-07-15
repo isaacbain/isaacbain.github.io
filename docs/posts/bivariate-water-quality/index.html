@@ -155,23 +155,28 @@ background: #00000000;
   z-index: -1;
 }
 </style>
-<meta name="quarto:status" content="draft">
 
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Bivariate maps for water quality – Isaac Bain">
 <meta property="og:description" content="">
+<meta property="og:image" content="https://isaacbain.com/posts/bivariate-water-quality/index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png">
 <meta property="og:site_name" content="Isaac Bain">
+<meta property="og:image:height" content="1536">
+<meta property="og:image:width" content="1344">
 <meta name="twitter:title" content="Bivariate maps for water quality – Isaac Bain">
 <meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://isaacbain.com/posts/bivariate-water-quality/index_files/figure-html/fig-bi-maps-dairy-ecoli-1.png">
 <meta name="twitter:creator" content="@IsaacBain">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image-height" content="1536">
+<meta name="twitter:image-width" content="1344">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -824,7 +829,7 @@ Figure&nbsp;8: Bivariate maps of modelled median nitrogen levels in river segmen
 <li>Canterbury has high levels of dairy density throughout, but lower levels of <em>E. coli</em> in some rivers, due to the large alpine-fed systems.</li>
 <li>Bay of Plenty and the West Coast have relatively lower <em>E. coli</em> levels for a given dairy density.</li>
 </ul>
-<div class="cell">
+<div class="cell preview-image">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create classes</span></span>
@@ -1047,6 +1052,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1362,7 +1374,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

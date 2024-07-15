@@ -14,9 +14,11 @@ format:
     toc: true
     toc-location: left
     number-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
 editor: visual
 lightbox: auto
-draft: true
+draft: false
 draft-mode: unlinked
 title-block-banner: "#00000000"
 title-block-banner-color: "rgba(255, 255, 255, 0.9)"
@@ -62,7 +64,7 @@ For example, in NIWA's recent random forest modelling of river water quality[^3]
 [^3]: Snelder T. H., Fraser C., Larned S. T., Monaghan R., De Malmanche S., Whitehead A. L. (2022) Attribution of river water-quality trends to agricultural land use and climate variability in New Zealand. Marine and Freshwater Research 73, 1-19.
 
 | Predictor rank | NNN predictors                   | *E. coli* predictors             |
-|-------------------|---------------------------|---------------------------|
+|----------------|----------------------------------|----------------------------------|
 | 1              | Stock density                    | Catchment elevation              |
 | 2              | Dairy density                    | Rainfall variability             |
 | 3              | Beef density                     | Stock density                    |
@@ -480,6 +482,7 @@ Key findings:
 #| label: fig-bi-maps-dairy-ecoli
 #| fig-cap: "Bivariate maps of modelled median *E. coli* levels in river segments and upstream dairy density."
 #| fig-height: 8
+#| classes: preview-image
 
 # create classes
 bi_class(

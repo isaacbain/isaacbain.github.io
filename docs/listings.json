@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/bivariate-water-quality/index.html",
       "/posts/climate-projections/index.html",
       "/posts/3d-population-grid/index.html",
       "/posts/remote-huts/index.html",
