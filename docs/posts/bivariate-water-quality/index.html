@@ -307,9 +307,9 @@ background: #00000000;
 <p>For example, in NIWA’s recent random forest modelling of river water quality<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, the top ten most important predictors of nitrate + nitrite-nitrogen (NNN) and <em>E. coli</em> were:</p>
 <table class="table-sm table-hover small caption-top table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 36%">
-<col style="width: 36%">
+<col style="width: 23%">
+<col style="width: 38%">
+<col style="width: 38%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -326,12 +326,12 @@ background: #00000000;
 </tr>
 <tr class="even">
 <td>2</td>
-<td>Dairy density</td>
+<td>Proportion of total stock units that are dairy</td>
 <td>Rainfall variability</td>
 </tr>
 <tr class="odd">
 <td>3</td>
-<td>Beef density</td>
+<td>Proportion of total stock units that are Beef</td>
 <td>Stock density</td>
 </tr>
 <tr class="even">
@@ -500,7 +500,9 @@ Figure&nbsp;2: Bivariate choropleth map demonstrates the county wise distributio
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(StreamOrder <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filter extreme outliers </span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SUDensityTotal_2017 <span class="sc">&lt;</span> <span class="dv">40</span>) <span class="ot">-&gt;</span> dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SUDensityTotal_2017 <span class="sc">&lt;</span> <span class="dv">40</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sheep_density_2017 =</span> SUDensityTotal_2017 <span class="sc">*</span> PropSheep_2017,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">dairy_density_2017 =</span> SUDensityTotal_2017 <span class="sc">*</span> PropDairy_2017) <span class="ot">-&gt;</span> dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -742,8 +744,8 @@ Figure&nbsp;6: Bivariate maps of modelled median nitrogen levels in river segmen
 <p>Key findings:</p>
 <ul>
 <li>Waikato and Northland have low sheep density for relatively high <em>E. coli</em> levels.</li>
-<li>The Canterbury high country, and Otago have high sheep density for relatively low <em>E. coli</em> levels.</li>
-<li>The Canterbury plains have low sheep density for a relatively high <em>E. coli</em> levels.</li>
+<li>Hawke’s Bay down to eastern Wairarapa have high sheep density for relatively low <em>E. coli</em> levels.</li>
+<li>Parts of Southland have both high sheep density and high <em>E. coli</em> levels.</li>
 </ul>
 <div class="cell">
 <details class="code-fold">
@@ -751,7 +753,7 @@ Figure&nbsp;6: Bivariate maps of modelled median nitrogen levels in river segmen
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dat,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_ecoli,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> PropSheep_2017,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> sheep_density_2017,</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>,</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">4</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
@@ -779,8 +781,8 @@ Figure&nbsp;7: Bivariate maps of modelled median <em>E. coli</em> levels in rive
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <p>Key findings:</p>
 <ul>
-<li>Manawatū-Whanganui, Hawke’s Bay, Wairarapa, Marlborough, Canterbury high country, and Otago have high sheep density but relatively low levels of nitrogen.</li>
-<li>The Canterbury plains, and to a lesser extent Waikato, have low sheep density but relatively high levels of nitrogen.</li>
+<li>Manawatū-Whanganui, Hawke’s Bay, Wairarapa, Marlborough, and north Canterbury have high sheep density but relatively low levels of nitrogen.</li>
+<li>The Canterbury plains, Waikato, and Taranaki have low sheep density but relatively high levels of nitrogen.</li>
 </ul>
 <div class="cell">
 <details class="code-fold">
@@ -788,7 +790,7 @@ Figure&nbsp;7: Bivariate maps of modelled median <em>E. coli</em> levels in rive
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  dat,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_nitrogen,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> PropSheep_2017,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> sheep_density_2017,</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>,</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">4</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
@@ -825,9 +827,9 @@ Figure&nbsp;8: Bivariate maps of modelled median nitrogen levels in river segmen
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <p>Key findings:</p>
 <ul>
-<li>Some areas of Northland, Waikato, Taranaki, Manawatū-Whanganui, and Southland have both high levels of dairy density and <em>E. coli</em>.</li>
-<li>Canterbury has high levels of dairy density throughout, but lower levels of <em>E. coli</em> in some rivers, due to the large alpine-fed systems.</li>
-<li>Bay of Plenty and the West Coast have relatively lower <em>E. coli</em> levels for a given dairy density.</li>
+<li>Canterbury, Waikato, Taranaki, and some areas of Southland have both high levels of dairy density and <em>E. coli</em>.</li>
+<li>Canterbury has high levels of dairy density throughout the plain-fed rivers, but lower levels of <em>E. coli</em> in some rivers, due to the large alpine-fed systems.</li>
+<li>Areas of the North Island outside of Waikato and Taranaki have relatively lower <em>E. coli</em> levels for a given dairy density.</li>
 </ul>
 <div class="cell preview-image">
 <details class="code-fold">
@@ -836,7 +838,7 @@ Figure&nbsp;8: Bivariate maps of modelled median nitrogen levels in river segmen
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  dat,</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_ecoli,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> PropDairy_2017,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> dairy_density_2017,</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>,</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">4</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
@@ -864,9 +866,9 @@ Figure&nbsp;9: Bivariate maps of modelled median <em>E. coli</em> levels in rive
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <p>Key findings:</p>
 <ul>
-<li>Canterbury, Southland, and the lower Waikato have both high dairy density and nitrogen levels.</li>
-<li>Hawke’s Bay and eastern Wairarapa have medium level nitrogen levels despite having low dairy density.<br>
-<br>
+<li>Canterbury, and Southland have both high dairy density and nitrogen levels.</li>
+<li>Waikato and Taranaki have slightly lower nitrogen levels despite dairy densities similar to Canterbury and Southland.</li>
+<li>Hawke’s Bay and eastern Wairarapa have relatively high nitrogen levels but lower dairy density.<br>
 <br>
 </li>
 </ul>
@@ -876,7 +878,7 @@ Figure&nbsp;9: Bivariate maps of modelled median <em>E. coli</em> levels in rive
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bi_class</span>(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  dat,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> median_nitrogen,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> PropDairy_2017,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> dairy_density_2017,</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"fisher"</span>,</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">4</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
@@ -1374,7 +1376,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

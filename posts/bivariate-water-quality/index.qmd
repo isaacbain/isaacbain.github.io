@@ -63,18 +63,18 @@ For example, in NIWA's recent random forest modelling of river water quality[^3]
 
 [^3]: Snelder T. H., Fraser C., Larned S. T., Monaghan R., De Malmanche S., Whitehead A. L. (2022) Attribution of river water-quality trends to agricultural land use and climate variability in New Zealand. Marine and Freshwater Research 73, 1-19.
 
-| Predictor rank | NNN predictors                   | *E. coli* predictors             |
-|----------------|----------------------------------|----------------------------------|
-| 1              | Stock density                    | Catchment elevation              |
-| 2              | Dairy density                    | Rainfall variability             |
-| 3              | Beef density                     | Stock density                    |
-| 4              | Intensive agriculture land cover | Bare land cover                  |
-| 5              | Urban land cover                 | Intensive agriculture land cover |
-| 6              | Catchment slope                  | Slope                            |
-| 7              | Temperature Minimum              | Urban land cover                 |
-| 8              | Rainfall variability             | Exotic forest land cover         |
-| 9              | Number of warm days              | Local elevation                  |
-| 10             | Catchment elevation              | Catchment phosphorus             |
+| Predictor rank | NNN predictors                                 | *E. coli* predictors             |
+|-----------------|----------------------------|----------------------------|
+| 1              | Stock density                                  | Catchment elevation              |
+| 2              | Proportion of total stock units that are dairy | Rainfall variability             |
+| 3              | Proportion of total stock units that are Beef  | Stock density                    |
+| 4              | Intensive agriculture land cover               | Bare land cover                  |
+| 5              | Urban land cover                               | Intensive agriculture land cover |
+| 6              | Catchment slope                                | Slope                            |
+| 7              | Temperature Minimum                            | Urban land cover                 |
+| 8              | Rainfall variability                           | Exotic forest land cover         |
+| 9              | Number of warm days                            | Local elevation                  |
+| 10             | Catchment elevation                            | Catchment phosphorus             |
 
 : {.sm .hover}
 
@@ -212,7 +212,9 @@ ecoli |>
   ) |>
   filter(StreamOrder > 1) |> 
   # filter extreme outliers 
-  filter(SUDensityTotal_2017 < 40) -> dat
+  filter(SUDensityTotal_2017 < 40) |> 
+  mutate(sheep_density_2017 = SUDensityTotal_2017 * PropSheep_2017,
+         dairy_density_2017 = SUDensityTotal_2017 * PropDairy_2017) -> dat
 ```
 
 ### Scatter plot
@@ -414,8 +416,8 @@ We can also separate the total stock density predictor into specific livestock t
 Key findings:
 
 -   Waikato and Northland have low sheep density for relatively high *E. coli* levels.
--   The Canterbury high country, and Otago have high sheep density for relatively low *E. coli* levels.
--   The Canterbury plains have low sheep density for a relatively high *E. coli* levels.
+-   Hawke's Bay down to eastern Wairarapa have high sheep density for relatively low *E. coli* levels.
+-   Parts of Southland have both high sheep density and high *E. coli* levels.
 
 ```{r}
 #| label: fig-bi-maps-sheep-ecoli
@@ -425,7 +427,7 @@ Key findings:
 bi_class(
   dat,
   x = median_ecoli,
-  y = PropSheep_2017,
+  y = sheep_density_2017,
   style = "fisher",
   dim = 4
 ) |>
@@ -441,8 +443,8 @@ finalPlotSheepEcoli
 
 Key findings:
 
--   Manawatū-Whanganui, Hawke's Bay, Wairarapa, Marlborough, Canterbury high country, and Otago have high sheep density but relatively low levels of nitrogen.
--   The Canterbury plains, and to a lesser extent Waikato, have low sheep density but relatively high levels of nitrogen.
+-   Manawatū-Whanganui, Hawke's Bay, Wairarapa, Marlborough, and north Canterbury have high sheep density but relatively low levels of nitrogen.
+-   The Canterbury plains, Waikato, and Taranaki have low sheep density but relatively high levels of nitrogen.
 
 ```{r}
 #| label: fig-bi-maps-sheep-nitrogen
@@ -452,7 +454,7 @@ Key findings:
 bi_class(
   dat,
   x = median_nitrogen,
-  y = PropSheep_2017,
+  y = sheep_density_2017,
   style = "fisher",
   dim = 4
 ) |>
@@ -474,9 +476,9 @@ Here's a similar analysis for dairy density.
 
 Key findings:
 
--   Some areas of Northland, Waikato, Taranaki, Manawatū-Whanganui, and Southland have both high levels of dairy density and *E. coli*.
--   Canterbury has high levels of dairy density throughout, but lower levels of *E. coli* in some rivers, due to the large alpine-fed systems.
--   Bay of Plenty and the West Coast have relatively lower *E. coli* levels for a given dairy density.
+-   Canterbury, Waikato, Taranaki, and some areas of Southland have both high levels of dairy density and *E. coli*.
+-   Canterbury has high levels of dairy density throughout the plain-fed rivers, but lower levels of *E. coli* in some rivers, due to the large alpine-fed systems.
+-   Areas of the North Island outside of Waikato and Taranaki have relatively lower *E. coli* levels for a given dairy density.
 
 ```{r}
 #| label: fig-bi-maps-dairy-ecoli
@@ -488,7 +490,7 @@ Key findings:
 bi_class(
   dat,
   x = median_ecoli,
-  y = PropDairy_2017,
+  y = dairy_density_2017,
   style = "fisher",
   dim = 4
 ) |>
@@ -504,9 +506,9 @@ finalPlotDairyEcoli
 
 Key findings:
 
--   Canterbury, Southland, and the lower Waikato have both high dairy density and nitrogen levels.
--   Hawke's Bay and eastern Wairarapa have medium level nitrogen levels despite having low dairy density.\
-    \
+-   Canterbury, and Southland have both high dairy density and nitrogen levels.
+-   Waikato and Taranaki have slightly lower nitrogen levels despite dairy densities similar to Canterbury and Southland.
+-   Hawke's Bay and eastern Wairarapa have relatively high nitrogen levels but lower dairy density. \
     \
 
 ```{r}
@@ -517,7 +519,7 @@ Key findings:
 bi_class(
   dat,
   x = median_nitrogen,
-  y = PropDairy_2017,
+  y = dairy_density_2017,
   style = "fisher",
   dim = 4
 ) |>
