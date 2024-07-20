@@ -1,0 +1,486 @@
+---
+title: "Livestock density comparison"
+author: "Isaac Bain"
+date: "2024-07-23"
+categories: [code, water quality, maps, animation]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
+editor: visual
+lightbox: auto
+draft: true
+draft-mode: unlinked
+resources: 
+  - "www/*"
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.6)
+          ),
+          /* bottom, image */ 
+          url(./cows4.jpg);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 0.7; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
+---
+
+## Overview
+
+It seems to be a national past-time to obsess over the number of livestock in New Zealand, whether you're interested in the agri-economy, environmental health, or comparing the current ratio of sheep:people.[^1]
+
+[^1]: It's 4.6 sheep per person. See <https://www.rnz.co.nz/news/country/515877/new-zealand-s-iconic-sheep-to-person-ratio-keeps-falling>
+
+In this post, I make some visualisations which will hopefully enable a better understanding of the number
+of different animals over time and the spatial distribution of livestock across New Zealand.
+
+## Data sources
+
+StatsNZ publish livestock numbers as part of their series of APS derived data. Three important data series. 1. Total livestock numbers across NZ 2. Regional breakdown 3. APS hex grid breakdown
+
+Differing levels of resolution and time series.
+
+```{r}
+#| output: false
+
+library(tidyverse)
+library(sf)
+library(mapgl)
+library(koordinatr)
+library(zoo)
+library(gganimate)
+library(scales)
+library(isaacr)
+library(pals)
+library(magick)
+
+options(scipen = 999)
+
+# Load the data
+aps17 <- st_read("data/livestock-numbers-grid-aps-2017/livestock-numbers-grid-aps-2017.shp")
+aps94 <- st_read("data/livestock-numbers-grid-aps-1994/livestock-numbers-grid-aps-1994.shp")
+
+aps17$sheepdens[aps17$grid_id == 724] <- 0
+aps17$sheepdens[aps17$grid_id == 742] <- 0
+
+livestock_numbers_raw <- get_table_as_tibble(Sys.getenv("mfe_api_key"), "mfe", "105406") |> select(-gml_id)
+
+# Read in the shapefile of regions
+regions_sf <- st_read("data/statsnz-regional-council-2023-clipped-generalised-SHP/regional-council-2023-clipped-generalised.shp") |> 
+  mutate(REGC2023_2 = str_replace(REGC2023_2, " Region$", "")) |> 
+  st_simplify(dTolerance = 1000, preserveTopology = FALSE)
+```
+
+## Total cattle numbers in New Zealand
+
+Here's the total cattle numbers in New Zealand over time.
+
+```{r}
+cattle_numbers <- livestock_numbers_raw |>
+  filter(geography_name == "New Zealand") |>
+  filter(animal %in% c("Beef cattle", "Dairy cattle", "Total cattle")) |>
+  group_by(animal) |>
+  mutate(count = na.spline(count, na.rm = FALSE)) # Interpolate missing values via cubic spline interpolation
+
+# Create the plot
+p <- ggplot(cattle_numbers, aes(x = year, y = count, colour = animal, group = animal)) +
+  geom_line() + 
+  geom_point(size = 2) +
+  geom_text(aes(label = animal), vjust = -0.5, hjust = 0, size = 4) +
+  labs(title = "Total cattle numbers in New Zealand",
+       x = "",
+       y = "Number of cattle") + 
+  theme_minimal() +
+  expand_limits(x = c(1971, 2019 + 6), y = 0) + # Expand limits on x-axis
+  theme(legend.position = "none") +
+  scale_y_continuous(breaks = seq(0, max(cattle_numbers$count, na.rm = TRUE), by = 1e6),
+                     labels = scales::label_number(scale = 1e-6, suffix = "M")) + # Format y-axis labels 
+  transition_reveal(year)
+
+# Render the animation
+animate(p,
+        nframes = 100,
+        fps = 10,
+        end_pause = 30)
+```
+
+## Total sheep numbers in New Zealand
+
+Here's the total sheep numbers in New Zealand over time.
+
+```{r}
+# Load and prepare your data
+sheep_numbers <- livestock_numbers_raw |>
+  filter(geography_name == "New Zealand") |>
+  filter(animal == "Sheep") |>
+  group_by(animal) |>
+  mutate(count = na.spline(count, na.rm = FALSE)) # Interpolate missing values via cubic spline interpolation
+
+# Create the plot
+p2 <- ggplot(sheep_numbers, aes(x = year, y = count, colour = animal, group = animal)) +
+  geom_line() +
+  geom_point(size = 2) +
+  geom_text(aes(label = animal), vjust = -0.5, hjust = 0, size = 4) +
+  labs(title = "Total sheep numbers for New Zealand",
+       x = "",
+       y = "Number of sheep") +
+  theme_minimal() +
+  expand_limits(x = c(1971, 2019 + 6), y = 0) + # Expand limits on x-axis
+  scale_y_continuous(breaks = seq(0, max(sheep_numbers$count, na.rm = TRUE), by = 1e7),
+                     labels = scales::label_number(scale = 1e-6, suffix = "M")) + # Format y-axis labels
+  theme(legend.position = "none") +
+  transition_reveal(year)
+
+# Render the animation
+animate(p2, nframes = 100, fps = 10, end_pause = 20)
+```
+
+## Total livestock numbers for New Zealand
+
+Why not have all the animals on one graph? It masks the trends for the less numerous animals.
+
+```{r}
+# Load and prepare your data
+livestock_numbers <- livestock_numbers_raw  |> 
+  filter(geography_name == "New Zealand") |>
+  group_by(animal) |>
+  mutate(count = na.spline(count, na.rm = FALSE)) |> # Interpolate missing values via cubic spline interpolation
+  filter(count > 0) # Filter out animals with zero counts
+
+# Create the plot
+p3 <- ggplot(livestock_numbers, aes(x = year, y = count, colour = animal, group = animal)) +
+  geom_line() +
+  geom_point(size = 2) +
+  geom_text(aes(label = animal), vjust = -0.5, hjust = 0, size = 4) +
+  labs(title = "Total livestock numbers for New Zealand",
+       x = "",
+       y = "Number of animals") +
+  theme_minimal() +
+  expand_limits(x = c(1971, 2019 + 6), y = 0) + # Expand limits on x-axis
+  scale_y_continuous(breaks = seq(0, max(livestock_numbers$count, na.rm = TRUE), by = 1e7),
+                     labels = scales::label_number(scale = 1e-6, suffix = "M")) + # Format y-axis labels
+  theme(legend.position = "none") +
+  transition_reveal(year)
+
+# Render the animation
+animate(p3, nframes = 100, fps = 10, end_pause = 20)
+```
+
+## Total stock unit equivalents
+
+Same approach as Snelder et al. (2021) to calculate total stock unit equivalents.
+
+```{r}
+stock_units_constant <- tibble(
+    year = c(2017),
+    `Sheep` = c(1.35),
+    `Beef cattle` = c(6.9),
+    `Dairy cattle` = c(8),
+    `Deer` = c(2.3)
+  )
+
+# Apply the function to the dataset
+total_stock_units <- livestock_numbers_raw |> 
+  filter(geography_name == "New Zealand") |>
+  filter(animal != "Total cattle") |> 
+  group_by(animal) |> 
+  mutate(count = na.spline(count, na.rm = FALSE)) |> # Interpolate missing values via cubic spline interpolation
+  ungroup() |> 
+  rowwise() %>%
+  mutate(stock_unit_equivalent = count * get_stock_unit(animal, year)) %>%
+  ungroup() |> 
+  group_by(year) |> 
+  summarise(total_stock_unit_equivalent = sum(stock_unit_equivalent, na.rm = TRUE))
+
+# Create the plot
+p4 <- ggplot(total_stock_units, aes(x = year, y = total_stock_unit_equivalent)) +
+  geom_line() +
+  geom_point(size = 2) +
+  geom_text(label = "Total stock units", vjust = -0.5, hjust = 0, size = 4) +
+  labs(title = "Total stock unit equivalents for New Zealand",
+       x = "",
+       y = "Number of stock units") +
+  theme_minimal() +
+  expand_limits(x = c(1971, 2019 + 6), y = 0) + # Expand limits on x-axis
+  scale_y_continuous(breaks = seq(0, max(total_stock_units$total_stock_unit_equivalent, na.rm = TRUE), by = 5e7),
+                     labels = scales::label_number(scale = 1e-6, suffix = "M")) + # Format y-axis labels
+  theme(legend.position = "none") +
+  transition_reveal(year)
+
+# Render the animation
+animate(p4, nframes = 100, fps = 10, end_pause = 20)
+```
+
+## Regional breakdown
+
+Between 1990 - 2019 regional breakdowns are available for livestock numbers.
+
+Here's a plot of dairy cattle numbers by region.
+
+```{r}
+dairy_numbers_region <- livestock_numbers_raw |>
+  filter(geography_type == "Region") |>
+  filter(geography_name != "Chatham Islands") |> 
+  filter(animal == "Dairy cattle") |>
+  group_by(geography_name) |>
+  mutate(count = na.approx(count, rule = 2, na.rm = FALSE)) |>  # Interpolate missing values via linear interpolation
+  mutate(baseline_1990 = first(count[year == 1990])) |> 
+  mutate(change_from_1990 = count - baseline_1990) |> 
+  filter(count > 0) |>  # Filter out animals with zero counts |> 
+  mutate(year = as.integer(year))
+
+# Create the plot
+p5 <- ggplot(dairy_numbers_region, aes(x = year, y = count, colour = geography_name, group = geography_name)) +
+  geom_line() +
+  geom_point(size = 2) +
+  geom_text(aes(label = geography_name), vjust = -0.5, hjust = 0, size = 4) +
+  labs(title = "Dairy cattle numbers by region",
+       x = "",
+       y = "Number of dairy cattle") +
+  theme_minimal() +
+  expand_limits(x = c(1990, 2019 + 6), y = 0) + # Expand limits on x-axis
+  theme(legend.position = "none") +
+  scale_y_continuous(labels = label_comma()) + # Format y-axis labels with commas
+  scale_color_manual(values = c("Canterbury" = "red")) +
+  transition_reveal(year)
+
+# Render the animation
+animate(p5,
+        nframes = 100,
+        fps = 10,
+        end_pause = 30)
+```
+
+```{r}
+# Create the plot
+p6 <- ggplot(dairy_numbers_region, aes(x = year, y = count, colour = geography_name, group = geography_name)) +
+  geom_line() +
+  geom_point(size = 2) +
+  geom_text(aes(label = geography_name), vjust = -0.5, hjust = 0, size = 4) +
+  labs(title = "Dairy cattle numbers by region",
+       x = "",
+       y = "Number of dairy cattle") +
+  theme_minimal() +
+  expand_limits(x = c(1990, 2019 + 6), y = 0) + # Expand limits on x-axis
+  theme(legend.position = "none") +
+  scale_y_continuous(labels = label_comma()) + # Format y-axis labels with commas
+  scale_color_manual(values=as.vector(ocean.phase(17))) +
+  transition_reveal(year)
+
+# Render the animation
+animate(p6, nframes = 100, fps = 10, end_pause = 30)
+```
+
+### Regional breakdown linked map
+
+:::{.column-page-inset}
+
+```{r}
+
+# Merge spatial data with dairy numbers
+map_data <- dairy_numbers_region %>%
+  left_join(regions_sf, by = c("geography_name" = "REGC2023_2")) |> 
+  filter(!is.na(LAND_AREA_)) |>  # Filter out regions with missing values |>
+  #filter(geography_name %in% c("Canterbury", "Southland", "Northland", "Waikato", "Bay of Plenty")) |> 
+  ungroup()
+
+# Calculate the range of change_from_1990
+dairy_change_range <- range(dairy_numbers_region$change_from_1990, na.rm = TRUE)
+max_abs_change <- max(abs(dairy_change_range))
+
+# Define the limits to be symmetric around zero
+symmetric_limits <- c(-max_abs_change, max_abs_change)
+
+# Create the line plot
+line_plot <- ggplot(dairy_numbers_region, aes(x = year, y = change_from_1990, colour = change_from_1990, group = geography_name)) +
+  geom_line() +
+  geom_point(size = 2) +
+  geom_text(aes(label = geography_name), vjust = -0.5, hjust = 0, size = 4) +
+  labs(title = "Change in dairy cattle numbers from 1990, by region",
+       x = "",
+       y = "Number of dairy cattle") +
+  theme_minimal() +
+  expand_limits(x = c(1990, 2019 + 6)) + # Expand limits on y-axis to match symmetric limits
+  theme(legend.position = "none") +
+  scale_color_distiller(
+    palette = "RdBu",
+    limits = symmetric_limits,
+    labels = label_comma()) +
+  scale_y_continuous(labels = label_comma()) + # Format y-axis labels with commas
+  transition_reveal(year)
+
+# Create the map plot animation
+map_plot <- ggplot(map_data) +
+  geom_sf(aes(fill = change_from_1990, geometry = geometry), color = "black") +
+  scale_fill_distiller(
+    palette = "RdBu",
+    limits = symmetric_limits,
+    labels = label_comma(), 
+    name = "Dairy cattle change \nfrom 1990") +
+  theme_void() +
+  theme(legend.position = "right") +
+  labs(title = 'Year: {frame_time}') +
+  transition_time(year) +
+  ease_aes('linear')
+
+# Render the individual animations
+line_anim <- animate(line_plot, nframes = 100, fps = 10, end_pause = 30)
+map_anim <- animate(map_plot, nframes = 100, fps = 10, end_pause = 30)
+
+# Combine the animations side by side using magick
+line_gif <- image_read(line_anim)
+map_gif <- image_read(map_anim)
+combined_gif <- image_append(c(line_gif[1], map_gif[1]))
+
+# Ensure both GIFs have the same number of frames
+num_frames_line <- nrow(image_info(line_gif))
+num_frames_map <- nrow(image_info(map_gif))
+num_frames <- min(num_frames_line, num_frames_map)
+
+# Combine the animations side by side
+combined_gif <- image_append(c(line_gif[1], map_gif[1]), stack = FALSE)
+
+for (i in 2:num_frames) {
+  combined <- image_append(c(line_gif[i], map_gif[i]), stack = FALSE)
+  combined_gif <- c(combined_gif, combined)
+}
+
+# Add a pause by duplicating the last frame multiple times
+pause_duration <- 30 # Number of frames to pause
+last_frame <- combined_gif[num_frames]
+
+for (i in 1:pause_duration) {
+  combined_gif <- c(combined_gif, last_frame)
+}
+
+# Display the combined animation
+combined_gif
+```
+:::
+
+## 2D compare
+
+```{r}
+mapboxgl() |>
+  fit_bounds(aps94, animate = FALSE) |>
+  add_fill_layer(id = "APS 1994",
+                 source = aps94,
+                 fill_color = interpolate(
+                   column = "dairydens",
+                   values = c(0, 420), 
+                   stops = c("#450C54", "#FDE724"),
+                   na_color = "lightgrey",
+                 ),
+                 fill_opacity = 0.8) -> map1
+
+mapboxgl() |> 
+  fit_bounds(aps17, animate = FALSE) |>
+  add_fill_layer(id = "APS 2017",
+                 source = aps17,
+                 fill_color = interpolate(
+                   column = "dairydens",
+                   values = c(0, 420), 
+                   stops = c("#450C54", "#FDE724"),
+                   na_color = "lightgrey",
+                 ),
+                 fill_opacity = 0.8) -> map2
+
+# very hacky way to include the map in the html. See issue at: https://github.com/walkerke/mapgl/issues/3
+htmlwidgets::saveWidget(compare(map1, map2), "www/map1.html")
+```
+
+
+```{=html}
+<iframe src="www/map1.html" width = 900 height = 600></iframe>
+```
+
+## 3D compare
+
+```{r}
+
+my_column <- "sheepdens"
+my_range <- round(range(aps17$sheepdens), 0)
+
+maplibre(
+  style = maptiler_style('basic'),
+  center = c(170.5, -42.5),
+  zoom = 5.5,
+  pitch = 60,
+  bearing = 0
+) |>
+  add_fill_extrusion_layer(
+    id = "3d",
+    source = aps94,
+    fill_extrusion_color = interpolate(
+      column = my_column,
+      values = my_range,
+      stops = c("#450C54", "#FDE724")
+    ),
+    fill_extrusion_height = interpolate(
+      column = my_column,
+      values = my_range, # Data values for interpolation
+      stops = c(0, 160000) # Corresponding heights for those values
+    )
+  ) |>
+  add_legend("Sheep density <br>1994 / 2017",
+    values = my_range,
+    colors = c("#450C54", "#FDE724")
+  ) -> map3
+
+maplibre(
+  style = maptiler_style('basic'),
+  center = c(170.5, -42.5),
+  zoom = 5.5,
+  pitch = 60,
+  bearing = 0
+) |>
+  add_fill_extrusion_layer(
+    id = "3d",
+    source = aps17,
+    fill_extrusion_color = interpolate(
+      column = my_column,
+      values = my_range,
+      stops = c('#450C54', '#FDE724')
+    ),
+    fill_extrusion_height = interpolate(
+      column = my_column,
+      values = my_range,  # Data values for interpolation
+      stops = c(0, 160000)  # Corresponding heights for those values
+    )
+  ) -> map4
+
+#compare(map3, map4)
+
+# very hacky way to include the map in the html. See issue at: https://github.com/walkerke/mapgl/issues/3
+htmlwidgets::saveWidget(compare(map3, map4), "www/map2.html")
+```
+
+```{=html}
+<iframe src="www/map2.html" width = 900 height = 600></iframe>
+```
