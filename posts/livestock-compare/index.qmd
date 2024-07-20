@@ -55,7 +55,7 @@ include-in-header:
 
 It seems to be a national past-time to obsess over the number of livestock in New Zealand, whether you're interested in the agri-economy, environmental health, or comparing the current ratio of sheep:people.[^1]
 
-[^1]: It's 4.6 sheep per person. See <https://www.rnz.co.nz/news/country/515877/new-zealand-s-iconic-sheep-to-person-ratio-keeps-falling>
+[^1]: FYI it's 4.6 sheep per person! See <https://www.rnz.co.nz/news/country/515877/new-zealand-s-iconic-sheep-to-person-ratio-keeps-falling>
 
 In this post, I make some visualisations which will hopefully enable a better understanding of the number
 of different animals over time and the spatial distribution of livestock across New Zealand.
@@ -119,6 +119,7 @@ p <- ggplot(cattle_numbers, aes(x = year, y = count, colour = animal, group = an
   theme_minimal() +
   expand_limits(x = c(1971, 2019 + 6), y = 0) + # Expand limits on x-axis
   theme(legend.position = "none") +
+  scale_colour_brewer(palette = "Set1") +
   scale_y_continuous(breaks = seq(0, max(cattle_numbers$count, na.rm = TRUE), by = 1e6),
                      labels = scales::label_number(scale = 1e-6, suffix = "M")) + # Format y-axis labels 
   transition_reveal(year)
@@ -129,6 +130,32 @@ animate(p,
         fps = 10,
         end_pause = 30)
 ```
+
+Interactive
+
+```{r}
+library(billboarder)
+
+# Convert count to millions for better readability in the plot
+cattle_numbers2 <- cattle_numbers %>%
+  mutate(count_million = count / 1e6)
+
+# Create the plot
+billboarder() %>%
+  bb_linechart(
+    data = cattle_numbers2,
+    mapping = bbaes(x = year, y = count_million, group = animal)
+  ) %>%
+  bb_legend(position = "right") %>%
+  bb_x_axis(tick = list(values = seq(1971, 2019, by = 5))) %>%
+  bb_y_axis(tick = list(format = suffix("M"))) %>%
+  bb_x_grid(show = TRUE) %>% 
+  bb_y_grid(show = TRUE) %>% 
+  bb_title(text = "Total Cattle Numbers in New Zealand") %>%
+  bb_colors_manual("Beef cattle" = "#DA0719", "Dairy cattle" = "#2D6BAA", "Total cattle" = "#40A33B") %>%
+  bb_legend(show = TRUE)
+```
+
 
 ## Total sheep numbers in New Zealand
 
@@ -151,6 +178,7 @@ p2 <- ggplot(sheep_numbers, aes(x = year, y = count, colour = animal, group = an
        x = "",
        y = "Number of sheep") +
   theme_minimal() +
+  scale_colour_brewer(palette = "Set1") +
   expand_limits(x = c(1971, 2019 + 6), y = 0) + # Expand limits on x-axis
   scale_y_continuous(breaks = seq(0, max(sheep_numbers$count, na.rm = TRUE), by = 1e7),
                      labels = scales::label_number(scale = 1e-6, suffix = "M")) + # Format y-axis labels
@@ -182,6 +210,7 @@ p3 <- ggplot(livestock_numbers, aes(x = year, y = count, colour = animal, group 
        x = "",
        y = "Number of animals") +
   theme_minimal() +
+  scale_colour_brewer(palette = "Set1") +
   expand_limits(x = c(1971, 2019 + 6), y = 0) + # Expand limits on x-axis
   scale_y_continuous(breaks = seq(0, max(livestock_numbers$count, na.rm = TRUE), by = 1e7),
                      labels = scales::label_number(scale = 1e-6, suffix = "M")) + # Format y-axis labels
@@ -299,6 +328,8 @@ animate(p6, nframes = 100, fps = 10, end_pause = 30)
 
 ### Regional breakdown linked map
 
+Want the interactive version of this? Click through to this [Shiny app](https://isaacbain.shinyapps.io/livestock-shiny-app/). 
+
 :::{.column-page-inset}
 
 ```{r}
@@ -384,29 +415,38 @@ combined_gif
 ```
 :::
 
+
 ## 2D compare
 
 ```{r}
+
+my_column <- "sheepdens"
+my_range <- round(range(aps17$sheepdens), 0)
+
 mapboxgl() |>
   fit_bounds(aps94, animate = FALSE) |>
   add_fill_layer(id = "APS 1994",
                  source = aps94,
                  fill_color = interpolate(
-                   column = "dairydens",
+                   column = my_column,
                    values = c(0, 420), 
-                   stops = c("#450C54", "#FDE724"),
+                   stops = c("#F4F4F3", "#A40D23"),
                    na_color = "lightgrey",
                  ),
-                 fill_opacity = 0.8) -> map1
+                 fill_opacity = 0.8) |> 
+  add_legend("Sheep density <br>1994 / 2017",
+    values = my_range,
+    colors = c("#F4F4F3", "#A40D23")
+  )-> map1
 
 mapboxgl() |> 
   fit_bounds(aps17, animate = FALSE) |>
   add_fill_layer(id = "APS 2017",
                  source = aps17,
                  fill_color = interpolate(
-                   column = "dairydens",
+                   column = my_column,
                    values = c(0, 420), 
-                   stops = c("#450C54", "#FDE724"),
+                   stops = c("#F4F4F3", "#A40D23"),
                    na_color = "lightgrey",
                  ),
                  fill_opacity = 0.8) -> map2
@@ -417,7 +457,27 @@ htmlwidgets::saveWidget(compare(map1, map2), "www/map1.html")
 
 
 ```{=html}
-<iframe src="www/map1.html" width = 900 height = 600></iframe>
+
+<style>
+.responsive-iframe-container {
+  position: relative;
+  overflow: hidden;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+}
+
+.responsive-iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+</style>
+
+<div class="responsive-iframe-container">
+  <iframe src="www/map1.html" allowfullscreen></iframe>
+</div>
 ```
 
 ## 3D compare
@@ -429,8 +489,8 @@ my_range <- round(range(aps17$sheepdens), 0)
 
 maplibre(
   style = maptiler_style('basic'),
-  center = c(170.5, -42.5),
-  zoom = 5.5,
+  center = c(170.5, -43.5),
+  zoom = 5,
   pitch = 60,
   bearing = 0
 ) |>
@@ -440,7 +500,7 @@ maplibre(
     fill_extrusion_color = interpolate(
       column = my_column,
       values = my_range,
-      stops = c("#450C54", "#FDE724")
+      stops = c("#F4F4F3", "#A40D23")
     ),
     fill_extrusion_height = interpolate(
       column = my_column,
@@ -450,13 +510,13 @@ maplibre(
   ) |>
   add_legend("Sheep density <br>1994 / 2017",
     values = my_range,
-    colors = c("#450C54", "#FDE724")
+    colors = c("#F4F4F3", "#A40D23")
   ) -> map3
 
 maplibre(
   style = maptiler_style('basic'),
-  center = c(170.5, -42.5),
-  zoom = 5.5,
+  center = c(170.5, -43.5),
+  zoom = 5,
   pitch = 60,
   bearing = 0
 ) |>
@@ -466,7 +526,7 @@ maplibre(
     fill_extrusion_color = interpolate(
       column = my_column,
       values = my_range,
-      stops = c('#450C54', '#FDE724')
+      stops = c('#F4F4F3', '#A40D23')
     ),
     fill_extrusion_height = interpolate(
       column = my_column,
@@ -482,5 +542,7 @@ htmlwidgets::saveWidget(compare(map3, map4), "www/map2.html")
 ```
 
 ```{=html}
-<iframe src="www/map2.html" width = 900 height = 600></iframe>
+<div class="responsive-iframe-container">
+  <iframe src="www/map2.html" allowfullscreen></iframe>
+</div>
 ```
