@@ -9,7 +9,7 @@
 <meta name="author" content="Isaac Bain">
 <meta name="dcterms.date" content="2024-07-23">
 
-<title>Livestock density comparison – Isaac Bain</title>
+<title>Livestock numbers through space and time – Isaac Bain</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -166,10 +166,10 @@ background: #00000000;
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Livestock density comparison – Isaac Bain">
+<meta property="og:title" content="Livestock numbers through space and time – Isaac Bain">
 <meta property="og:description" content="">
 <meta property="og:site_name" content="Isaac Bain">
-<meta name="twitter:title" content="Livestock density comparison – Isaac Bain">
+<meta name="twitter:title" content="Livestock numbers through space and time – Isaac Bain">
 <meta name="twitter:description" content="">
 <meta name="twitter:creator" content="@IsaacBain">
 <meta name="twitter:card" content="summary">
@@ -240,7 +240,7 @@ background: #00000000;
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Livestock density comparison</h1>
+      <h1 class="title">Livestock numbers through space and time</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">water quality</div>
@@ -290,6 +290,7 @@ background: #00000000;
   </ul></li>
   <li><a href="#d-compare" id="toc-d-compare" class="nav-link" data-scroll-target="#d-compare"><span class="header-section-number">8</span> 2D compare</a></li>
   <li><a href="#d-compare-1" id="toc-d-compare-1" class="nav-link" data-scroll-target="#d-compare-1"><span class="header-section-number">9</span> 3D compare</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">10</span> Conclusions</a></li>
   </ul>
 </nav>
 </nav>
@@ -306,13 +307,17 @@ background: #00000000;
 
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>It seems to be a national past-time to obsess over the number of livestock in New Zealand, whether you’re interested in the agri-economy, environmental health, or comparing the current ratio of sheep:people.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>It seems to be a national past-time to chat about the number of livestock in New Zealand, whether you’re interested in the agri-economy, environmental health, or comparing the current ratio of sheep:people.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>In this post, I make some visualisations which will hopefully enable a better understanding of the number of different animals over time and the spatial distribution of livestock across New Zealand.</p>
 </section>
 <section id="data-sources" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="data-sources"><span class="header-section-number">2</span> Data sources</h2>
-<p>StatsNZ publish livestock numbers as part of their series of APS derived data. Three important data series. 1. Total livestock numbers across NZ 2. Regional breakdown 3. APS hex grid breakdown</p>
-<p>Differing levels of resolution and time series.</p>
+<p>StatsNZ publish <a href="https://www.stats.govt.nz/indicators/livestock-numbers/">livestock numbers</a> as part of their series of Agricultural Production Survey (APS) derived data. It’s important to note that within this one dataset there are differing levels of spatial resolution and time series:</p>
+<ol type="1">
+<li>Total livestock numbers across NZ, 1971-2019</li>
+<li>Regional breakdown, 1990-2019</li>
+<li>APS hex grid breakdown, 1994-2017</li>
+</ol>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -347,7 +352,12 @@ background: #00000000;
 </section>
 <section id="total-cattle-numbers-in-new-zealand" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="total-cattle-numbers-in-new-zealand"><span class="header-section-number">3</span> Total cattle numbers in New Zealand</h2>
-<p>Here’s the total cattle numbers in New Zealand over time.</p>
+<p>First up, we’ll present how total cattle numbers in New Zealand are changing over time.</p>
+<ul>
+<li>Total cattle numbers peaked in 2014 with 10.4M cattle.</li>
+<li>Around the year 2000 the number of dairy cattle surpassed the number of beef cattle for the first time.</li>
+<li>Dairy cattle also peaked in 2014 (6.7M), but beef cattle peaked way back in 1975 (6.3M) and have been fairly steadily declining ever since.</li>
+</ul>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -397,7 +407,7 @@ background: #00000000;
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cattle_numbers2 <span class="ot">&lt;-</span> cattle_numbers <span class="sc">%&gt;%</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count_million =</span> count <span class="sc">/</span> <span class="fl">1e6</span>)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plot</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plots</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">billboarder</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bb_linechart</span>(</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> cattle_numbers2,</span>
@@ -414,16 +424,19 @@ background: #00000000;
 </details>
 <div class="cell-output-display">
 <div class="billboarder html-widget html-fill-item" style="width:100%;height:320px; position: relative;">
-<a id="htmlwidget-6f03cd4a71f3d6adee46-export" style="position:absolute; top:0; right:0; display:none; z-index:50;"></a>
-<div id="htmlwidget-6f03cd4a71f3d6adee46" class="billboarder html-widget" style="width:100%;height:320px;" width="100%" height="320px"></div>
+<a id="htmlwidget-36764569e3dbae16d7b9-export" style="position:absolute; top:0; right:0; display:none; z-index:50;"></a>
+<div id="htmlwidget-36764569e3dbae16d7b9" class="billboarder html-widget" style="width:100%;height:320px;" width="100%" height="320px"></div>
 </div>
-<script type="application/json" data-for="htmlwidget-6f03cd4a71f3d6adee46">{"x":{"bb_opts":{"interaction":{"inputType":{"touch":false}},"line":{"classes":["billboarder-line-Beef cattle","billboarder-line-Dairy cattle","billboarder-line-Total cattle"]},"data":{"x":"year","json":{"year":[1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019],"Beef cattle":[4.796,5.344,5.765,6.237,6.294,6.087,5.839,5.507275,5.122316,5.162261,5.113419,4.905639,4.496559,4.530565,4.61312,4.880831,4.804178,4.858168,4.526056,4.59316,4.670569,4.676497,4.757962,5.047848,5.182508,4.852179,4.656115654763156,4.640988629479118,4.643705,4.551664277551501,4.454235714853636,4.491281,4.626617,4.4474,4.423626,4.439136,4.393617,4.136872,4.100718,3.94852,3.846414,3.734412,3.698522,3.669862,3.547228,3.533054,3.616091,3.721262,3.889996],"Dairy cattle":[3.198,3.288,3.159,3.074,2.998,2.93,2.899,2.910736,2.900089,2.968953,2.922049,3.006664,3.133923,3.245524,3.30803,3.398291,3.19478,3.19973,3.302377,3.440815,3.429427,3.467824,3.55014,3.839184,4.089817,4.165098,4.155770869859203,4.171781078348776,4.316409,4.6413344986317,4.991835395212859,5.161589,5.101603,5.152492,5.087176,5.169557,5.26085,5.57844,5.860776,5.915452,6.174503,6.445681,6.4836,6.698326,6.485535,6.6188,6.529811,6.385541,6.260895],"Total cattle":[7.995,8.632,8.923999999999999,9.311,9.292,9.016999999999999,8.739000000000001,8.418011,8.022404999999999,8.131214,8.035468,7.912303,7.630482,7.776089,7.92115,8.279121999999999,7.998958,8.057898,7.828433,8.033975999999999,8.099996000000001,8.144321,8.308102,8.887032,9.272325,9.017277,8.811886525457297,8.812769708388952,8.960114000000001,9.192998775978444,9.446071109944162,9.65287,9.72822,9.599892000000001,9.510802,9.608693000000001,9.654467,9.715312000000001,9.961494,9.863972,10.020917,10.180093,10.182122,10.368188,10.032763,10.151854,10.145902,10.106803,10.150891]},"types":{"Beef cattle":"line","Dairy cattle":"line","Total cattle":"line"},"colors":{"Beef cattle":"#DA0719","Dairy cattle":"#2D6BAA","Total cattle":"#40A33B"}},"point":{"show":false},"legend":{"position":"right","show":true},"axis":{"x":{"tick":{"values":[1971,1976,1981,1986,1991,1996,2001,2006,2011,2016]}},"y":{"tick":{"format":"function(x) {return x + 'M';}"}}},"grid":{"x":{"show":true},"y":{"show":true}},"title":{"text":"Total Cattle Numbers in New Zealand","position":"top-center"},"billboarderspecials":{"opacity":1}},"data":null},"evals":["bb_opts.axis.y.tick.format"],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-36764569e3dbae16d7b9">{"x":{"bb_opts":{"interaction":{"inputType":{"touch":false}},"line":{"classes":["billboarder-line-Beef cattle","billboarder-line-Dairy cattle","billboarder-line-Total cattle"]},"data":{"x":"year","json":{"year":[1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019],"Beef cattle":[4.796,5.344,5.765,6.237,6.294,6.087,5.839,5.507275,5.122316,5.162261,5.113419,4.905639,4.496559,4.530565,4.61312,4.880831,4.804178,4.858168,4.526056,4.59316,4.670569,4.676497,4.757962,5.047848,5.182508,4.852179,4.656115654763156,4.640988629479118,4.643705,4.551664277551501,4.454235714853636,4.491281,4.626617,4.4474,4.423626,4.439136,4.393617,4.136872,4.100718,3.94852,3.846414,3.734412,3.698522,3.669862,3.547228,3.533054,3.616091,3.721262,3.889996],"Dairy cattle":[3.198,3.288,3.159,3.074,2.998,2.93,2.899,2.910736,2.900089,2.968953,2.922049,3.006664,3.133923,3.245524,3.30803,3.398291,3.19478,3.19973,3.302377,3.440815,3.429427,3.467824,3.55014,3.839184,4.089817,4.165098,4.155770869859203,4.171781078348776,4.316409,4.6413344986317,4.991835395212859,5.161589,5.101603,5.152492,5.087176,5.169557,5.26085,5.57844,5.860776,5.915452,6.174503,6.445681,6.4836,6.698326,6.485535,6.6188,6.529811,6.385541,6.260895],"Total cattle":[7.995,8.632,8.923999999999999,9.311,9.292,9.016999999999999,8.739000000000001,8.418011,8.022404999999999,8.131214,8.035468,7.912303,7.630482,7.776089,7.92115,8.279121999999999,7.998958,8.057898,7.828433,8.033975999999999,8.099996000000001,8.144321,8.308102,8.887032,9.272325,9.017277,8.811886525457297,8.812769708388952,8.960114000000001,9.192998775978444,9.446071109944162,9.65287,9.72822,9.599892000000001,9.510802,9.608693000000001,9.654467,9.715312000000001,9.961494,9.863972,10.020917,10.180093,10.182122,10.368188,10.032763,10.151854,10.145902,10.106803,10.150891]},"types":{"Beef cattle":"line","Dairy cattle":"line","Total cattle":"line"},"colors":{"Beef cattle":"#DA0719","Dairy cattle":"#2D6BAA","Total cattle":"#40A33B"}},"point":{"show":false},"legend":{"position":"right","show":true},"axis":{"x":{"tick":{"values":[1971,1976,1981,1986,1991,1996,2001,2006,2011,2016]}},"y":{"tick":{"format":"function(x) {return x + 'M';}"}}},"grid":{"x":{"show":true},"y":{"show":true}},"title":{"text":"Total Cattle Numbers in New Zealand","position":"top-center"},"billboarderspecials":{"opacity":1}},"data":null},"evals":["bb_opts.axis.y.tick.format"],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
 <section id="total-sheep-numbers-in-new-zealand" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="total-sheep-numbers-in-new-zealand"><span class="header-section-number">4</span> Total sheep numbers in New Zealand</h2>
-<p>Here’s the total sheep numbers in New Zealand over time.</p>
+<p>Sheep numbers have seen a fairly precipitous decline in New Zealand.</p>
+<ul>
+<li>Since their peak in 1982 at just over 70M, sheep numbers have been declining almost year-on-year to their lowest number on record in 2019 at 26.8M.</li>
+</ul>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -464,7 +477,7 @@ background: #00000000;
 </section>
 <section id="total-livestock-numbers-for-new-zealand" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="total-livestock-numbers-for-new-zealand"><span class="header-section-number">5</span> Total livestock numbers for New Zealand</h2>
-<p>Why not have all the animals on one graph? It masks the trends for the less numerous animals.</p>
+<p>A graph like this is useful because it shows just how much more numerous sheep are than the other main livestock types - but the problem is they dominate so much it masks the trends in the other animals, so you can’t really see what’s going on.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -505,48 +518,87 @@ background: #00000000;
 </section>
 <section id="total-stock-unit-equivalents" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="total-stock-unit-equivalents"><span class="header-section-number">6</span> Total stock unit equivalents</h2>
-<p>Same approach as Snelder et al.&nbsp;(2021) to calculate total stock unit equivalents.</p>
+<p>Another aspect that isn’t well communicated by the last type of graph is that the metabolic requirements for the different animals vary drastically. Also, over time the metabolic requirements of animals has changed.</p>
+<table class="table-sm table-hover small caption-top table">
+<thead>
+<tr class="header">
+<th>Stock type</th>
+<th>1980</th>
+<th>1985</th>
+<th>2000</th>
+<th>2017</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sheep</td>
+<td>0.95</td>
+<td>0.95</td>
+<td>1.15</td>
+<td>1.35</td>
+</tr>
+<tr class="even">
+<td>Beef</td>
+<td>5</td>
+<td>5.3</td>
+<td>6</td>
+<td>6.9</td>
+</tr>
+<tr class="odd">
+<td>Dairy</td>
+<td>5</td>
+<td>5.5</td>
+<td>6.8</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>Deer</td>
+<td>1.6</td>
+<td>1.6</td>
+<td>2</td>
+<td>2.3</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+Converting to stock unit equivalents was the approach Snelder et al.&nbsp;(2021) used to make more useful comparisons. Here I’ve implemented their same methods of conversion.</p>
+<ul>
+<li>Total stock units peaked in 2012 at 121.9M stock units equivalents.</li>
+<li>Total stock units in New Zealand have actually been high for quite some time, with a relatively small change since 1980 when it was 106M SUs compared to 115 SUs in 2019.</li>
+</ul>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>stock_units_constant <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2017</span>),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Sheep</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.35</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Beef cattle</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">6.9</span>),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Dairy cattle</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">8</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Deer</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">2.3</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to the dataset</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>total_stock_units <span class="ot">&lt;-</span> livestock_numbers_raw <span class="sc">|&gt;</span> </span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(geography_name <span class="sc">==</span> <span class="st">"New Zealand"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(animal <span class="sc">!=</span> <span class="st">"Total cattle"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(animal) <span class="sc">|&gt;</span> </span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count =</span> <span class="fu">na.spline</span>(count, <span class="at">na.rm =</span> <span class="cn">FALSE</span>)) <span class="sc">|&gt;</span> <span class="co"># Interpolate missing values via cubic spline interpolation</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stock_unit_equivalent =</span> count <span class="sc">*</span> <span class="fu">get_stock_unit</span>(animal, year)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_stock_unit_equivalent =</span> <span class="fu">sum</span>(stock_unit_equivalent, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plot</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(total_stock_units, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_stock_unit_equivalent)) <span class="sc">+</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">label =</span> <span class="st">"Total stock units"</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total stock unit equivalents for New Zealand"</span>,</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of stock units"</span>) <span class="sc">+</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1971</span>, <span class="dv">2019</span> <span class="sc">+</span> <span class="dv">6</span>), <span class="at">y =</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="co"># Expand limits on x-axis</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(total_stock_units<span class="sc">$</span>total_stock_unit_equivalent, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">by =</span> <span class="fl">5e7</span>),</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number</span>(<span class="at">scale =</span> <span class="fl">1e-6</span>, <span class="at">suffix =</span> <span class="st">"M"</span>)) <span class="sc">+</span> <span class="co"># Format y-axis labels</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_reveal</span>(year)</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the animation</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(p4, <span class="at">nframes =</span> <span class="dv">100</span>, <span class="at">fps =</span> <span class="dv">10</span>, <span class="at">end_pause =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to the dataset</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>total_stock_units <span class="ot">&lt;-</span> livestock_numbers_raw <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(geography_name <span class="sc">==</span> <span class="st">"New Zealand"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(animal <span class="sc">!=</span> <span class="st">"Total cattle"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(animal) <span class="sc">|&gt;</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count =</span> <span class="fu">na.spline</span>(count, <span class="at">na.rm =</span> <span class="cn">FALSE</span>)) <span class="sc">|&gt;</span> <span class="co"># Interpolate missing values via cubic spline interpolation</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stock_unit_equivalent =</span> count <span class="sc">*</span> <span class="fu">get_stock_unit</span>(animal, year)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_stock_unit_equivalent =</span> <span class="fu">sum</span>(stock_unit_equivalent, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plot</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(total_stock_units, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_stock_unit_equivalent)) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">label =</span> <span class="st">"Total stock units"</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total stock unit equivalents for New Zealand"</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of stock units"</span>) <span class="sc">+</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1971</span>, <span class="dv">2019</span> <span class="sc">+</span> <span class="dv">6</span>), <span class="at">y =</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="co"># Expand limits on x-axis</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(total_stock_units<span class="sc">$</span>total_stock_unit_equivalent, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">by =</span> <span class="fl">5e7</span>),</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number</span>(<span class="at">scale =</span> <span class="fl">1e-6</span>, <span class="at">suffix =</span> <span class="st">"M"</span>)) <span class="sc">+</span> <span class="co"># Format y-axis labels</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_reveal</span>(year)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the animation</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(p4, <span class="at">nframes =</span> <span class="dv">100</span>, <span class="at">fps =</span> <span class="dv">10</span>, <span class="at">end_pause =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -559,8 +611,11 @@ background: #00000000;
 </section>
 <section id="regional-breakdown" class="level2 page-columns page-full" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="regional-breakdown"><span class="header-section-number">7</span> Regional breakdown</h2>
-<p>Between 1990 - 2019 regional breakdowns are available for livestock numbers.</p>
-<p>Here’s a plot of dairy cattle numbers by region.</p>
+<ul>
+<li>Although Waikato still dominates (by a large margin) in terms of dairy cattle numbers, Canterbury is the clear winner (or loser) in terms of the number of dairy cattle added since 1990.</li>
+<li>At their peak in 2014, the Waikato had 1.9M dairy cattle, before a slight decrease to 1.8M by 2019.</li>
+<li>This is still almost 1.5x greater than the peak number of dairy cows Canterbury (also in 2014), and 2.6x greater than peak dairy cow numbers of 730,000 in Southland in 2015.</li>
+</ul>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -635,7 +690,11 @@ background: #00000000;
 </div>
 <section id="regional-breakdown-linked-map" class="level3 page-columns page-full" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="regional-breakdown-linked-map"><span class="header-section-number">7.1</span> Regional breakdown linked map</h3>
-<p>Want the interactive version of this? Click through to this <a href="https://isaacbain.shinyapps.io/livestock-shiny-app/">Shiny app</a>.</p>
+<p><em>Want the interactive version of this? Click through to this <a href="https://isaacbain.shinyapps.io/livestock-shiny-app/">Shiny app</a>.</em></p>
+<ul>
+<li>As mentioned above, Canterbury really stands out for the increased number of dairy cows since 1990. In the 24 years leading up to 2014 they added over 1.2M dairy cattle to the region.</li>
+<li>The opposite end of the spectrum was Auckland, which by 2009 at it’s lowest point had lost 135,000 dairy cattle since 1990.</li>
+</ul>
 <div class="page-columns page-full">
 <div class="cell page-columns page-full">
 <details class="code-fold">
@@ -732,6 +791,8 @@ background: #00000000;
 </section>
 <section id="d-compare" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="d-compare"><span class="header-section-number">8</span> 2D compare</h2>
+<p>Now you get a bonus for reading this far! The awesome <a href="https://twitter.com/kyle_e_walker">Kyle Walker</a> has been writing a brand new R package <code>[mapgl](https://walker-data.com/mapgl/)</code> to bring the power of <a href="https://docs.mapbox.com/mapbox-gl-js/api/">Mapbox GL JS</a> and <a href="https://maplibre.org/maplibre-gl-js/docs/">MapLibre GL JS</a> to R users. This brings some exciting new features over traditional mapping packages like <code>[leaflet](https://rstudio.github.io/leaflet/)</code>.</p>
+<p>So the first map is a simple 2D map of the livestock hex grids, where you can slide the slider back and forth to compare sheep density between the years of 1994 and 2017.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -794,6 +855,8 @@ background: #00000000;
 </section>
 <section id="d-compare-1" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="d-compare-1"><span class="header-section-number">9</span> 3D compare</h2>
+<p>But the next plot is something really special! Now the hex grids are brought into 3D space by setting both their height and colour proportional to the sheep density. You can slide the slider back and forth as above, but you can also hold down the control button whilst clicking to tilt and pan the 3D view.</p>
+<p>It’s pretty dramatic in 3D how many less sheep there are these days, and you can clearly see where they’ve mostly been lost from in the South Island.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -857,6 +920,10 @@ background: #00000000;
 <div class="responsive-iframe-container">
   <iframe src="www/map2.html" allowfullscreen=""></iframe>
 </div>
+</section>
+<section id="conclusions" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">10</span> Conclusions</h2>
+<p>So that about wraps it up. I hope you learnt some more about the livestock numbers dataset available, and some of the possibilities for visualising them.</p>
 
 
 </section>
@@ -865,7 +932,7 @@ background: #00000000;
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>FYI it’s 4.6 sheep per person! See <a href="https://www.rnz.co.nz/news/country/515877/new-zealand-s-iconic-sheep-to-person-ratio-keeps-falling" class="uri">https://www.rnz.co.nz/news/country/515877/new-zealand-s-iconic-sheep-to-person-ratio-keeps-falling</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>FYI it’s currently 4.6 sheep per person! See <a href="https://www.rnz.co.nz/news/country/515877/new-zealand-s-iconic-sheep-to-person-ratio-keeps-falling">RNZ</a> for more details.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1296,7 +1363,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
