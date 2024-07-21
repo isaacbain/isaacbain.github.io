@@ -18,7 +18,7 @@ format:
     link-external-newwindow: true
 editor: visual
 lightbox: auto
-draft: true
+draft: false
 draft-mode: unlinked
 resources: 
   - "www/*"
