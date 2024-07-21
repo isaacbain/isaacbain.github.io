@@ -158,7 +158,7 @@ ggplot(cattle_numbers, aes(x = year, y = count, colour = animal, group = animal)
 ```
 
 ::: callout-tip
-The below chart is interactive. You can hover over the time series to see the exact values, you can hover over the legend to highlight each animal type, and you can click on the legend to show/hide certain animals.
+The graph below is interactive. You can hover over the time series to see the exact values, you can hover over the legend to highlight each animal type, and you can click on the legend to show/hide certain animals.
 :::
 
 ```{r}
@@ -343,9 +343,10 @@ animate(p5,
 ```
 
 ::: callout-tip
-The below graph is interactive. It looks pretty busy, but you can hover over the legend to isolate individual regions. And you can click on the legend items to hide or show multiple regions.
+The graph below is interactive. It looks pretty busy, but you can hover over the legend to isolate individual regions. And you can click on the legend items to hide or show multiple regions.
 :::
 
+:::{.column-body-outset}
 ```{r}
 # Create the plots
 billboarder(width = 700, height = 500) |>
@@ -362,6 +363,7 @@ billboarder(width = 700, height = 500) |>
   bb_legend(show = TRUE) |>
   bb_tooltip(grouped = FALSE)
 ```
+:::
 
 ## Animated Regional Trends Map
 
