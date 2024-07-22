@@ -1,11 +1,12 @@
 ---
-title: "Kia ora 👋"
+title: "Kia ora {{< animate tada '👋' >}}"
 ---
 
 ::: banner
 :::
 
 ## Welcome to my personal website.
+
 
 This is where I share my projects, maps, graphs, and code that I’ve been tinkering with. You'll hopefully find some interesting content here about environmental data, freshwater ecology, and public health.
 

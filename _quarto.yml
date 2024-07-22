@@ -30,7 +30,8 @@ website:
     center: "© 2024 Isaac Bain"
 format:
   html:
-    theme: [flatly, theme-light.scss]
+    theme: 
+      light: [flatly, theme-light.scss]
     css: styles.css
 
 editor: visual
