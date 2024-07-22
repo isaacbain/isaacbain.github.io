@@ -28,7 +28,7 @@ website:
         href: https://twitter.com/isaacbain
 format:
   html:
-    theme: flatly
+    theme: [flatly, theme-light.scss]
     css: styles.css
 
 editor: visual
