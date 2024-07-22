@@ -1,0 +1,31 @@
+---
+title: "Opps! Page not found (404)"
+---
+
+<style>
+.center-content {
+    text-align: center;
+    margin-top: 5%;
+}
+
+.center-content img {
+    display: block;
+    margin: 0 auto;
+}
+
+h1.title {
+    text-align: center;
+    margin-bottom: 0; /* Removes bottom margin */
+    padding-bottom: 0; /* Removes bottom padding */
+}
+</style>
+
+<div class="center-content">
+  
+**Looks like you're in uncharted waters, matey! 🏴‍☠️**
+
+![](lost-kakapo.png){width="200"}
+
+Dive back into the [main site](www.isaacbain.com) and quench your curiosity.
+
+</div>

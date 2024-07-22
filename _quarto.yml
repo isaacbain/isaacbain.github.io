@@ -26,6 +26,8 @@ website:
         href: https://scholar.google.com/citations?user=vtZwgC4AAAAJ&hl=en
       - icon: twitter
         href: https://twitter.com/isaacbain
+  page-footer: 
+    center: "© 2024 Isaac Bain"
 format:
   html:
     theme: [flatly, theme-light.scss]
