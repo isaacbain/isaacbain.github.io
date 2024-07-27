@@ -1,0 +1,331 @@
+---
+title: "Ki uta ki tai: 3D catchment models for public outreach"
+author: "Isaac Bain"
+date: "2024-07-30"
+categories: [code, maps, animation, water quality]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
+editor: visual
+lightbox: auto
+draft: true
+draft-mode: unlinked
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.6)
+          ),
+          /* bottom, image */ 
+          url(./whangateau-banner.jpg);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 0.7; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
+---
+
+## Introduction
+
+Are you part of a catchment group or similar organisation and interested in creating a physical model of your catchment for public outreach? Allowing people to touch and hold a miniature version of the landscape can be a powerful community engagement tool. 3D printing is an excellent way to achieve this. But how do you get started?
+
+Here are a few tips to help you begin, using open-source software and publicly available data. If you prefer, you can also contact me on LinkedIn or Twitter with details about your catchment and your goals, and I will generate a model for you free of charge.
+
+## What is 3D printing?
+
+![](3d-printer.gif){fig-align="center" width="525"}
+
+3D printers are affordable, desktop machines that create physical objects from digital files by building up layers of material, such as plastic or resin. Most 3D printers use a process called Fused Deposition Modelling (FDM), where a plastic filament is melted and extruded through a nozzle to form the object.
+
+For those concerned about environmental impact, the most common filament, PLA, is biodegradable and made from renewable resources like corn starch.
+
+3D printers are widely available and can be purchased for a few hundred dollars. If you prefer not to buy one, many libraries, schools, and makerspaces offer 3D printing services for a small fee. Additionally, commercial services are available to print your models for you.
+
+## Getting started
+
+::: column-margin
+```{mermaid}
+flowchart TD
+    A[Get elevation data] -->|Large catchment| B[Global dataset]
+    A -->|Small catchment| C[LiDAR]
+    B --> D[Clip DEM to catchment boundary]
+    C --> D
+    D --> E[Build mesh]
+    E -->|Determine Z scale, sizing, etc.| F[Convert to STL]
+    F --> G[Send to 3D printer]
+```
+:::
+
+To create a 3D model of your catchment, you’ll need a Digital Elevation Model (DEM) of the area. A DEM is a 2D representation of the terrain, where each pixel represents the ground’s elevation at that point.
+
+There are many sources for DEM data, but one of the best is the LINZ Data Service. LINZ provides free access to a range of spatial data, including DEMs, which you can download and use at no cost.
+
+Once you have your DEM, you’ll need to convert it into a format suitable for 3D printing software. This typically involves converting the raster data into a mesh, which is a collection of vertices and faces defining the object’s shape.
+
+Many tools are available for converting DEMs into 3D models, but one of the best is the `rayshader` package for R. Rayshader is an open-source package that allows you to create 3D visualisations of spatial data, including DEMs.
+
+## Mount Taranaki
+
+Let's start with an example of how to create a 3D model of Taranaki Maunga using `rayshader`. Although it's not a catchment, it's a beautiful landform and a great place to start.
+
+We'll use the `plot_3d_vista` function from the `rayvista` package to create a 3D model of Mount Taranaki. This function requires a latitude, longitude, radius (in meters), and a few other parameters to the model.
+
+The function can also drape a satellite image over the model for a more realistic appearance. This isn't needed for 3D printing, but it does enhance the model's visual appeal for digital display.
+
+```{r setup}
+#| code-summary: "Show libraries code"
+
+options(rgl.useNULL = TRUE)
+rgl::setupKnitr(autoprint = TRUE)
+
+library(rayshader) 
+library(rayvista)
+library(sf)
+library(terra)
+library(elevatr)
+library(RColorBrewer)
+library(leaflet)
+```
+
+::: callout-tip
+The below model is interactive, you can click and drag to move it around.
+:::
+
+```{r}
+taranaki <- plot_3d_vista(lat = -39.295783, long = 174.06395,
+                          radius = 7000, phi=30, outlier_filter=0.001,
+                          fill_holes = TRUE, zscale = 40,
+                          elevation_detail = 10, overlay_detail = 13, 
+                          zoom = 0.6)
+
+rgl::rglwidget(width = 800, height = 400)
+```
+
+## Ahuriri, Kakanui and Whangateau catchments
+
+Now, let's move on to a more complex example: creating a 3D model of a catchment from the mountains to the sea, including its estuary. We'll use the Ahuriri, Kakanui, and Whangateau catchments as examples (@fig-catchments-leaflet), because I recently printed out some models for a colleague who was working in these catchments.
+
+We'll follow a similar process as we did for Mount Taranaki, but with a few extra steps to account for the catchment's complex shape. We'll need to clip the DEM to the catchment boundary, downsample it to reduce the resolution, and convert it to a mesh for 3D printing.
+
+```{r}
+#| label: fig-catchments-leaflet
+#| fig-cap: "Interactive map of the Ahuriri, Kakanui, and Whangateau catchments, including their estuaries"
+
+# catchment boundary
+whangateau <- st_read("/Users/isaacbain/working/estuary-mapping/data/whangateau_combined/whangateau_combined.shp", quiet = TRUE) |> st_transform(4326)
+kakanui <- st_read("/Users/isaacbain/working/estuary-mapping/data/kakanui_combined/kakanui_catchment.shp", quiet = TRUE) |> st_transform(4326)
+ahuriri <- st_read("/Users/isaacbain/working/estuary-mapping/data/ahuriri_combined/ahuriri_combined.shp", quiet = TRUE) |> st_transform(4326)
+
+# Define colours for each layer
+colors <- brewer.pal(3, "Set1")
+whangateau_color <- colors[1]
+kakanui_color <- colors[2]
+ahuriri_color <- colors[3]
+
+# Create custom labels for each layer
+whangateau$label <- "Whangateau"
+kakanui$label <- "Kakanui"
+ahuriri$label <- "Ahuriri"
+
+# Create the Leaflet map
+leaflet() %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addPolygons(
+    data = whangateau, 
+    color = whangateau_color, 
+    weight = 2, 
+    opacity = 1, 
+    fillOpacity = 0.5, 
+    group = "Whangateau",
+    label = ~label,
+    labelOptions = labelOptions(
+                    noHide = TRUE,
+                    direction = 'right',
+                    offset = c(3, 0))
+  ) %>%
+  addPolygons(
+    data = kakanui, 
+    color = kakanui_color, 
+    weight = 2, 
+    opacity = 1, 
+    fillOpacity = 0.5, 
+    group = "Kakanui",
+    label = ~label,
+    labelOptions = labelOptions(
+                    noHide = TRUE,
+                    direction = 'right',
+                    offset = c(6, 0))
+  ) %>%
+  addPolygons(
+    data = ahuriri, 
+    color = ahuriri_color, 
+    weight = 2, 
+    opacity = 1, 
+    fillOpacity = 0.5, 
+    group = "Ahuriri",
+    label = ~label,
+    labelOptions = labelOptions(
+                    noHide = TRUE,
+                    direction = 'right',
+                    offset = c(3, 0))
+  ) %>%
+  addLegend(
+    "bottomright", 
+    colors = colors, 
+    labels = c("Whangateau", "Kakanui", "Ahuriri"), 
+    title = "Catchments", 
+    opacity = 1
+  )
+```
+
+### Data sources
+
+#### Catchment boundaries
+
+For sea-draining catchments in New Zealand, the Ministry for the Environment offers a dataset of sea-draining catchment boundaries[^1] available for download.
+
+[^1]: <https://data.mfe.govt.nz/layer/99776-sea-draining-catchments/>
+
+For sub-catchments that don't reach the sea, you might need to look elsewhere. Your local Regional Council is a good starting point. If you don't have luck there, you can derive custom catchment boundaries from a DEM or combine precomputed watershed areas from the digital river network. This process is more involved and won't be covered in this post, but it's definitely doable.
+
+#### Estuary boundaries
+
+To add the estuary itself, you can use NIWA's Estuarine Environment Classification dataset[^2], which includes the boundaries of most estuaries in New Zealand. Or LINZ topographic maps are a good source too.
+
+[^2]: <https://www.doc.govt.nz/nature/habitats/estuaries/estuaries-spatial-database>
+
+#### Elevation data
+
+For elevation data, LINZ provides high-resolution LiDAR data[^3] that is increasingly available for New Zealand. This data is essential for creating a detailed 3D model of your catchment, especially for small catchments where detail is crucial. For larger catchments, lower resolution satellite DEMs may suffice and are easier to work with in terms of file size.
+
+[^3]: <https://www.linz.govt.nz/products-services/data/types-linz-data/elevation-data>
+
+### Kakanui
+
+Let's start off with Kakanui. It's the easiest because it's fairly large, allowing us to use elevation data from a global dataset. In this case, we'll use Amazon Web Services Terrain Tiles.
+
+[LAWA](https://www.lawa.org.nz/explore-data/otago-region/river-quality/kakanui-river) tells us:
+
+> The Kakanui River catchment has an area of 894 km^2^
+>
+> The catchment is contained by the Kakanui Mountains and Pisgah Spur (1634m) to the west and south. In the north, the catchment is separated from the Waitaki catchment by rolling hill country. The main tributaries of the Kakanui River are the Kauru River (catchment area 143 km^2^), Island Stream (122 km^2^) and Waiareka Creek (213 km^2^).
+>
+> Water quality in the upper Kakanui River is excellent.
+
+```{r}
+#| echo: true
+#| eval: false 
+#| file: kakanui.R
+```
+
+::: centered-video-container
+```{=html}
+
+<video width=100% height=100% controls loop autoplay>
+  <source src="kakanui_spinning.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+```
+:::
+
+### Whangateau
+
+Next, we'll move on to the Whangateau catchment. This catchment is smaller, so we'll use LINZ LiDAR data to obtain more detailed elevation information for the model.
+
+[LAWA](https://www.lawa.org.nz/explore-data/auckland-region/estuaries/whangateau) tells us:
+
+> The Whangateau estuary is a permanently open tidal lagoon on the northeast coast. The estuary is highly valuable for wildlife, providing rich feeding grounds for many migratory and endemic shore birds. In the upper reaches of the harbour an ecologically significant sequence of seagrass and mangroves transition into saltmarsh and coastal kahikatea swamp forest (Omaha Taniko Wetlands Scientific Reserve).
+>
+> Freshwater inputs to the estuary are low and over 90% of the estuary’s volume is flushed during each outgoing tide. Native forest covers a quarter of the catchment, with rural land uses and exotic forest making up the rest. The monitoring sites have low mud content in comparison to other estuaries in the region and the estuary is in good overall health.
+
+```{r}
+#| echo: true
+#| eval: false 
+#| file: whangateau.R
+```
+
+::: centered-video-container
+```{=html}
+
+<video width=100% height=100% controls loop autoplay>
+  <source src="whangateau_spinning.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+```
+:::
+
+### Ahuriri
+
+Finally, we have the Ahuriri catchment. The Ahuriri is notable because the 1931 Hawke's Bay earthquake lifted the area 1-2 metres, draining most of the water and only leaving a remnant estuary. Further drainage has occurred to enable residential and industrial land uses.
+
+[HBRC](https://www.hbrc.govt.nz/services/policy-and-planning/kotahi/kotahicatchments/ha-catchment/) tells us:
+
+> Ahuriri Estuary Te Whanganui-a-Orotū is a significant conservation area with high ecological value, as well as the Poukawa and Waitangi wetlands. Many native fish species, and rainbow and brown trout frequent the rivers. Surface water quality gradually decreases from a pristine ecological condition in the upper reaches of the catchment, to an ‘impacted rural condition’, to the worst water quality in urban areas.
+
+```{r}
+#| echo: true
+#| eval: false 
+#| file: ahuriri.R
+```
+
+::: centered-video-container
+```{=html}
+
+<video width=100% height=100% controls loop autoplay>
+  <source src="ahuriri_spinning.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+```
+:::
+
+## 3D printing
+
+Once you have your 3D model, you can export it to a file format suitable for 3D printing. The most common file format for 3D printing is STL, which describes the shape of an object as a collection of triangles.
+
+You can export your 3D model to an STL file using the `rayshader` package's `save_3dprint` function in R. This function takes a filename and a mesh object as input and writes the mesh to an STL file. You can also set the `max_width` parameter to scale the model to a specific size.
+
+Here's some that I printed off at home in a couple of different colours. The material cost to print one of these is around \$1.08 and takes a couple of hours.
+
+::: {layout-nrow="2"}
+![Ahuriri catchment and estuary in green PLA filament.](ahuriri_photo.jpg)
+
+![Kakanui catchment and estuary in green PLA filament.](kakanui_photo.jpg)
+
+![Whangateau catchment and estuary in green PLA filament.](whangateau_photo.jpg)
+:::
+
+![All three catchments printed in white PLA filament.](all_three_photo.jpg)
+
+## Conclusions
+
+Creating 3D models of catchments using DEM data and 3D printing technology provides an effective tool for public outreach and community engagement. This guide demonstrated how to use global datasets for larger catchments like Kakanui and high-resolution LiDAR data for smaller catchments like Whangateau and Ahuriri.
+
+Using the `rayshader` and `rayvista` packages in R, we obtained and processed DEM data, created 3D models, and converted them to STL files for 3D printing. This workflow is straightforward, cost-effective, and leverages open-source software and publicly available data.
+
+These 3D models offer a tangible way to communicate complex geographical and hydrological concepts, making them valuable for catchment groups, educators, and more.
+
+And remember, if you like what you saw and want an STL file for your own group's catchment - just let me know and I'll see what I can do.
