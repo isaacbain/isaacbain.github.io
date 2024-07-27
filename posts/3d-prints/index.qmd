@@ -329,3 +329,9 @@ Using the `rayshader` and `rayvista` packages in R, we obtained and processed DE
 These 3D models offer a tangible way to communicate complex geographical and hydrological concepts, making them valuable for catchment groups, educators, and more.
 
 And remember, if you like what you saw and want an STL file for your own group's catchment - just let me know and I'll see what I can do.
+
+::: callout-tip
+Want to print out these specific catchment models, or other models I've made? Head over to [Thingiverse](https://www.thingiverse.com/isaacbain/designs) to check out my designs.
+
+![](all_three_render.jpg)
+:::
