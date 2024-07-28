@@ -35,8 +35,8 @@ include-in-header:
         background: 
           /* top, transparent black, faked with gradient */
           linear-gradient(
-            rgba(0, 0, 0, 0.2),
-            rgba(0, 0, 0, 0.6)
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.2)
           ),
           /* bottom, image */ 
           url(./whangateau-banner.jpg);
@@ -63,7 +63,19 @@ Here are a few tips to help you begin, using open-source software and publicly a
 
 For those concerned about environmental impact, the most common filament, PLA, is biodegradable and made from renewable resources like corn starch.
 
-3D printers are widely available and can be purchased for a few hundred dollars. If you prefer not to buy one, many libraries, schools, and makerspaces offer 3D printing services for a small fee. Additionally, commercial services are available to print your models for you.
+3D printers are widely available and can be purchased for a few hundred dollars.[^1] If you prefer not to buy one, many libraries[^2], universities[^3], schools[^4], and makerspaces[^5] offer 3D printing services for a nominal fee. Additionally, commercial services are available to print your models for you.[^6]
+
+[^1]: e.g. [This](https://marvle3d.co.nz/printer/2452-2421-creality-ender-3-v3-se-3d-printer-6971636403623.html#/285-bundles-printer_only) is the model I use, available from a number of retailers.
+
+[^2]: <https://my.christchurchcitylibraries.com/maker-space/>
+
+[^3]: <https://www.cie.auckland.ac.nz/locations/maker-space-old/>
+
+[^4]: <https://elearning.tki.org.nz/Technologies/Hardware-for-learning/3D-printing>
+
+[^5]: <https://hackland.nz/>
+
+[^6]: I've never tried any of these, but here's one local option. <https://www.makeshop.co.nz/3d-printing>
 
 ## Getting started
 
@@ -204,31 +216,31 @@ leaflet() %>%
 
 ### Data sources
 
-#### Catchment boundaries
+**Catchment boundaries**
 
-For sea-draining catchments in New Zealand, the Ministry for the Environment offers a dataset of sea-draining catchment boundaries[^1] available for download.
+For sea-draining catchments in New Zealand, the Ministry for the Environment offers a dataset of sea-draining catchment boundaries[^7] available for download.
 
-[^1]: <https://data.mfe.govt.nz/layer/99776-sea-draining-catchments/>
+[^7]: <https://data.mfe.govt.nz/layer/99776-sea-draining-catchments/>
 
 For sub-catchments that don't reach the sea, you might need to look elsewhere. Your local Regional Council is a good starting point. If you don't have luck there, you can derive custom catchment boundaries from a DEM or combine precomputed watershed areas from the digital river network. This process is more involved and won't be covered in this post, but it's definitely doable.
 
-#### Estuary boundaries
+**Estuary boundaries**
 
-To add the estuary itself, you can use NIWA's Estuarine Environment Classification dataset[^2], which includes the boundaries of most estuaries in New Zealand. Or LINZ topographic maps are a good source too.
+To add the estuary itself, you can use NIWA's Estuarine Environment Classification dataset[^8], which includes the boundaries of most estuaries in New Zealand. Or LINZ topographic maps are a good source too.
 
-[^2]: <https://www.doc.govt.nz/nature/habitats/estuaries/estuaries-spatial-database>
+[^8]: <https://www.doc.govt.nz/nature/habitats/estuaries/estuaries-spatial-database>
 
-#### Elevation data
+**Elevation data**
 
-For elevation data, LINZ provides high-resolution LiDAR data[^3] that is increasingly available for New Zealand. This data is essential for creating a detailed 3D model of your catchment, especially for small catchments where detail is crucial. For larger catchments, lower resolution satellite DEMs may suffice and are easier to work with in terms of file size.
+For elevation data, LINZ provides high-resolution LiDAR data[^9] that is increasingly available for New Zealand. This data is essential for creating a detailed 3D model of your catchment, especially for small catchments where detail is crucial. For larger catchments, lower resolution satellite DEMs may suffice and are easier to work with in terms of file size.
 
-[^3]: <https://www.linz.govt.nz/products-services/data/types-linz-data/elevation-data>
+[^9]: <https://www.linz.govt.nz/products-services/data/types-linz-data/elevation-data>
 
 ### Kakanui
 
 Let's start off with Kakanui. It's the easiest because it's fairly large, allowing us to use elevation data from a global dataset. In this case, we'll use Amazon Web Services Terrain Tiles.
 
-[LAWA](https://www.lawa.org.nz/explore-data/otago-region/river-quality/kakanui-river) tells us:
+Regarding the Kakanui, [LAWA](https://www.lawa.org.nz/explore-data/otago-region/river-quality/kakanui-river) tells us:
 
 > The Kakanui River catchment has an area of 894 km^2^
 >
@@ -256,7 +268,7 @@ Let's start off with Kakanui. It's the easiest because it's fairly large, allowi
 
 Next, we'll move on to the Whangateau catchment. This catchment is smaller, so we'll use LINZ LiDAR data to obtain more detailed elevation information for the model.
 
-[LAWA](https://www.lawa.org.nz/explore-data/auckland-region/estuaries/whangateau) tells us:
+Again, [LAWA](https://www.lawa.org.nz/explore-data/auckland-region/estuaries/whangateau) tells us:
 
 > The Whangateau estuary is a permanently open tidal lagoon on the northeast coast. The estuary is highly valuable for wildlife, providing rich feeding grounds for many migratory and endemic shore birds. In the upper reaches of the harbour an ecologically significant sequence of seagrass and mangroves transition into saltmarsh and coastal kahikatea swamp forest (Omaha Taniko Wetlands Scientific Reserve).
 >
@@ -328,10 +340,10 @@ Using the `rayshader` and `rayvista` packages in R, we obtained and processed DE
 
 These 3D models offer a tangible way to communicate complex geographical and hydrological concepts, making them valuable for catchment groups, educators, and more.
 
-And remember, if you like what you saw and want an STL file for your own group's catchment - just let me know and I'll see what I can do.
+**And remember, if you're a non-profit and like what you saw and want an STL file for your own group's catchment, just let me know and I'll see what I can do.**
 
 ::: callout-tip
-Want to print out these specific catchment models, or other models I've made? Head over to [Thingiverse](https://www.thingiverse.com/isaacbain/designs) to check out my designs.
+Want to 3D print these specific catchment models, or other models I've made? Head over to [Thingiverse](https://www.thingiverse.com/isaacbain/designs) to check out my designs.
 
 ![](all_three_render.jpg)
 :::
