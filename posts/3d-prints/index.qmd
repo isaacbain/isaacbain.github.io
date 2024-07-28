@@ -79,6 +79,8 @@ For those concerned about environmental impact, the most common filament, PLA, i
 
 ## Getting started
 
+To create a 3D model of your catchment, you’ll need a Digital Elevation Model (DEM) of the area. A DEM is a 2D representation of the terrain, where each pixel represents the ground’s elevation at that point.
+
 ::: column-margin
 ```{mermaid}
 flowchart TD
@@ -91,8 +93,6 @@ flowchart TD
     F --> G[Send to 3D printer]
 ```
 :::
-
-To create a 3D model of your catchment, you’ll need a Digital Elevation Model (DEM) of the area. A DEM is a 2D representation of the terrain, where each pixel represents the ground’s elevation at that point.
 
 There are many sources for DEM data, but one of the best is the LINZ Data Service. LINZ provides free access to a range of spatial data, including DEMs, which you can download and use at no cost.
 
@@ -257,7 +257,7 @@ Regarding the Kakanui, [LAWA](https://www.lawa.org.nz/explore-data/otago-region/
 ::: centered-video-container
 ```{=html}
 
-<video width=100% height=100% controls loop autoplay>
+<video width=100% height=100% controls loop autoplay muted>
   <source src="kakanui_spinning.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
@@ -283,7 +283,7 @@ Again, [LAWA](https://www.lawa.org.nz/explore-data/auckland-region/estuaries/wha
 ::: centered-video-container
 ```{=html}
 
-<video width=100% height=100% controls loop autoplay>
+<video width=100% height=100% controls loop autoplay muted>
   <source src="whangateau_spinning.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
@@ -307,7 +307,7 @@ Finally, we have the Ahuriri catchment. The Ahuriri is notable because the 1931 
 ::: centered-video-container
 ```{=html}
 
-<video width=100% height=100% controls loop autoplay>
+<video width=100% height=100% controls loop autoplay muted>
   <source src="ahuriri_spinning.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
