@@ -1,5 +1,6 @@
 ---
 title: "Ki uta ki tai: 3D catchment models for public outreach"
+image: "whangateau_3d_satellite.png"
 author: "Isaac Bain"
 date: "2024-07-30"
 categories: [code, maps, animation, water quality]
