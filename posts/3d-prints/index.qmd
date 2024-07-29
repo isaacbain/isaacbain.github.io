@@ -18,7 +18,7 @@ format:
     link-external-newwindow: true
 editor: visual
 lightbox: auto
-draft: true
+draft: false
 draft-mode: unlinked
 title-block-banner: "#00000000"
 title-block-banner-color: "rgba(255, 255, 255, 0.9)"
