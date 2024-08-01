@@ -54,7 +54,7 @@ include-in-header:
 
 Are you part of a catchment group or similar organisation and interested in creating a physical model of your catchment for public outreach? Allowing people to touch and hold a miniature version of the landscape can be a powerful community engagement tool. 3D printing is an excellent way to achieve this. But how do you get started?
 
-Here are a few tips to help you begin, using open-source software and publicly available data. If you prefer, you can also contact me on LinkedIn or Twitter with details about your catchment and your goals, and I will generate a model for you free of charge.
+Here are a few tips to help you begin, using open-source software and publicly available data. If you prefer, you can also contact me on LinkedIn or Twitter with details about your catchment and your goals, and I will generate an STL model file for you free of charge. You can then take this to your local library or another 3D printing service to print.
 
 ## What is 3D printing?
 
