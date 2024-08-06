@@ -18,7 +18,7 @@ format:
     link-external-newwindow: true
 editor: visual
 lightbox: auto
-draft: true
+draft: false
 draft-mode: unlinked
 title-block-banner: "#00000000"
 title-block-banner-color: "rgba(255, 255, 255, 0.9)"
@@ -51,9 +51,13 @@ include-in-header:
 
 ## Introduction
 
-In a [previous post](https://isaacbain.com/posts/3d-prints/), I offered to create an STL file for 3D printing for any catchment groups interested in visualising their catchments. [Chris Hollis](https://field-basedstem.kiwi/facilitator/chris-hollis/), a geoscience educator and member of the Upper Ruamahanga River Management Advisory Group (URRMAC) established by Greater Wellington Regional Council, was the first to get in touch. He expressed interest in the Upper Ruamahanga, particularly in understanding how the active faults in the region interact with rivers.
+In a [previous post](https://isaacbain.com/posts/3d-prints/), I offered to create an STL file for 3D printing for any catchment groups interested in visualising their catchments. [Chris Hollis](https://field-basedstem.kiwi/facilitator/chris-hollis/), a geoscience educator and member of the Upper Ruamahanga River Management Advisory Group (URRMAC) established by Greater Wellington Regional Council, was the first to get in touch. He expressed interest in the Upper Ruamahanga, particularly in helping to understand how the active faults in the region interact with rivers.
 
 The [Ruamahanga Water Management Zone](https://www.lawa.org.nz/explore-data/wellington-region/water-quantity/surface-water-zones/ruamahanga) is a vast area of 3,555 km^2^, encompassing the entire Ruamahanga River catchment and it occupies nearly half the land area of the Wellington Region. The catchment features diverse land uses, including urban townships, intensive agriculture and horticulture, native bush, and wetlands.
+
+Chris also mentions:
+
+> A significant feature of this catchment is how the rivers flowing from the Tararua Range have been affected by movement along active faults linked to the region's setting alongside the Hikurangi Subduction Zone.
 
 ```{r}
 library(sf)
