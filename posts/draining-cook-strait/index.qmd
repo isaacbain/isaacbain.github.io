@@ -2,7 +2,7 @@
 title: "Draining the Cook Strait"
 author: "Isaac Bain"
 date: "2024-08-13"
-categories: [code, maps, animation]
+categories: [code, maps, animation, bathymetry]
 execute:
   warning: false
   error: false
