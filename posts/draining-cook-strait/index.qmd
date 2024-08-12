@@ -1,0 +1,86 @@
+---
+title: "Draining the Cook Strait"
+author: "Isaac Bain"
+date: "2024-08-13"
+categories: [code, maps, animation]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
+editor: visual
+lightbox: auto
+draft: false
+draft-mode: unlinked
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.6)
+          ),
+          /* bottom, image */ 
+          url(./cook-strait-photo.png);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 0.7; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
+---
+
+```{r}
+#| echo: true
+#| eval: false 
+#| file: main.R
+```
+
+## Introduction
+
+With the Aratere ferry once again playing bumper boats during docking, and the dream of a bridge or tunnel across the Cook Strait sinking faster than a lead balloon, it’s clear we need a new approach. So, let’s toss conventional wisdom overboard and consider something truly bold: draining the Cook Strait to create a land route between the North and South Islands.
+
+Yes, you read that right.
+
+![Animation showing the water level in the Cook Strait area reducing from 0 to -270m below current sea level. Built using GEBCO 2024 bathymetric data.](water_depth_animation.gif){#fig-animation}
+
+## Extending SH1
+
+**Scenic Route: Paraparaumu to Nelson**
+
+Armed with some bathymetric data and a healthy dose of dystopian satire, I've mapped out the potential routes for our new inter-island highway. The first scenario, perfect for those who love a scenic drive, proposes draining a moderate depth of water to establish a route between Paraparaumu and Nelson. It’s a bit longer, sure, but think of the coastal views!
+
+![Map showing the water level 140m below current levels in the Cook Strait area. Built using GEBCO 2024 bathymetric data.](scenario_1_labeled.png){#fig-scenario-1 width="600"}
+
+**Speedy Shortcut: Wellington to Blenheim**
+
+Alternatively, if you're in a hurry to get from Wellington to Blenheim, we can opt to drain a greater depth of water for a more direct route. Picture it: a swift, straight drive through what was once ocean. Just watch out for the occasional leftover fish.
+
+![Map showing the water level 200m below current levels in the Cook Strait area. Built using GEBCO 2024 bathymetric data.](scenario_2_labeled.png){#fig-scenario-2 width="600"}
+
+## Beyond Cook Strait
+
+Of course, this raises the question: where else should we drain next? Perhaps a road trip to the Chatham Islands is in order? Imagine cruising along the ocean floor, past ancient shipwrecks and submerged ecosystems, all the way to your holiday destination.
+
+In a world of endless possibilities—and an endless supply of satire—draining the Cook Strait might just be the wacky, out-of-the-box solution we've been searching for. So, what do you think? Time to roll up our sleeves and start digging?
+
+*Disclaimer: no oceans were harmed in the making of this blog post.*
