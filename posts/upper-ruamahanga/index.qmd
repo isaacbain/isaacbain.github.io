@@ -164,7 +164,13 @@ catchment_mat |>
                                     offset = c(0,0)), alphalayer = 0.7) |> 
   add_shadow(ray_shade(catchment_mat), 0.5) |> # adds shadow
   add_shadow(ambient_shade(catchment_mat), 0) |>  # adds ambient light (looks nice but very slow)
-  plot_3d(catchment_mat, zscale = 28, zoom = 0.4, theta = 0, phi = 30, windowsize = c(1920, 1080)) # define plot parameters
+  plot_3d(catchment_mat,
+          soliddepth = -500,
+          zscale = 12,
+          zoom = 0.4,
+          theta = 0,
+          phi = 30,
+          windowsize = c(1920, 1080)) # post used z = 28
 
 render_highquality(paste0(catchment_name, "_static.png"),
                    parallel = TRUE,

@@ -1,0 +1,181 @@
+---
+title: "Creating a Relative Elevation Model (REM) of the Waimakariri River"
+author: "Isaac Bain"
+date: "2024-08-20"
+categories: [code, maps, water quality]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
+editor: visual
+lightbox: auto
+draft: true
+draft-mode: unlinked
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.2)
+          ),
+          /* bottom, image */ 
+          url(./waimak.jpg);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 0.7; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
+---
+## Introduction
+
+Recently, I derived a Relative Elevation Model (REM) for the Waimakariri River, covering the stretch from Gorge Bridge to the coast. An REM is similar to a Digital Elevation Model (DEM) but differs in that it standardises each cell’s height relative to a reference point—in this case, the river centreline. This method highlights variations in elevation across the riverbed that may not be as evident in a traditional DEM.
+
+### Why use a REM?
+
+The Waimakariri River’s braided structure creates a complex topography. By using a REM, we can highlight how the riverbed varies relative to its centreline, providing insight into erosion, sediment deposition, and flood management. This is particularly useful for understanding and managing dynamic river systems like braided rivers.
+
+### Why not use a DEM?
+
+While a Digital Elevation Model (DEM) provides information about the absolute elevation of the landscape, it doesn’t always capture the nuances needed for specific analyses. A DEM gives a broad overview of the topography, but it might not reveal subtle variations in elevation that are critical for understanding river geomorphology.
+
+## Creating the REM
+
+To create the REM, I used a combination of [LiDAR data](https://data.linz.govt.nz/layer/115795-canterbury-waimakariri-lidar-1m-dem-2023/) and river centreline information. The LiDAR data provided detailed elevation information, while the centreline served as the reference point for each cell. By subtracting the elevation of each cell from the elevation of the corresponding point on the centreline, the REM was generated.
+
+Fortunately, the [RiverREM](https://github.com/OpenTopography/RiverREM) Python package takes care of most of the heavy lifting. The package is designed specifically for creating REMs of river systems and streamlining the process for researchers and practitioners.
+
+```{r}
+#| echo: true
+#| eval: false 
+#| file: main.py
+```
+
+## Visualisations
+
+The REM can be visualised in various ways to highlight different aspects of the riverbed. For example, a colour gradient can be used to show the relative elevation of each cell, with darker colours indicating higher elevations and cooler colours indicating lower elevations. This can help identify areas of erosion and deposition, as well as changes in the river channel over time.
+
+```{r, fig.width=8, fig.asp=0.1, out.width="8in"}
+#| echo: false
+
+# Load the required libraries
+library(ggplot2)
+library(viridisLite)
+
+# Create a data frame for the gradient
+df <- data.frame(x = seq(0, 1, length.out = 1000), 
+                 y = 1)
+
+# Generate the plot using geom_raster
+ggplot(df, aes(x = x, y = y, fill = x)) + 
+  geom_raster(interpolate = TRUE) +
+  scale_fill_gradientn(colors = viridisLite::mako(256)) +
+  theme_void() +
+  theme(legend.position = "none") +
+  labs(title = NULL) +
+  annotate("text", x = 0, y = 1, label = " High Elevation", color = "white", hjust = 0, size = 5) +
+  annotate("text", x = 1, y = 1, label = "Low Elevation ", color = "white", hjust = 1, size = 5) +
+  coord_fixed(ratio=0.10)
+```
+
+```{r, echo=FALSE, out.width="7.1in", fig.align="center"}
+knitr::include_graphics("legend.jpg")
+```
+
+Remember that in a REM, every height is by definition relative to the river centreline. And apologies for the blocky outline of the below images! This is due to the outline of the captured LiDAR imagery.
+
+### Gorge Bridge
+
+In this section, you can observe the Waimakariri River being squeezed through a narrow constriction at the Gorge Bridge and then expanding outwards as it moves downstream. This constriction-expansion sequence is characteristic of braided rivers, which transport huge quantities of sediment (especially gravel) down from high-energy mountainous regions and distribute it across floodplains further downstream.
+
+Interestingly, this is also where the kayak leg of the Coast to Coast race concludes, making it a notable point both geographically and recreationally!
+
+::: column-page
+![](gorge-bridge.jpg)
+:::
+
+### Courtenay shallowing
+
+Just downstream of Courtenay, the riverbed becomes noticeably shallower, a feature clearly indicated by the relatively darker colour in the main riverbed on the REM. This section highlights the natural variability in the river’s depth. Additionally, you can observe the flood defences on the southern side of the river, strategically placed to prevent the river from spilling over onto the Old West Coast Road.
+
+::: column-page
+![](high.jpg)
+:::
+
+### West Melton flood defences
+
+In this section, the extensive flood engineering works are clearly visible, particularly in the form of stop-banks and groynes. These hard engineering structures are designed to control the river’s flow, manage sediment deposition, and protect surrounding areas from flooding. While highly effective in preventing immediate flood risks, they exemplify the traditional approach of hard engineering, which often requires significant maintenance and can alter the natural dynamics of the river.
+
+There is growing interest in complementing these hard engineering with nature-based solutions. Integrating natural floodplains or re-establishing vegetation could enhance a river’s natural ability to manage floodwaters, offering a more sustainable and resilient approach to flood management in the long term. Combining these methods could provide the necessary protection while also supporting the river’s ecological health.
+
+::: column-page
+![](flood-defences.jpg)
+:::
+
+## Interactive map
+
+Here you can explore the Waimakariri REM. Zoom in and pan around to see the detailed elevation changes and how these structures interact with the landscape.
+
+Due to file size restrictions, the map has been downsampled to approximately 15MB, which lowers the resolution of the data versus the above cropped images.
+
+::: column-page
+```{r}
+#| message: false
+#| warning: false
+
+# Load the required libraries
+library(terra)
+library(leaflet)
+library(leaflet.extras)
+
+# Suppress progress bar
+terraOptions(progress = 0)
+
+# Load the raster
+raster_path <- "data/merged_output_hillshade-color.tif"
+r <- rast(raster_path)
+
+desired_cells <- 200 * 1e6 / 4  # Each cell in a raster typically takes 4 bytes
+
+# Calculate the aggregation factor to achieve the desired number of cells
+agg_factor <- round(sqrt(ncell(r) / desired_cells))
+
+# Resample the raster to reduce its size
+r_resampled <- terra::aggregate(r, fact=agg_factor, method="bilinear")
+
+# Create a leaflet map
+map <- leaflet() %>% 
+  addProviderTiles('Esri.WorldImagery', group = "Base Map") |> 
+  addRasterImage(r_resampled, project = TRUE, opacity = 1, group = "Hillshade-Color", maxBytes = 30 * 1024 * 1024) |> 
+  addLayersControl(
+    baseGroups = c("Base Map"),
+    overlayGroups = c("REM"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) |> 
+  addFullscreenControl()
+
+# Display the map
+map
+```
+:::
