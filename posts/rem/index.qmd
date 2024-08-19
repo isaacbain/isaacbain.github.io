@@ -18,7 +18,7 @@ format:
     link-external-newwindow: true
 editor: visual
 lightbox: auto
-draft: true
+draft: false
 draft-mode: unlinked
 title-block-banner: "#00000000"
 title-block-banner-color: "rgba(255, 255, 255, 0.9)"
@@ -51,19 +51,31 @@ include-in-header:
 
 ## Introduction
 
-Recently, I created a Relative Elevation Model (REM) for the Waimakariri River, covering the stretch from Gorge Bridge to the coast. A REM is similar to a Digital Elevation Model (DEM) but differs in that it standardises each cell’s height relative to a reference point—in this case, the river centreline. This method highlights variations in elevation across the riverbed that may not be as evident in a traditional DEM.
+Recently, I created a Relative Elevation Model (REM) for the Waimakariri River, covering the stretch from Gorge Bridge to the coast. A REM is similar to a Digital Elevation Model (DEM) but differs in that it standardises each cell’s height relative to a reference point—in this case, the river centreline. This method highlights relative variations in elevation across the riverbed that may not be as evident in a traditional DEM.
 
 ### Why use a REM?
 
-The Waimakariri River’s braided structure creates a complex topography. By using a REM, we can highlight how the riverbed varies relative to its centreline, providing insight into erosion, sediment deposition, and flood management. This is particularly useful for understanding and managing dynamic river systems like braided rivers.
+The Waimakariri River’s braided structure creates a complex topography. By using a REM, we can highlight how the riverbed varies relative to its centreline, providing insight into fluvial geomorphology, erosion, sediment deposition, and flood management. This is particularly useful for understanding and managing dynamic river systems like braided rivers. REMs can easily discern relic channels, terraces, and oxbow lakes.
 
 ### Why not use a DEM?
 
 While a Digital Elevation Model (DEM) provides the base information about the absolute elevation of the landscape, it doesn’t always capture the nuances needed for specific analyses. A DEM gives a broad overview of the topography, but it might not reveal subtle variations in elevation that are critical for understanding river geomorphology.
 
+Because rivers always flow downhill, DEMs of rivers will always have a decreasing trend in elevation from the source to the mouth. Added to this are the smaller-scale elevation variations within the river corridor. These variations are often lost in a DEM but can be highlighted in a REM.
+
+![Comparison of DEM (left) to a REM (right) of the same area. From: https://dancoecarto.com/creating-rems-in-qgis-the-idw-method](demrem.jpg)
+
 ## Creating the REM
 
-To create the REM, I used a combination of [LiDAR data](https://data.linz.govt.nz/layer/115795-canterbury-waimakariri-lidar-1m-dem-2023/) and river centreline information. The LiDAR data provided detailed elevation information, while the centreline served as the reference point for each cell. By subtracting the elevation of each cell from the elevation of the corresponding point on the centreline, the REM was generated.
+To create the REM, I used a combination of [LiDAR data](https://data.linz.govt.nz/layer/115795-canterbury-waimakariri-lidar-1m-dem-2023/) and river centreline information. The LiDAR data provided detailed elevation information, while the centreline served as the reference point for each cell.
+
+Detrending a DEM to generate a Relative Elevation Model (REM) involves three key steps:
+
+1.  **Sample Elevation Values Along the River Centreline**: Begin by extracting elevation values along the river’s centreline, which serves as the reference point.
+
+2.  **Interpolate River Elevations Using Inverse Distance Weighting (IDW)**: Instead of simply using the nearest elevation sample, IDW is applied to calculate a weighted average of multiple nearby river elevations. This technique smooths the output surface by considering the influence of several points, resulting in a more accurate representation of local elevation relative to the river.
+
+3.  **Subtract River Elevations from the DEM**: Finally, subtract these interpolated river elevations from the original DEM. The resulting REM assigns a value of 0 to areas at the same elevation as the nearest point on the river channel, with positive values indicating the height above the river channel.
 
 Fortunately, the [RiverREM](https://github.com/OpenTopography/RiverREM) Python package takes care of most of the heavy lifting. The package is designed specifically for creating REMs of river systems and streamlining the process for researchers and practitioners. An equivalent package isn't available for R, so it's create to be able to mix and match R and Python code in an analysis.
 
