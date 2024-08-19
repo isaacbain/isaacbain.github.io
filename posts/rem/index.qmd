@@ -3,6 +3,7 @@ title: "Creating a Relative Elevation Model (REM) of the Waimakariri River"
 author: "Isaac Bain"
 date: "2024-08-20"
 categories: [code, maps, water quality]
+image: "gorge-bridge.jpg"
 execute:
   warning: false
   error: false
