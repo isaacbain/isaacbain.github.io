@@ -48,9 +48,10 @@ include-in-header:
       }
       </style>
 ---
+
 ## Introduction
 
-Recently, I derived a Relative Elevation Model (REM) for the Waimakariri River, covering the stretch from Gorge Bridge to the coast. An REM is similar to a Digital Elevation Model (DEM) but differs in that it standardises each cell’s height relative to a reference point—in this case, the river centreline. This method highlights variations in elevation across the riverbed that may not be as evident in a traditional DEM.
+Recently, I created a Relative Elevation Model (REM) for the Waimakariri River, covering the stretch from Gorge Bridge to the coast. A REM is similar to a Digital Elevation Model (DEM) but differs in that it standardises each cell’s height relative to a reference point—in this case, the river centreline. This method highlights variations in elevation across the riverbed that may not be as evident in a traditional DEM.
 
 ### Why use a REM?
 
@@ -58,13 +59,13 @@ The Waimakariri River’s braided structure creates a complex topography. By usi
 
 ### Why not use a DEM?
 
-While a Digital Elevation Model (DEM) provides information about the absolute elevation of the landscape, it doesn’t always capture the nuances needed for specific analyses. A DEM gives a broad overview of the topography, but it might not reveal subtle variations in elevation that are critical for understanding river geomorphology.
+While a Digital Elevation Model (DEM) provides the base information about the absolute elevation of the landscape, it doesn’t always capture the nuances needed for specific analyses. A DEM gives a broad overview of the topography, but it might not reveal subtle variations in elevation that are critical for understanding river geomorphology.
 
 ## Creating the REM
 
 To create the REM, I used a combination of [LiDAR data](https://data.linz.govt.nz/layer/115795-canterbury-waimakariri-lidar-1m-dem-2023/) and river centreline information. The LiDAR data provided detailed elevation information, while the centreline served as the reference point for each cell. By subtracting the elevation of each cell from the elevation of the corresponding point on the centreline, the REM was generated.
 
-Fortunately, the [RiverREM](https://github.com/OpenTopography/RiverREM) Python package takes care of most of the heavy lifting. The package is designed specifically for creating REMs of river systems and streamlining the process for researchers and practitioners.
+Fortunately, the [RiverREM](https://github.com/OpenTopography/RiverREM) Python package takes care of most of the heavy lifting. The package is designed specifically for creating REMs of river systems and streamlining the process for researchers and practitioners. An equivalent package isn't available for R, so it's create to be able to mix and match R and Python code in an analysis.
 
 ```{r}
 #| echo: true
@@ -103,13 +104,13 @@ ggplot(df, aes(x = x, y = y, fill = x)) +
 knitr::include_graphics("legend.jpg")
 ```
 
-Remember that in a REM, every height is by definition relative to the river centreline. And apologies for the blocky outline of the below images! This is due to the outline of the captured LiDAR imagery.
+Remember that in a REM, every height is by definition relative to the river centreline. And apologies for the blocky outline of the below images! This is due to the outline of the captured LiDAR imagery, which just followed the river.
 
 ### Gorge Bridge
 
 In this section, you can observe the Waimakariri River being squeezed through a narrow constriction at the Gorge Bridge and then expanding outwards as it moves downstream. This constriction-expansion sequence is characteristic of braided rivers, which transport huge quantities of sediment (especially gravel) down from high-energy mountainous regions and distribute it across floodplains further downstream.
 
-Interestingly, this is also where the kayak leg of the Coast to Coast race concludes, making it a notable point both geographically and recreationally!
+Interestingly, this is also the finish line of the kayak leg of the Coast to Coast race, making it a notable point both geographically and recreationally!
 
 ::: column-page
 ![](gorge-bridge.jpg)
@@ -117,7 +118,7 @@ Interestingly, this is also where the kayak leg of the Coast to Coast race concl
 
 ### Courtenay shallowing
 
-Just downstream of Courtenay, the riverbed becomes noticeably shallower, a feature clearly indicated by the relatively darker colour in the main riverbed on the REM. This section highlights the natural variability in the river’s depth. Additionally, you can observe the flood defences on the southern side of the river, strategically placed to prevent the river from spilling over onto the Old West Coast Road.
+Just downstream of Courtenay, the riverbed becomes noticeably shallower across its entire width, a feature clearly indicated by the relatively darker colour in the main riverbed on the REM. This section highlights the natural variability in the river’s depth. Additionally, you can observe the stopbanks on the southern side of the river, strategically placed to prevent the river from spilling over onto the Old West Coast Road.
 
 ::: column-page
 ![](high.jpg)
@@ -125,9 +126,9 @@ Just downstream of Courtenay, the riverbed becomes noticeably shallower, a featu
 
 ### West Melton flood defences
 
-In this section, the extensive flood engineering works are clearly visible, particularly in the form of stop-banks and groynes. These hard engineering structures are designed to control the river’s flow, manage sediment deposition, and protect surrounding areas from flooding. While highly effective in preventing immediate flood risks, they exemplify the traditional approach of hard engineering, which often requires significant maintenance and can alter the natural dynamics of the river.
+In this section, the extensive flood engineering works are clearly visible on both sides of the river, particularly in the form of stop-banks and groynes. These hard engineering structures are designed to control the river’s flow, manage sediment deposition, and protect surrounding areas from flooding. While highly effective in preventing immediate flood risks, they exemplify the traditional hard engineering approach, which often requires significant maintenance and can alter the natural dynamics of the river. Time will also tell how resilient these structures are in the face of climate change.
 
-There is growing interest in complementing these hard engineering with nature-based solutions. Integrating natural floodplains or re-establishing vegetation could enhance a river’s natural ability to manage floodwaters, offering a more sustainable and resilient approach to flood management in the long term. Combining these methods could provide the necessary protection while also supporting the river’s ecological health.
+There is growing interest in complementing these hard engineering with [nature-based solutions](https://envirolink.govt.nz/assets/2419-TSDC191-Nature-based-solutions-for-flood-management.pdf). Integrating natural floodplains, constructing wetlands, or re-establishing vegetation could enhance a river’s natural ability to manage floodwaters, offering a more sustainable and resilient approach to flood management in the long term. Combining these methods could provide the necessary protection while also supporting the river’s ecological health.
 
 ::: column-page
 ![](flood-defences.jpg)
@@ -135,9 +136,9 @@ There is growing interest in complementing these hard engineering with nature-ba
 
 ## Interactive map
 
-Here you can explore the Waimakariri REM. Zoom in and pan around to see the detailed elevation changes and how these structures interact with the landscape.
+The above images were cropped, but here you can explore the Waimakariri REM along its entire length in an interactive map. Zoom in and pan around to see the detailed elevation changes and how these structures interact with the landscape.
 
-Due to file size restrictions, the map has been downsampled to approximately 15MB, which lowers the resolution of the data versus the above cropped images.
+Due to file size restrictions, the map has been downsampled to approximately 15MB, which lowers the resolution.
 
 ::: column-page
 ```{r}
