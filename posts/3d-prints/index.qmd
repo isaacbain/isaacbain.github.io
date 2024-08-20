@@ -321,7 +321,7 @@ Once you have your 3D model, you can export it to a file format suitable for 3D 
 
 You can export your 3D model to an STL file using the `rayshader` package's `save_3dprint` function in R. This function takes a filename and a mesh object as input and writes the mesh to an STL file. You can also set the `max_width` parameter to scale the model to a specific size.
 
-Here's some that I printed off at home in a couple of different colours. The material cost to print one of these is around \$1.08 and takes a couple of hours.
+Here's some that I printed off at home in a couple of different colours. The material cost to print one of these is minimal and takes a couple of hours.
 
 ::: {layout-nrow="2"}
 ![Ahuriri catchment and estuary in green PLA filament.](ahuriri_photo.jpg)
