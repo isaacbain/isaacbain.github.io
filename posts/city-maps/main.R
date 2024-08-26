@@ -11,17 +11,6 @@ cities <- st_read("posts/city-maps/cities.shp") |>
   st_drop_geometry() |>
   dplyr::arrange(desc(Population))
 
-city <- new_city(name = "Hokitika", country = "New Zealand", lat = -42.717507, long = 170.973959)
-
-p <- cityview(name = city, license = FALSE, border = "circle", theme = myTheme)
-
-ggplot2::ggsave(filename = "posts/city-maps/output/Hokitika.jpg",
-                plot = p,
-                height = 500,
-                width = 500,
-                units = "mm",
-                dpi = 300)
-
 myTheme <- list(
   colors = list(
     background = "#ffffff",
@@ -60,6 +49,20 @@ myTheme <- list(
     )
   )
 )
+
+# do one individually
+
+# city <- new_city(name = "Hokitika", country = "New Zealand", lat = -42.717507, long = 170.973959)
+# 
+# p <- cityview(name = city, license = FALSE, border = "circle", theme = myTheme)
+# 
+# ggplot2::ggsave(filename = "posts/city-maps/output/Hokitika.jpg",
+#                 plot = p,
+#                 height = 500,
+#                 width = 500,
+#                 units = "mm",
+#                 dpi = 300)
+
 
 # Loop through each city in the data frame
 for (i in 111:nrow(cities)) {
