@@ -89,11 +89,7 @@ To show you just how easy these are to create, I wrote a small for loop that ite
 #| file: main.R
 ```
 
-You can download[^1] high resolution versions from this [repo](https://github.com/isaacbain/nz-city-maps/tree/main/maps).  I hope your town or city is among them!
-
-[^1]: Feel free to print these, share them, or use them as you please. Just maybe don’t start selling them without asking me first.
-
-Here are a few of my favourites:
+Here are a few of my favourites: (more below)
 
 :::{.column-page-inset}
 
@@ -121,4 +117,619 @@ Here are a few of my favourites:
 ```
 
 :::
+
+## Download links
+
+You can download[^1] high resolution versions from this [repo](https://github.com/isaacbain/nz-city-maps/tree/main/maps) or the table below. I hope your town or city is among them!
+
+[^1]: Feel free to print these, share them, or use them as you please. Just maybe don’t start selling them without asking me first.
+
+```{=html}
+<table>
+  <thead>
+    <tr>
+      <th>City</th>
+      <th>Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Alexandra</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Alexandra.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Amberley</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Amberley.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Arrowtown</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Arrowtown.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Ashburton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ashburton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Ashhurst</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ashhurst.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Auckland</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Auckland.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Balclutha</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Balclutha.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Beachlands-Pine Harbour</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Beachlands-Pine%20Harbour.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Blenheim</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Blenheim.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Bluff</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Bluff.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Brightwater</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Brightwater.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Bulls</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Bulls.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Cambridge</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Cambridge.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Carterton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Carterton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Christchurch</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Christchurch.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Clive</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Clive.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Coromandel</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Coromandel.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Cromwell</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Cromwell.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Dannevirke</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Dannevirke.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Darfield</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Darfield.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Dargaville</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Dargaville.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Dunedin</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Dunedin.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Edgecumbe</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Edgecumbe.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Eltham</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Eltham.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Featherston</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Featherston.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Feilding</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Feilding.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Foxton Beach</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Foxton%20Beach.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Foxton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Foxton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Geraldine</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Geraldine.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Gisborne</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Gisborne.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Gore</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Gore.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Greymouth</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Greymouth.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Greytown</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Greytown.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Hamilton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Hamilton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Hastings</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Hastings.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Havelock North</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Havelock%20North.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Helensville</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Helensville.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Hibiscus Coast</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Hibiscus%20Coast.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Hokitika</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Hokitika.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Huntly</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Huntly.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Hāwera</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Hāwera.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Inglewood</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Inglewood.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Invercargill</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Invercargill.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Kaiapoi</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Kaiapoi.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Kaikohe</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Kaikohe.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Kaikōura</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Kaikōura.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Kaitaia</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Kaitaia.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Katikati</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Katikati.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Kawerau</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Kawerau.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Kerikeri</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Kerikeri.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Kihikihi</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Kihikihi.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Kumeū-Huapai</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Kumeū-Huapai.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Lake Hāwea</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Lake%20Hāwea.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Leeston</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Leeston.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Levin</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Levin.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Lincoln</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Lincoln.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Lower Hutt</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Lower%20Hutt.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Lyttelton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Lyttelton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Mangawhai Heads</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Mangawhai%20Heads.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Maraetai</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Maraetai.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Martinborough</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Martinborough.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Marton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Marton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Masterton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Masterton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Matamata</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Matamata.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Methven</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Methven.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Milton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Milton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Moerewa</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Moerewa.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Morrinsville</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Morrinsville.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Mosgiel</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Mosgiel.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Motueka</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Motueka.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Murupara</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Murupara.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Napier</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Napier.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Nelson</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Nelson.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>New Plymouth</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/New%20Plymouth.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Ngongotahā</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ngongotahā.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Ngāruawāhia</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ngāruawāhia.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Oamaru</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Oamaru.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>One Tree Point</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/One%20Tree%20Point.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Oxford</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Oxford.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Paekākāriki</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Paekākāriki.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Paeroa</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Paeroa.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Pahiatua</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Pahiatua.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Palmerston North</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Palmerston%20North.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Paraparaumu</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Paraparaumu.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Pegasus</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Pegasus.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Picton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Picton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Porirua</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Porirua.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Prebbleton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Prebbleton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Pukekohe</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Pukekohe.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Putāruru</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Putāruru.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Pōkeno</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Pōkeno.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Queenstown</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Queenstown.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Raglan</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Raglan.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Rangiora</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Rangiora.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Renwick</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Renwick.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Richmond</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Richmond.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Riverhead</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Riverhead.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Rolleston</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Rolleston.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Rotorua</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Rotorua.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Ruakākā</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ruakākā.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Snells Beach</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Snells%20Beach.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Stratford</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Stratford.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Taihape</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Taihape.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Taumarunui</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Taumarunui.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Taupō</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Taupō.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Tauranga</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Tauranga.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Te Anau</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Te%20Anau.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Te Aroha</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Te%20Aroha.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Te Awamutu</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Te%20Awamutu.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Te Kauwhata</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Te%20Kauwhata.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Te Kūiti</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Te%20Kūiti.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Te Puke</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Te%20Puke.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Temuka</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Temuka.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Thames</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Thames.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Timaru</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Timaru.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Tokoroa</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Tokoroa.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Tuakau</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Tuakau.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Twizel</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Twizel.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Tūrangi</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Tūrangi.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Upper Hutt</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Upper%20Hutt.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Waiheke Island</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Waiheke%20Island.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Waihi Beach-Bowentown</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Waihi%20Beach-Bowentown.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Waihi</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Waihi.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Waikanae</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Waikanae.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Waimate</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Waimate.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Waipawa</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Waipawa.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Waipukurau</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Waipukurau.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Wairoa</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Wairoa.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Waitara</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Waitara.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Waiuku</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Waiuku.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Wakefield</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Wakefield.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Warkworth</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Warkworth.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Wellington</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Wellington.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Wellsford</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Wellsford.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>West Melton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/West%20Melton.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Westport</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Westport.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Whakatāne</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Whakatāne.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Whanganui</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Whanganui.jpg" target="_blank">View Map</a></td>
+    </tr>
+    <tr>
+      <td>Whangārei</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Whangārei.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Whitianga</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Whitianga.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Winton</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Winton.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Woodend</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Woodend.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Wānaka</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/W%C4%81naka.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Ōhope</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ōhope.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Ōmokoroa</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ōmokoroa.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Ōpōtiki</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ōpōtiki.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Ōtaki Beach</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ōtaki%20Beach.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Ōtaki</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ōtaki.jpg" target="_blank">View Map</a></td>
+    </tr>
+        <tr>
+      <td>Ōtorohanga</td>
+      <td><a href="https://github.com/isaacbain/nz-city-maps/blob/main/maps/Ōtorohanga.jpg" target="_blank">View Map</a></td>
+    </tr>
+  </tbody>
+</table>
+```
 
