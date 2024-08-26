@@ -99,7 +99,9 @@ Here are a few of my favourites:
 
 ```{=html}
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-  <div><img src="thumbnails/Auckland.jpg" alt="Auckland" style="width: 100%;"></div>
+  <div><img src="thumbnails/Bluff.jpg" alt="Bluff" style="width: 100%;"></div>
+  <div><img src="thumbnails/Kaikōura.jpg" alt="Kaikōura" style="width: 100%;"></div>
+  <div><img src="thumbnails/Timaru.jpg" alt="Timaru" style="width: 100%;"></div>
   <div><img src="thumbnails/Christchurch.jpg" alt="Christchurch" style="width: 100%;"></div>
   <div><img src="thumbnails/Wellington.jpg" alt="Wellington" style="width: 100%;"></div>
   <div><img src="thumbnails/Hamilton.jpg" alt="Hamilton" style="width: 100%;"></div>
@@ -112,8 +114,9 @@ Here are a few of my favourites:
   <div><img src="thumbnails/Balclutha.jpg" alt="Balclutha" style="width: 100%;"></div>
   <div><img src="thumbnails/Lyttelton.jpg" alt="Lyttelton" style="width: 100%;"></div>
   <div><img src="thumbnails/Edgecumbe.jpg" alt="Edgecumbe" style="width: 100%;"></div>
-  <div><img src="thumbnails/Blenheim.jpg" alt="Edgecumbe" style="width: 100%;"></div>
-  <div><img src="thumbnails/Dunedin.jpg" alt="Edgecumbe" style="width: 100%;"></div>
+  <div><img src="thumbnails/Blenheim.jpg" alt="Blenheim" style="width: 100%;"></div>
+  <div><img src="thumbnails/Dunedin.jpg" alt="Dunedin" style="width: 100%;"></div>
+  <div><img src="thumbnails/Auckland.jpg" alt="Auckland" style="width: 100%;"></div>
 </div>
 ```
 
