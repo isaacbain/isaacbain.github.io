@@ -65,7 +65,7 @@ myTheme <- list(
 
 
 # Loop through each city in the data frame
-for (i in 111:nrow(cities)) {
+for (i in 1:nrow(cities)) {
   
   # Extract city details
   city_name <- cities$Urban.Area[i]
