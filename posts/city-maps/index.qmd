@@ -1,0 +1,120 @@
+---
+title: "City maps of the 150 largest urban areas in NZ"
+author: "Isaac Bain"
+date: "2024-08-27"
+categories: [code, maps, population]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
+editor: visual
+lightbox: auto
+draft: false
+draft-mode: unlinked
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.2)
+          ),
+          /* bottom, image */ 
+          url(./chch.jpg);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 0.7; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
+---
+
+## Introduction
+
+City maps in a particular minimalist style have become quite trendy recently. You’ve probably seen them all over the internet, with sellers on platforms like [Etsy](https://www.etsy.com/nz/search?q=city%20map&ref=search_bar) charging anywhere from \$5 to \$20 for a digital download, and even more for printed versions.
+
+But here’s a little secret… they’re **super** easy to create in R.
+
+There’s an R package called `rcityviews` that allows you to make these maps with just one line of code:
+
+```{r}
+#| eval: false
+#| code-fold: false
+
+rcityviews::cityview("Christchurch")
+```
+
+```{r}
+#| fig-width: 19.685
+#| fig-height: 19.685
+#| echo: false
+
+library(rcityviews)
+library(patchwork)
+
+p <- cityview(new_city(name = "Christchurch", country = "New Zealand", lat = -43.53210, long = 172.6362))
+
+p
+```
+
+Pretty cool, right? But it doesn’t stop there. The `rcityviews` package offers a range of themes and border [options](https://github.com/koenderks/rcityviews). And if coding isn’t your thing, the package author has even provided a [ShinyApp](https://koenderks.shinyapps.io/rcityviews/) that lets you create custom maps for cities all over the world without writing a single line of R code.
+
+## New Zealand urban areas
+
+To show you just how easy these are to create, I wrote a small for loop that iterates over the names and locations of New Zealand’s [150 largest urban areas](https://en.wikipedia.org/wiki/List_of_New_Zealand_urban_areas_by_population) to generate maps for each one. The process is highly efficient and requires minimal effort once the loop is set up. With just a few lines of code, you can create a comprehensive collection of maps that visually capture the essence of these diverse urban landscapes. This method not only saves time but also allows for consistent styling across all maps, ensuring that each map adheres to the same aesthetic standards.
+
+```{r}
+#| echo: true
+#| eval: false 
+#| file: main.R
+```
+
+You can download[^1] high resolution versions from this [repo](https://github.com/isaacbain/nz-city-maps/tree/main/maps).  I hope your town or city is among them!
+
+[^1]: Feel free to print these, share them, or use them as you please. Just maybe don’t start selling them without asking me first.
+
+Here are a few of my favourites:
+
+:::{.column-page-inset}
+
+```{=html}
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+  <div><img src="thumbnails/Auckland.jpg" alt="Auckland" style="width: 100%;"></div>
+  <div><img src="thumbnails/Christchurch.jpg" alt="Christchurch" style="width: 100%;"></div>
+  <div><img src="thumbnails/Wellington.jpg" alt="Wellington" style="width: 100%;"></div>
+  <div><img src="thumbnails/Hamilton.jpg" alt="Hamilton" style="width: 100%;"></div>
+  <div><img src="thumbnails/Rotorua.jpg" alt="Rotorua" style="width: 100%;"></div>
+  <div><img src="thumbnails/Pukekohe.jpg" alt="Pukekohe" style="width: 100%;"></div>
+  <div><img src="thumbnails/Havelock North.jpg" alt="Havelock North" style="width: 100%;"></div>
+  <div><img src="thumbnails/Lincoln.jpg" alt="Lincoln" style="width: 100%;"></div>
+  <div><img src="thumbnails/Huntly.jpg" alt="Huntly" style="width: 100%;"></div>
+  <div><img src="thumbnails/Picton.jpg" alt="Picton" style="width: 100%;"></div>
+  <div><img src="thumbnails/Balclutha.jpg" alt="Balclutha" style="width: 100%;"></div>
+  <div><img src="thumbnails/Lyttelton.jpg" alt="Lyttelton" style="width: 100%;"></div>
+  <div><img src="thumbnails/Edgecumbe.jpg" alt="Edgecumbe" style="width: 100%;"></div>
+  <div><img src="thumbnails/Blenheim.jpg" alt="Edgecumbe" style="width: 100%;"></div>
+  <div><img src="thumbnails/Dunedin.jpg" alt="Edgecumbe" style="width: 100%;"></div>
+</div>
+```
+
+:::
