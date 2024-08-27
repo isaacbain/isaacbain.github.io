@@ -1,0 +1,71 @@
+---
+title: "3D-printed models for catchment groups"
+---
+
+::: banner2
+:::
+
+\
+*Have you found your way here because you're part of a catchment group and interested in a 3D-printed topographic model of your catchment? If so, you're in the right place.*\
+
+## What's the point in a 3D printed model?
+
+In a previous [post](https://isaacbain.com/posts/upper-ruamahanga/), I described these models as a "*tangible, miniature representations of the landscape that you can hold in your hands*." They're definitely not going to change the world, but they might serve as a conversation starter as you gather around the table to talk about your environmental goals and aspirations.
+
+![Koukourarata / Port Levy, Te Roto o Wairewa / Lake Forsyth, Te Waihora / Lake Ellesmere](images/canterbury-models.jpg)
+
+These models offer a less abstract view of the landscape compared to a 2D paper map, focusing on elevation to reduce distractions. For visual thinkers, they can reveal connections and scales otherwise only visible from a helicopter.
+
+By mapping the entire catchment, the model embodies the concept of *Ki uta ki tai*—a te ao Māori perspective on integrated, indivisible land and river management, from the mountains to the sea.
+
+And they're just damn cool.
+
+## What's this going to cost me?
+
+If you have access to a 3D printer through your local library, makerspace, or community, it may cost you nothing.
+
+Recognising the varying budgets of catchment groups (and the valuable service you provide for our environment), I operate a pay-what-you-want project to generate a basic STL file for your catchment. If you're able and willing to contribute, a suggested amount just for the file is between **\$0 to \$50**. Any contribution is greatly appreciated and helps sustain the project, allowing me to assist more groups.
+
+::: column-margin
+![Ōhinehou / Lyttelton](images/mt-cavendish-model.jpg)
+:::
+
+If you're **not** a catchment group or simply want one for your personal use, this pricing obviously doesn't apply. However, I’d still love to make one for you! In fact, the more paying customers I have, the more non-profit groups I can support. Please [get in touch](https://isaacbain.com/contact) and I can provide a quote based on the complexity of the design.
+
+## Can you print it for me?
+
+Due to popular demand, I can now offer to 3D print these models for you. Some people can't access a 3D printer, want the highest quality possible, or simply want a ready-made product without the hassle.
+
+I’m happy to print one of my designs for your group or multiple copies if your group’s members want their own.
+
+::: column-margin
+![Upper Ruamahanga](images/ruamahanga-model.png)
+:::
+
+Pricing is heavily discounted for catchment groups and mainly designed to cover my consumable costs. Commercial-grade 3D printers don't come cheap, and I've got other direct costs like filament, power, and maintenance. One of these models typically ties up my printer for 8-12 hours.
+
+Pricing depends on size, but for a single colour up to 200mm length is typically **\$30 - \$50**. I'm located in Christchurch and can post anywhere. Please allow 2-3 weeks lead time.
+
+## I Want Something Completely Custom—Can You Do That?
+
+Probably! Get in touch and let's figure it out. Some requests I’ve already had include:
+
+-   Larger prints comprised of multiple blocks
+-   Commercial projects
+-   Individual requests
+-   Preparing files for laser cutting or CNC routing
+-   Sub-catchments that fit together like a jigsaw puzzle
+
+## Okay, I want one. How does the process work?
+
+Fantastic! I'm here to help make this a reality. Here are the steps to consider:
+
+1.  **Location:** The catchment must be in New Zealand. Anywhere in New Zealand is fine, but very small catchments may require LiDAR data, which isn’t available everywhere.
+2.  **Define your area of interest:** This doesn’t have to be a hydrological catchment. It can be a square, circle, sub-catchment, FMU, or multiple catchments. Any contiguous boundary works.
+3.  **Obtain a shapefile:** It's easiest if you can provide a GIS shapefile (.shp) of your area of interest. Otherwise if it's a catchment, I can likely derive this for you.
+4.  **Get in touch:** Fill out this [Google form](https://forms.gle/nat3uHCC3ToFtX8j8):\
+    \
+
+```{=html}
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfxTbwctyqajju26YE2D4qX685ynVbVqetHrwCosQPANzd90g/viewform?embedded=true" width="640" height="2000" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+```

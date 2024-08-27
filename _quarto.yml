@@ -16,7 +16,12 @@ website:
       - text: "Home"
         href: index.qmd
       - about.qmd
-      - blog.qmd
+      - text: "Contact"
+        href: contact.qmd
+      - text: "Data viz blog"
+        href: blog.qmd
+      - text: "Catchment groups"
+        href: catchment-groups.qmd
     right:
       - icon: github
         href: https://github.com/isaacbain
