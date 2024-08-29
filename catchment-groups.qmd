@@ -24,7 +24,10 @@ And they're just damn cool.
 
 If you have access to a 3D printer through your local library, makerspace, or community, it may cost you nothing.
 
-Recognising the varying budgets of catchment groups (and the valuable service you provide for our environment), I operate a pay-what-you-want project to generate a basic STL file for your catchment. If you're able and willing to contribute, a suggested amount just for the file is between **\$0 to \$50**. Any contribution is greatly appreciated and helps sustain the project, allowing me to assist more groups.
+Recognising the varying budgets of catchment groups (and the valuable service you provide for our environment), I operate a pay-what-you-want project to generate a basic STL file for your catchment.
+
+If you're able and willing to contribute, a suggested amount just for the file is between **\$0 to \$50**.
+Any contribution is greatly appreciated and helps sustain the project, allowing me to assist more groups.
 
 ::: column-margin
 ![Ōhinehou / Lyttelton](images/mt-cavendish-model.jpg)
@@ -44,7 +47,7 @@ I’m happy to print one of my designs for your group or multiple copies if your
 
 Pricing is heavily discounted for catchment groups and mainly designed to cover my consumable costs. Commercial-grade 3D printers don't come cheap, and I've got other direct costs like filament, power, and maintenance. One of these models typically ties up my printer for 8-12 hours.
 
-Pricing depends on size, but for a single colour up to 200mm length is typically **\$30 - \$50**. I'm located in Christchurch and can post anywhere. Please allow 2-3 weeks lead time.
+Pricing for the printing depends on size, but for a single colour up to 200mm in length ranges from **\$30 - \$50** (+ design cost and shipping). I'm located in Christchurch and can post anywhere. Please allow 2-3 weeks lead time.
 
 ## I Want Something Completely Custom—Can You Do That?
 
