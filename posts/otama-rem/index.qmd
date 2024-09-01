@@ -2,6 +2,7 @@
 title: "Otama Wetland Relative Elevation Model"
 author: "Isaac Bain"
 date: "2024-09-03"
+image: "/reduced_file_size/cropped-terrain.jpg"
 categories: [code, maps, water quality]
 execute:
   warning: false
@@ -137,7 +138,7 @@ r <- subset(r, c(3, 2, 1))
 
 # Create a leaflet map
 leaflet() %>% 
-  addProviderTiles('Stadia.StamenTonerLite', group = "Base Map") |> 
+  addProviderTiles('CartoDB.Positron', group = "Base Map") |> 
   addRasterRGB(x = r, project = FALSE, opacity = 1, group = "REM", maxBytes = 30 * 1024 * 1024, na.color = "#00000000") |> 
   addFullscreenControl()
 ```
