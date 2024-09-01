@@ -1,0 +1,147 @@
+---
+title: "Otama Wetland Relative Elevation Model"
+author: "Isaac Bain"
+date: "2024-09-03"
+categories: [code, maps, water quality]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
+editor: visual
+lightbox: auto
+draft: true
+draft-mode: unlinked
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.0),
+            rgba(0, 0, 0, 0.0)
+          ),
+          /* bottom, image */ 
+          url(./otama-satellite.png);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 1.0; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
+---
+
+## Introduction
+
+In a recent [post](https://isaacbain.com/posts/rem/), I explored the application of a Relative Elevation Model (REM) to the Waimakariri River, typically used for analysing braided river systems. This led me to consider their potential utility in understanding wetlands, particularly modified wetland complexes.
+
+New Zealand has lost about 90% of its original wetland extent,[^1] with 87% of recent losses attributed to conversion to exotic grassland.[^2] Last year, Manaaki Whenua researchers estimated that 3% of remaining wetlands are potentially affected by drainage, though their case study in one catchment suggests this may be an underestimate, with the true figure potentially being three times higher.[^3]
+
+[^1]: <https://newzealandecology.org/nzje/3444>
+
+[^2]: <https://www.stats.govt.nz/indicators/wetland-area>
+
+[^3]: <https://newzealandecology.org/nzje/3523.pdf>
+
+Theoretically, Relative Elevation Models should make drainage and other wetland modifications more discernible than a Digital Elevation Model (DEM) alone. In this post, I test this theory at Otama Beach on the Coromandel Peninsula.
+
+In the lower part of the Otama Beach catchment lies a important remnant wetland (26 hectares)[^4], formed behind a large dune and fed by freshwater from the surrounding hills. On either side of the wetland is developed farmland, grazed with exotic grassland. The catchment also includes native forest and pine plantations.
+
+[^4]: <https://www.otamareservesgroup.co.nz/our-reserves/>
+
+## Otama Catchment
+
+The Otama Catchment is a small watershed, encompassing the main Otama River and smaller tributaries, including the Ototoro Stream, Pekapekarau Stream, Waikarikia Stream, and Waimata Stream.
+
+For those interested in the meanings of these place names, based on my interpretation from the Te Aka Māori Dictionary:
+
+-   **Otama**: Means "my son."
+
+```{=html}
+<!-- -->
+```
+-   **Torotoro**: Could refer to "visiting a number of times" or "a small white clinging rātā."
+
+-   **Pekapeka**: Refers to the endemic bat, with "rau" meaning "to catch with a net."
+
+-   **Karikia**: Possibly derived from "karakia," meaning "to pray."
+
+-   **Matā**: Means "flint, quartz, obsidian," or "lava."
+
+![](otama-catchment.webp)
+
+The Otama Reserves Group describes the wetland as follows:
+
+> The Otama Reserves Group currently undertakes pest and weed control in the wetland and is two years into a riparian planting program on five hectares that has recently been fenced off from adjoining farmland.\
+> \
+> The quality of the water and land practices directly relate to the health of the wetland; in particular farming practices, siltation from forestry, and draining of the wetland during inundation.\
+> \
+> This wetland has been classified as degraded and it is our aim to restore it and bring it back to a healthy functioning wetland, and then engage the community with a bird hide and walkways throughout the wetland.
+>
+> *“We identified very early on that to achieve our goals and aspirations, we would require a comprehensive restoration plan for the reserve – one recognised by local government agencies, iwi, landowners and the community. The restoration plan will give the group a guideline on timeframes for a staged restoration approach over the next decade and how the goals can be achieved.”*
+
+## Relative Elevation Model
+
+Below are two versions of the Otama Catchment REM using different colour scales. The first uses the Mako colour scale, a diverging scale that is colourblind-friendly. The second uses a terrain colour scale, a sequential and also colourblind-friendly option.
+
+The REM reveals features not immediately apparent in aerial photography. For example, the main Otama River channel has been straightened and channelised, leaving the original river meanders cut off and filled with tidal waters.
+
+On the east and west of the image, an extensive drainage network is visible, maintaining the farmland free of surface water. Using the terrain colour scale, you can easily imagine where the original wetland might have extended by comparing areas of the same colour, which correspond to the same elevation.
+
+::: {layout-ncol="2"}
+![Mako colour scale](reduced_file_size/cropped-mako.jpg)
+
+![Terrain colour scale](reduced_file_size/cropped-terrain.jpg)
+:::
+
+Here’s the REM on an interactive map, allowing you to zoom and pan around. This version uses the Mako colour scale and shows the entire catchment. The key advantage of the REM over a DEM in this area is its ability to de-emphasise the relatively large elevation differences of the hills and highlight minute elevation changes within the wetland.
+
+```{r}
+#| message: false
+#| warning: false
+
+# Load the required libraries
+library(terra)
+library(leaflet)
+library(leaflet.extras)
+library(leafem)
+library(stars)
+
+# Suppress progress bar
+terraOptions(progress = 0)
+
+# Load the raster
+raster_path <- "/Users/isaacbain/working/isaacbain.github.io/posts/otama-rem/data/clipped_raster_hillshade-color.tif"
+
+r <- raster::brick(raster_path)
+
+r <- subset(r, c(3, 2, 1))
+
+# Create a leaflet map
+leaflet() %>% 
+  addProviderTiles('Stadia.StamenTonerLite', group = "Base Map") |> 
+  addRasterRGB(x = r, project = FALSE, opacity = 1, group = "REM", maxBytes = 30 * 1024 * 1024, na.color = "#00000000") |> 
+  addFullscreenControl()
+```
+
+## Conclusion
+
+So there we have it. We've explored the use of REMs in a wetland, particularly the beautiful Otama area. It's clear that REMs really stand out for their ability to visualise minute relative changes in elevation compared to a river or wetland baseline, making them valuable tools for delineating drains and remnant areas.

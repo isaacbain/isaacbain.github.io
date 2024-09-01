@@ -15,14 +15,21 @@ website:
     left:
       - text: "Home"
         href: index.qmd
+      - text: "|"
       - about.qmd
+      - text: "|"
       - text: "Contact"
         href: contact.qmd
+      - text: "|"
       - text: "Data viz blog"
         href: blog.qmd
+      - text: "|"
       - text: "Catchment groups"
         href: catchment-groups.qmd
     right:
+      - icon: bag-heart-fill
+        text: "Store"
+        href: https://www.etsy.com/nz/shop/KakapoIndustries
       - icon: github
         href: https://github.com/isaacbain
       - icon: linkedin
