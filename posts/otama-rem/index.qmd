@@ -1,8 +1,8 @@
 ---
 title: "Otama Wetland Relative Elevation Model"
 author: "Isaac Bain"
-date: "2024-09-03"
-image: "/reduced_file_size/cropped-terrain.jpg"
+date: "2024-09-02"
+image: "inferno_r.jpg"
 categories: [code, maps, water quality]
 execute:
   warning: false
@@ -52,7 +52,7 @@ include-in-header:
 
 ## Introduction
 
-In a recent [post](https://isaacbain.com/posts/rem/), I explored the application of a Relative Elevation Model (REM) for the Waimakariri River. REMS are typically used for analysing braided river systems, but this also led me to consider their potential utility in understanding wetlands, particularly modified wetland complexes.
+In a recent [post](https://isaacbain.com/posts/rem/), I explored the application of a Relative Elevation Model (REM) for the Waimakariri River. REMs are typically used for analysing braided river systems, but this also led me to consider their potential utility in understanding wetlands, particularly modified wetland complexes.
 
 New Zealand has lost about 90% of its original wetland extent,[^1] with 87% of recent losses attributed to conversion to exotic grassland.[^2] Last year, Manaaki Whenua researchers estimated that 3% of remaining wetlands are potentially affected by drainage, though their case study in one catchment suggests this may be an underestimate, with the true figure potentially being three times higher.[^3]
 
