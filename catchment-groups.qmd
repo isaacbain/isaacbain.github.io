@@ -26,8 +26,7 @@ If you have access to a 3D printer through your local library, makerspace, or co
 
 Recognising the varying budgets of catchment groups (and the valuable service you provide for our environment), I operate a pay-what-you-want project to generate a basic STL file for your catchment.
 
-If you're able and willing to contribute, a suggested amount just for the file is between **\$0 to \$50**.
-Any contribution is greatly appreciated and helps sustain the project, allowing me to assist more groups.
+If you're able and willing to contribute, a suggested amount just for the file is between **\$0 to \$50**. Any contribution is greatly appreciated and helps sustain the project, allowing me to assist more groups.
 
 ::: column-margin
 ![Ōhinehou / Lyttelton](images/mt-cavendish-model.jpg)
@@ -52,6 +51,10 @@ Pricing for the printing depends on size, but for a single colour up to 200mm in
 ## I Want Something Completely Custom—Can You Do That?
 
 Probably! Get in touch and let's figure it out. Some requests I’ve already had include:
+
+::: column-margin
+![Ruakituri](images/ruakituri-model.jpg)
+:::
 
 -   Larger prints comprised of multiple blocks
 -   Commercial projects
