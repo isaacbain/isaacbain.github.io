@@ -1,0 +1,147 @@
+---
+title: "LCDB symbology in R"
+author: "Isaac Bain"
+date: "2024-09-17"
+categories: [code, maps]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: false
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
+editor: visual
+lightbox: auto
+draft: false
+draft-mode: unlinked
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.2)
+          ),
+          /* bottom, image */ 
+          url(./photo.jpg);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 0.8; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
+---
+
+## Purpose
+
+The goal of `lcdb_symbology` in my [isaacr](https://isaacbain.com/isaacr/) package is to colour the symbology of the [Land Cover Database](https://lris.scinfo.org.nz/layer/104400-lcdb-v50-land-cover-database-version-50-mainland-new-zealand/) (LCDB) in a way that is consistent with the [Manaaki Whenua Landcare Research](https://www.landcareresearch.co.nz/) (MWLR)'s original symbology. MWLR provide a .lyr file for use with ArcGIS (or with QGIS via a plugin), but this repo provides a way to use the same symbology in R or ggplot2 or other non-GIS software.
+
+## Usage
+
+To load the LCDB symbology, use the `load_lcdb_symbology` function. This will return a data frame with the following columns: `Class`, `Colour`, and `Name`. The `Class` column contains the class code, the `Colour` column contains the colour in HEX format, and the `Name` column contains the name of the land cover class.
+
+```{r setup}
+# install.packages("devtools")
+# devtools::install_github("isaacbain/isaacr")
+library(isaacr)
+
+# load data 
+landcover_df <- load_lcdb_symbology()
+```
+
+## Table of colours
+
+Here's a table of the colours used in the LCDB symbology. Extracted from XML in the original .lyr file.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(kableExtra)
+
+# Display the table using kableExtra
+landcover_df |> 
+  mutate(
+    ColourCell = cell_spec(Name, background = Colour, color = ifelse(Colour == "#000000", "white", "black"))
+  ) %>%
+  select(Class, ColourCell, Colour, Name) %>%
+  kable("html", escape = FALSE, col.names = c("Class Code", "Colour", "HEX Code", "Landcover Class")) %>%
+  kable_styling(full_width = FALSE, position = "left")
+```
+
+## Examples
+
+### ggplot2
+
+Here's an example of how to use the LCDB symbology in ggplot2. Let's make a map of Christchurch, and another one of Blenheim.
+
+```{r fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(sf)
+
+# for ggplot2, load named vector
+lcdb_colours_vector <- load_lcdb_vector()
+
+# Plot using ggplot2 with scale_fill_manual
+ggplot(data = lcdb5_chch) + # lcdb5_chch available in the isaacr package, and it lazy-loads - so just refer to it
+  geom_sf(aes(fill = as.factor(Class_2018)), color = NA) +
+  scale_fill_manual(values = lcdb_colours_vector) +
+  theme_void() +
+  theme(legend.position = "none")
+
+# Plot using ggplot2 with scale_fill_manual
+ggplot(data = lcdb5_blenheim) +
+  geom_sf(aes(fill = as.factor(Class_2018)), color = NA) +
+  scale_fill_manual(values = lcdb_colours_vector) +
+  theme_void() +
+  theme(legend.position = "none")
+```
+
+### Leaflet
+
+Here's an example of how to use the LCDB symbology in leaflet.
+
+```{r fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
+library(leaflet)
+
+lcdb5_chch <- lcdb5_chch |> 
+  left_join(landcover_df, by = c("Class_2018" = "Class"))
+
+# Create a leaflet map of Christchurch
+leaflet(data = lcdb5_chch |> st_transform(4326)) %>%
+  addTiles() %>%
+  addPolygons(
+    fillColor = ~Colour,
+    weight = 0, # Border thickness
+    fillOpacity = 1,
+    popup = ~paste(Name)
+  )
+
+lcdb5_blenheim <- lcdb5_blenheim |> 
+  left_join(landcover_df, by = c("Class_2018" = "Class"))
+
+# Create a leaflet map of Blenheim
+leaflet(data = lcdb5_blenheim |> st_transform(4326)) %>%
+  addTiles() %>%
+  addPolygons(
+    fillColor = ~Colour,
+    weight = 0, # Border thickness
+    fillOpacity = 1,
+    popup = ~paste(Name)
+  )
+```
