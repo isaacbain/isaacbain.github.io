@@ -22,6 +22,14 @@ And they're just damn cool.
 
 ## How big are they? 
 
+::: column-margin
+![Puketoi FMU made up of Akitio, Owahanga and Wainui catchments](images/puketoi-separate.jpg)
+:::
+
+::: column-margin
+![Puketoi FMU assembled](images/puketoi-assembled.jpg)
+:::
+
 My standard sized model is around 200mm long. This is a good size to hold in your hand or pass around.
 
 If you want a bigger model, my printer can print up to ~300mm long in a single printed block. If you want larger than this, I can print multiple blocks which are either glued together or snap together with a dovetail joint. This is a bit more work, but it's definitely possible.
@@ -30,15 +38,15 @@ Another option is to print multiple sub-catchments separately, the largest of wh
 
 ## What's this going to cost me?
 
-::: column-margin
-![Ōhinehou / Lyttelton](images/mt-cavendish-model.jpg)
-:::
-
 **Option 1:** If you have access to a 3D printer through your local library, makerspace, or community, I can assist you with making an .STL file that you can print yourself.
 
 **Option 2:** Due to popular demand, I can also now offer to 3D print these models for you. Some people can't access a 3D printer, want a multi-colour model, or simply want a ready-made product without the hassle. I’m happy to print one of my designs for your group (or multiple copies if your group’s members want their own).
 
 Pricing is heavily discounted for catchment groups and mainly designed to cover my consumable costs. Commercial-grade 3D printers don't come cheap, and I've got other direct costs like filament, power, and maintenance. One of these models typically ties up my printer for 8-12 hours.
+
+::: column-margin
+![Otama](images/otama.jpeg)
+:::
 
 I can provide an exact quote, which will depend on the size, complexity, etc. But for indicative pricing, expect in the \$50-\$100 range per model.
 
