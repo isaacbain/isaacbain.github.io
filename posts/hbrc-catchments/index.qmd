@@ -1,0 +1,117 @@
+---
+title: "Hawke's Bay catchment models"
+author: "Isaac Bain"
+date: "2024-10-15"
+categories: [code, maps, 3dprint]
+execute:
+  warning: false
+  error: false
+  messages: false
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    number-sections: true
+    link-external-icon: true
+    link-external-newwindow: true
+editor: visual
+lightbox: auto
+draft: false
+draft-mode: unlinked
+title-block-banner: "#00000000"
+title-block-banner-color: "rgba(255, 255, 255, 0.9)"
+include-in-header:
+  - text: |
+      <style>
+      #title-block-header.quarto-title-block.default .quarto-title-meta {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .quarto-title-block .quarto-title-banner {
+        height: 0; /* hide */
+      }
+      #title-block-header {
+        background: 
+          /* top, transparent black, faked with gradient */
+          linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.2)
+          ),
+          /* bottom, image */ 
+          url(./ngaruroro.jpg);
+        background-size: cover;
+        background-position-y: center;
+        height: 300px;
+        opacity: 0.8; /* image opacity, lower means lighter */
+        z-index: -1;
+      }
+      </style>
+---
+
+## Introduction
+
+If you haven't already seen, I've invited [catchment groups](https://isaacbain.com/catchment-groups.html) to get in touch with me if they're interested in getting a topographic model of their catchment, and one exciting possibility is printing adjoining catchments at a common scale to fit together like a jigsaw puzzle. This is exactly what the Hawke's Bay Regional Council (HBRC) requested—a model of all 11 major catchments that fit together to form the entire region.
+
+## Puzzle pieces
+
+HBRC provided a shapefile of the 11 catchment groupings, conveniently prepared with coincident borders.
+
+```{r}
+library(leaflet)
+library(sf)
+
+# Load the catchments data
+catchments <- readRDS("hbrc_catchments.RDS")
+
+# Make sure the data is projected correctly for Leaflet
+catchments <- st_transform(catchments, crs = 4326) # Convert to WGS84
+
+# Create a color palette for the categorical EMA field
+ema_palette <- colorFactor(palette = "Set3", domain = catchments$EMA)
+
+# Create a leaflet map
+leaflet(catchments) |>
+  addProviderTiles("Esri.WorldImagery") |>
+  addPolygons(
+    fillColor = ~ema_palette(EMA),
+    weight = 2,
+    opacity = 1,
+    color = 'white',
+    dashArray = '3',
+    fillOpacity = 0.9,
+    highlightOptions = highlightOptions(
+      weight = 5,
+      color = "#666",
+      dashArray = "",
+      fillOpacity = 0.5,
+      bringToFront = TRUE
+    ),
+    label = ~EMA,
+    popup = ~EMA
+  )
+```
+\
+To ensure the pieces fit together perfectly, each catchment had to be scaled relative to the others. The Mohaka catchment, being the largest, occupied the full dimensions of the print bed (about 300mm on the diagonal), while Ahuriri, the smallest, came in at around 60mm long.
+
+![](ahuriri.jpeg)
+
+I also added rivers (widths varying by Strahler stream order), lakes, and estuaries. My favourite part was the addition of Lake Waikaremoana—it's amazing how that lake is so large for being perched right at the top of it's catchment, and bounded by huge mountain ranges with just a small cut for its outflow.
+
+## Finished product
+
+Printing this model was a mammoth effort—my printer ran 24 hours a day for 5 straight days! The final assembled model stretches over 600mm, providing a fantastic overview of the region's topography. It's a great size for exploring the intricacies of Hawke's Bay's landscape in detail.
+
+If your catchment group or council is interested in something similar, I'd love to hear from you!
+
+![](IMG_0145.jpeg)
+
+![](IMG_0147.jpeg)
+
+![](IMG_0150.jpeg)
+
+![](IMG_0152.jpeg)
+
+## Get in touch
+
+Feel free to reach out via the [contact form](https://isaacbain.com/contact.html) on my website if you'd like to discuss a custom model for your catchment group. I'd be excited to collaborate and bring your landscape to life!

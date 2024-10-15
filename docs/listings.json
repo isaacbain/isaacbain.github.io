@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/hbrc-catchments/index.html",
       "/posts/lcdb-symbology/index.html",
       "/posts/otama-rem/index.html",
       "/posts/city-maps/index.html",
