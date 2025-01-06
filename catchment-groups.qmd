@@ -20,7 +20,7 @@ By mapping the entire catchment, the model embodies the concept of *Ki uta ki ta
 
 And they're just damn cool.
 
-## How big are they? 
+## How big are they?
 
 ::: column-margin
 ![Puketoi FMU made up of Akitio, Owahanga and Wainui catchments](images/puketoi-separate.jpg)
@@ -32,9 +32,9 @@ And they're just damn cool.
 
 My standard sized model is around 200mm long. This is a good size to hold in your hand or pass around.
 
-If you want a bigger model, my printer can print up to ~300mm long in a single printed block. If you want larger than this, I can print multiple blocks which are either glued together or snap together with a dovetail joint. This is a bit more work, but it's definitely possible.
+If you want a bigger model, my printer can print up to \~300mm long in a single printed block. If you want larger than this, I can print multiple blocks which are either glued together or snap together with a dovetail joint. This is a bit more work, but it's definitely possible.
 
-Another option is to print multiple sub-catchments separately, the largest of which can take up the maximum size of the printer. If these sub-catchments are printed at a common scale, they should fit together like a jigsaw puzzle. 
+Another option is to print multiple sub-catchments separately, the largest of which can take up the maximum size of the printer. If these sub-catchments are printed at a common scale, they should fit together like a jigsaw puzzle.
 
 ## What's this going to cost me?
 

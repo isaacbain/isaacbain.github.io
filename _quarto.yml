@@ -21,7 +21,7 @@ website:
       - text: "Data viz blog"
         href: blog.qmd
       - text: "Catchment groups"
-        href: catchment-groups.qmd
+        href: www.kakapoindustries.com/catchment-groups
     right:
       - icon: github
         href: https://github.com/isaacbain
